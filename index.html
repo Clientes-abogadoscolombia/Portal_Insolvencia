@@ -150,6 +150,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:#1a1a2e;min-hei
   <div class="cnt">
     <div class="crds" id="cards"></div>
     <div id="actBox"></div>
+    <div class="sec"><button class="sec-btn" onclick="tog(this)"><span class="sec-t">📌 Contexto del caso</span><span class="sec-arr">▾</span></button><div class="sec-body" id="ctx"></div></div>
     <div class="sec"><button class="sec-btn" onclick="tog(this)"><span class="sec-t">📋 Detalle del proceso</span><span class="sec-arr">▾</span></button><div class="sec-body" id="tl"></div></div>
     <div class="sec"><button class="sec-btn" onclick="tog(this)"><span class="sec-t">💰 Detalle de pagos</span><span class="sec-arr">▾</span></button><div class="sec-body" id="pays"></div></div>
     <div class="ftr"><p>Colombia Abogados · Portal de Seguimiento</p></div>
@@ -301,6 +302,13 @@ function render(c){
     aHTML+='</div>';
   }
   document.getElementById("actBox").innerHTML=aHTML;
+ 
+  // Context
+  var ctxHTML="";
+  if(c.desc){ctxHTML+='<div style="margin-bottom:14px"><p style="font-size:10px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Descripción del caso</p><p style="font-size:13px;color:var(--navy-d);line-height:1.7">'+c.desc+'</p></div>';}
+  if(c.est){ctxHTML+='<div><p style="font-size:10px;font-weight:700;color:var(--gold-d,#a68a3e);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Estrategia jurídica</p><p style="font-size:13px;color:var(--navy-d);line-height:1.7">'+c.est+'</p></div>';}
+  if(!ctxHTML){ctxHTML='<p style="font-size:13px;color:var(--muted)">Información no disponible aún.</p>';}
+  document.getElementById("ctx").innerHTML=ctxHTML;
  
   // Timeline
   var tHTML="";
