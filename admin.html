@@ -422,7 +422,7 @@ function consultarCliente(){
 
 function copiarPIN(pin, nombre){
   var nm = decodeURIComponent(nombre).split(" ")[0];
-  var msg = "Hola " + nm + ", su PIN para consultar su proceso en nuestro portal es: " + pin + "\n\nIngrese aquí: [TU_URL_GITHUB_PAGES]";
+  var msg = "Hola " + nm + ", su PIN para consultar su proceso en nuestro portal es: " + pin + "\n\nIngrese aquí: https://clientes-abogadoscolombia.github.io/Portal_Insolvencia/";
   if(navigator.clipboard){
     navigator.clipboard.writeText(msg);
     alert("Mensaje copiado al portapapeles");
