@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Colombia Abogados</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#002855;--navy-l:#003d80;--gold:#c9a84c;--bg:#f4f6f9;--white:#fff;--muted:#64748b;--light:#e8ecf2;--ok:#16a34a;--ok-bg:#dcfce7;--warn:#d97706;--warn-bg:#fef3c7;--info:#2563eb;--info-bg:#dbeafe;--err:#dc2626}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:#1a1a2e;min-height:100vh}
+
+.top{background:var(--navy);color:#fff;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
+.top h1{font-size:18px;font-weight:700}
+.top-sub{font-size:11px;color:var(--gold);letter-spacing:2px;text-transform:uppercase}
+.badge{background:var(--gold);color:var(--navy);padding:4px 12px;border-radius:20px;font-size:11px;font-weight:800}
+
+.wrap{max-width:800px;margin:0 auto;padding:20px 16px}
+
+/* LOGIN ADMIN */
+.admin-login{max-width:400px;margin:80px auto;text-align:center}
+.admin-login h2{font-size:22px;margin-bottom:8px;color:var(--navy)}
+.admin-login p{font-size:13px;color:var(--muted);margin-bottom:20px}
+.admin-login input{width:100%;padding:14px;border:2px solid var(--light);border-radius:12px;font-size:15px;text-align:center;font-family:'DM Sans';outline:none;margin-bottom:12px}
+.admin-login input:focus{border-color:var(--navy)}
+.admin-login button{width:100%;padding:14px;border:none;background:var(--navy);color:#fff;font-weight:700;font-size:15px;border-radius:12px;cursor:pointer}
+
+/* PANEL */
+.panel{display:none}
+.section{background:var(--white);border-radius:16px;border:1px solid var(--light);padding:20px;margin-bottom:20px;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+.section h2{font-size:16px;font-weight:700;color:var(--navy);margin-bottom:16px}
+
+/* VERIFICAR PAGO */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-grid.full{grid-template-columns:1fr}
+label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;display:block}
+input,select{width:100%;padding:12px;border:1.5px solid var(--light);border-radius:10px;font-size:14px;font-family:'DM Sans';outline:none;background:var(--white)}
+input:focus,select:focus{border-color:var(--navy)}
+.btn{padding:14px 24px;border:none;border-radius:12px;font-weight:700;font-size:14px;cursor:pointer;font-family:'DM Sans';width:100%;margin-top:8px;transition:transform 0.1s}
+.btn:active{transform:scale(0.98)}
+.btn-primary{background:var(--navy);color:#fff}
+.btn-success{background:var(--ok);color:#fff}
+.btn-gold{background:var(--gold);color:var(--navy)}
+
+/* RESULTS */
+.result{padding:14px 16px;border-radius:12px;margin-top:12px;font-size:13px;font-weight:600;display:none}
+.result.show{display:block}
+.result.ok{background:var(--ok-bg);color:var(--ok)}
+.result.err{background:#fef2f2;color:var(--err)}
+.result.info{background:var(--info-bg);color:var(--info)}
+
+/* CLIENT INFO CARD */
+.client-card{background:linear-gradient(135deg,#f8fafc,#eef2f7);border:1.5px solid var(--light);border-radius:14px;padding:16px;margin-top:12px;display:none}
+.client-card.show{display:block}
+.cc-name{font-size:16px;font-weight:800;color:var(--navy)}
+.cc-info{font-size:12px;color:var(--muted);margin-top:2px}
+.cc-pays{margin-top:12px}
+.cc-pay{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-radius:10px;margin-bottom:8px;border:1px solid var(--light)}
+.cc-pay-name{font-size:13px;font-weight:600}
+.cc-pay-amount{font-size:14px;font-weight:800}
+.cc-pay-status{font-size:10px;font-weight:700;padding:3px 10px;border-radius:16px}
+.cc-pay .btn{width:auto;margin:0;padding:8px 16px;font-size:12px}
+
+/* QUICK ACTIONS */
+.qa{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.qa-btn{background:var(--white);border:1.5px solid var(--light);border-radius:14px;padding:16px;text-align:center;cursor:pointer;transition:border-color 0.2s}
+.qa-btn:hover{border-color:var(--navy)}
+.qa-ic{font-size:24px;margin-bottom:6px}
+.qa-t{font-size:13px;font-weight:700;color:var(--navy)}
+.qa-s{font-size:11px;color:var(--muted)}
+
+/* LOG */
+.log{max-height:200px;overflow-y:auto;font-size:12px;color:var(--muted)}
+.log-item{padding:8px 0;border-bottom:1px solid var(--light)}
+.log-item:last-child{border:none}
+.log-time{font-weight:700;color:var(--navy);margin-right:8px}
+
+@media(max-width:480px){
+  .form-grid{grid-template-columns:1fr}
+  .qa{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div>
+    <h1>Panel de Administración</h1>
+    <p class="top-sub">Colombia Abogados</p>
+  </div>
+  <span class="badge" id="badgeUser">ADMIN</span>
+</div>
+
+<!-- ADMIN LOGIN -->
+<div class="wrap" id="loginSection">
+  <div class="admin-login">
+    <h2>🔐 Acceso Admin</h2>
+    <p>Ingrese la API Key para acceder al panel</p>
+    <input type="password" id="keyInput" placeholder="API Key">
+    <button onclick="loginAdmin()">Ingresar</button>
+    <div class="result" id="loginResult"></div>
+  </div>
+</div>
+
+<!-- PANEL PRINCIPAL -->
+<div class="wrap panel" id="panelSection">
+
+  <!-- QUICK ACTIONS -->
+  <div class="qa">
+    <div class="qa-btn" onclick="showSection('verificar')">
+      <div class="qa-ic">✅</div>
+      <div class="qa-t">Verificar pago</div>
+      <div class="qa-s">Confirmar transferencia</div>
+    </div>
+    <div class="qa-btn" onclick="showSection('etapa')">
+      <div class="qa-ic">📋</div>
+      <div class="qa-t">Mover etapa</div>
+      <div class="qa-s">Avanzar caso de cliente</div>
+    </div>
+    <div class="qa-btn" onclick="showSection('consultar')">
+      <div class="qa-ic">🔍</div>
+      <div class="qa-t">Consultar cliente</div>
+      <div class="qa-s">Ver PIN y datos</div>
+    </div>
+    <div class="qa-btn" onclick="showSection('pins')">
+      <div class="qa-ic">🔑</div>
+      <div class="qa-t">Generar PINs</div>
+      <div class="qa-s">Asignar a nuevos clientes</div>
+    </div>
+  </div>
+
+  <!-- VERIFICAR PAGO -->
+  <div class="section" id="sec-verificar">
+    <h2>✅ Verificar pago</h2>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Busque al cliente y confirme el pago después de verificar el comprobante en WhatsApp.</p>
+    <div class="form-grid">
+      <div>
+        <label>Cédula del cliente</label>
+        <input type="text" id="vCed" placeholder="Ej: 1077853107" inputmode="numeric">
+      </div>
+      <div>
+        <label>Acción</label>
+        <button class="btn btn-primary" onclick="buscarCliente()" style="margin-top:0">🔍 Buscar</button>
+      </div>
+    </div>
+    <div class="client-card" id="clientCard">
+      <div class="cc-name" id="ccName"></div>
+      <div class="cc-info" id="ccInfo"></div>
+      <div class="cc-pays" id="ccPays"></div>
+    </div>
+    <div class="result" id="vResult"></div>
+  </div>
+
+  <!-- MOVER ETAPA -->
+  <div class="section" id="sec-etapa" style="display:none">
+    <h2>📋 Mover etapa</h2>
+    <div class="form-grid">
+      <div>
+        <label>Cédula</label>
+        <input type="text" id="eCed" placeholder="Cédula" inputmode="numeric">
+      </div>
+      <div>
+        <label>Etapa</label>
+        <select id="eEtapa">
+          <option value="s1">S1 — Envío contrato y poder</option>
+          <option value="s2">S2 — Documentos firmados</option>
+          <option value="s3">S3 — Anticipo honorarios</option>
+          <option value="s4">S4 — Solicitud documentos</option>
+          <option value="s5">S5 — Documentos completos</option>
+          <option value="s6">S6 — Solicitud radicada</option>
+          <option value="s7">S7 — Auto de admisión</option>
+          <option value="s8">S8 — Notificación acreedores</option>
+          <option value="s9">S9 — Primera audiencia</option>
+          <option value="a1">A1 — Segunda audiencia</option>
+          <option value="a2">A2 — Tercera audiencia</option>
+          <option value="fn">FN — Resultado final</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-grid" style="margin-top:12px">
+      <div>
+        <label>Estado</label>
+        <select id="eEstado">
+          <option value="COMPLETADO">COMPLETADO</option>
+          <option value="ACTIVO">ACTIVO</option>
+          <option value="PENDIENTE">PENDIENTE</option>
+        </select>
+      </div>
+      <div>
+        <label>Acción</label>
+        <button class="btn btn-primary" onclick="moverEtapa()" style="margin-top:0">Actualizar etapa</button>
+      </div>
+    </div>
+    <div class="result" id="eResult"></div>
+  </div>
+
+  <!-- CONSULTAR CLIENTE -->
+  <div class="section" id="sec-consultar" style="display:none">
+    <h2>🔍 Consultar cliente</h2>
+    <div class="form-grid">
+      <div>
+        <label>Cédula</label>
+        <input type="text" id="cCed" placeholder="Cédula" inputmode="numeric">
+      </div>
+      <div>
+        <label>Acción</label>
+        <button class="btn btn-primary" onclick="consultarCliente()" style="margin-top:0">Consultar</button>
+      </div>
+    </div>
+    <div class="client-card" id="cCard" style="display:none"></div>
+    <div class="result" id="cResult"></div>
+  </div>
+
+  <!-- GENERAR PINS -->
+  <div class="section" id="sec-pins" style="display:none">
+    <h2>🔑 Generar PINs</h2>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Asigna PINs a clientes nuevos que no tengan uno.</p>
+    <button class="btn btn-gold" onclick="generarPins()">Generar PINs faltantes</button>
+    <div class="result" id="pResult"></div>
+  </div>
+
+  <!-- LOG -->
+  <div class="section">
+    <h2>📝 Actividad reciente</h2>
+    <div class="log" id="logContainer">
+      <div class="log-item" style="color:var(--muted);font-style:italic">Sin actividad aún</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+//  CONFIGURACIÓN
+// ============================================================
+var API_URL = "https://script.google.com/macros/s/AKfycbwzjo0hWsdkp2TnDf5CJEb5GD6YnhKyRu_qwj72RhSMscPrRYpJ7_O3FqQG2GDheS3TLA/exec";
+
+// ⬇️ PEGA AQUÍ TU WEBHOOK DE MAKE.COM (Escenario 3: Pago verificado)
+var MAKE_WEBHOOK = "https://hook.us1.make.com/TU_WEBHOOK_ID_AQUI";
+
+var API_KEY = "";
+var fm = function(v){ return new Intl.NumberFormat("es-CO",{style:"currency",currency:"COP",maximumFractionDigits:0}).format(v||0); };
+
+var PAGO_NOMBRES = ["Anticipo honorarios","Cuota 2 honorarios","Cuota 3 honorarios","50% Centro (admisión)","50% Centro (audiencia)"];
+
+// ============================================================
+//  LOGIN ADMIN
+// ============================================================
+function loginAdmin(){
+  var key = document.getElementById("keyInput").value.trim();
+  if(!key){ showResult("loginResult","Ingrese la API Key","err"); return; }
+  API_KEY = key;
+
+  // Test: intentar consultar un endpoint para verificar la key
+  callAPI("action=generar_pins&key="+encodeURIComponent(key)).then(function(data){
+    if(data.ok || data.error === "API key inválida"){
+      if(data.ok !== false){
+        document.getElementById("loginSection").style.display = "none";
+        document.getElementById("panelSection").style.display = "block";
+        addLog("Admin ingresó al panel");
+      } else {
+        showResult("loginResult","API Key incorrecta","err");
+        API_KEY = "";
+      }
+    } else {
+      document.getElementById("loginSection").style.display = "none";
+      document.getElementById("panelSection").style.display = "block";
+      addLog("Admin ingresó al panel");
+    }
+  }).catch(function(){
+    showResult("loginResult","Error de conexión","err");
+  });
+}
+
+// ============================================================
+//  BUSCAR CLIENTE (para verificar pago)
+// ============================================================
+function buscarCliente(){
+  var ced = document.getElementById("vCed").value.trim();
+  if(!ced){ showResult("vResult","Ingrese la cédula","err"); return; }
+
+  showResult("vResult","Buscando...","info");
+
+  callAPI("action=info_cliente&key="+encodeURIComponent(API_KEY)+"&cedula="+encodeURIComponent(ced))
+    .then(function(data){
+      if(!data.ok){ showResult("vResult",data.error,"err"); return; }
+      hideResult("vResult");
+
+      var c = data.data;
+      document.getElementById("ccName").textContent = c.nombre;
+      document.getElementById("ccInfo").textContent = "CC " + c.cedula + " · " + c.celular + " · PIN: " + c.pin;
+
+      // Now we need payment data - use consultar with admin PIN knowledge
+      // Actually, the info_cliente doesn't return payments. Let's show a simple confirm interface
+      var pHTML = "";
+      PAGO_NOMBRES.forEach(function(nm, i){
+        pHTML += '<div class="cc-pay" id="payRow'+i+'">';
+        pHTML += '<div><div class="cc-pay-name">'+nm+'</div></div>';
+        pHTML += '<button class="btn btn-success" onclick="confirmarPago(\''+ced+'\','+i+',\''+encodeURIComponent(nm)+'\',\''+encodeURIComponent(c.nombre)+'\',\''+encodeURIComponent(c.celular)+'\')" style="width:auto;padding:8px 16px;font-size:12px;margin:0">✅ Confirmar</button>';
+        pHTML += '</div>';
+      });
+
+      document.getElementById("ccPays").innerHTML = pHTML;
+      document.getElementById("clientCard").classList.add("show");
+
+      addLog("Buscó cliente: " + c.nombre);
+    })
+    .catch(function(){ showResult("vResult","Error de conexión","err"); });
+}
+
+// ============================================================
+//  CONFIRMAR PAGO — Llama API + Webhook de Make
+// ============================================================
+function confirmarPago(cedula, pagoIdx, pagoNombre, clienteNombre, clienteCelular){
+  var concepto = decodeURIComponent(pagoNombre);
+  var nombre = decodeURIComponent(clienteNombre);
+  var celular = decodeURIComponent(clienteCelular);
+
+  if(!confirm("¿Confirmar pago de " + concepto + " para " + nombre + "?")){
+    return;
+  }
+
+  showResult("vResult","Procesando...","info");
+
+  // 1. Llamar API para marcar como PAGADO
+  callAPI("action=pago&key="+encodeURIComponent(API_KEY)+"&cedula="+encodeURIComponent(cedula)+"&pago="+pagoIdx+"&estado=PAGADO")
+    .then(function(data){
+      if(!data.ok){
+        showResult("vResult","Error: " + data.error,"err");
+        return;
+      }
+
+      showResult("vResult","✅ Pago confirmado: " + concepto,"ok");
+      addLog("Pago confirmado: " + concepto + " — " + nombre);
+
+      // Deshabilitar botón
+      var row = document.getElementById("payRow"+pagoIdx);
+      if(row){
+        var btn = row.querySelector("button");
+        if(btn){ btn.textContent = "✅ Pagado"; btn.disabled = true; btn.style.opacity = "0.5"; }
+      }
+
+      // 2. Disparar webhook de Make.com para WhatsApp
+      triggerMakeWebhook({
+        evento: "pago_verificado",
+        cedula: cedula,
+        nombre: nombre,
+        celular: celular,
+        concepto: concepto,
+        pagoIndice: pagoIdx,
+        timestamp: new Date().toISOString()
+      });
+    })
+    .catch(function(){
+      showResult("vResult","Error de conexión con la API","err");
+    });
+}
+
+// ============================================================
+//  MOVER ETAPA
+// ============================================================
+function moverEtapa(){
+  var ced = document.getElementById("eCed").value.trim();
+  var etapa = document.getElementById("eEtapa").value;
+  var estado = document.getElementById("eEstado").value;
+  if(!ced){ showResult("eResult","Ingrese la cédula","err"); return; }
+
+  showResult("eResult","Actualizando...","info");
+
+  callAPI("action=actualizar&key="+encodeURIComponent(API_KEY)+"&cedula="+encodeURIComponent(ced)+"&etapa="+etapa+"&estado="+estado)
+    .then(function(data){
+      if(!data.ok){ showResult("eResult","Error: "+data.error,"err"); return; }
+      showResult("eResult","✅ "+data.mensaje,"ok");
+      addLog("Etapa actualizada: " + etapa + " → " + estado + " (CC " + ced + ")");
+
+      // Disparar webhook de Make para notificación WhatsApp
+      // Primero obtener datos del cliente
+      callAPI("action=info_cliente&key="+encodeURIComponent(API_KEY)+"&cedula="+encodeURIComponent(ced))
+        .then(function(info){
+          if(info.ok){
+            triggerMakeWebhook({
+              evento: "etapa_actualizada",
+              cedula: ced,
+              nombre: info.data.nombre,
+              celular: info.data.celular,
+              etapa: etapa,
+              estado: estado,
+              etapaNombre: document.getElementById("eEtapa").selectedOptions[0].text,
+              timestamp: new Date().toISOString()
+            });
+          }
+        });
+    })
+    .catch(function(){ showResult("eResult","Error de conexión","err"); });
+}
+
+// ============================================================
+//  CONSULTAR CLIENTE
+// ============================================================
+function consultarCliente(){
+  var ced = document.getElementById("cCed").value.trim();
+  if(!ced){ showResult("cResult","Ingrese la cédula","err"); return; }
+
+  showResult("cResult","Buscando...","info");
+
+  callAPI("action=info_cliente&key="+encodeURIComponent(API_KEY)+"&cedula="+encodeURIComponent(ced))
+    .then(function(data){
+      if(!data.ok){ showResult("cResult",data.error,"err"); return; }
+      hideResult("cResult");
+      var c = data.data;
+      var card = document.getElementById("cCard");
+      card.innerHTML = '<div class="cc-name">'+c.nombre+'</div>'
+        +'<div class="cc-info">CC '+c.cedula+'</div>'
+        +'<div class="cc-info">📱 '+c.celular+' · 📧 '+(c.correo||"—")+'</div>'
+        +'<div class="cc-info">👤 '+c.abogado+' · '+c.modalidad+'</div>'
+        +'<div class="cc-info" style="margin-top:8px;font-weight:700;color:var(--navy)">🔐 PIN: '+c.pin+'</div>'
+        +'<div style="margin-top:8px"><button class="btn btn-gold" style="width:auto;padding:8px 16px;font-size:12px" onclick="copiarPIN(\''+c.pin+'\',\''+encodeURIComponent(c.nombre)+'\')">📋 Copiar mensaje con PIN</button></div>';
+      card.style.display = "block";
+      addLog("Consultó: " + c.nombre + " — PIN: " + c.pin);
+    })
+    .catch(function(){ showResult("cResult","Error de conexión","err"); });
+}
+
+function copiarPIN(pin, nombre){
+  var nm = decodeURIComponent(nombre).split(" ")[0];
+  var msg = "Hola " + nm + ", su PIN para consultar su proceso en nuestro portal es: " + pin + "\n\nIngrese aquí: [TU_URL_GITHUB_PAGES]";
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(msg);
+    alert("Mensaje copiado al portapapeles");
+  }
+}
+
+// ============================================================
+//  GENERAR PINS
+// ============================================================
+function generarPins(){
+  showResult("pResult","Generando...","info");
+  callAPI("action=generar_pins&key="+encodeURIComponent(API_KEY))
+    .then(function(data){
+      if(!data.ok){ showResult("pResult","Error: "+data.error,"err"); return; }
+      showResult("pResult","✅ "+data.mensaje,"ok");
+      addLog("PINs generados: " + data.total);
+    })
+    .catch(function(){ showResult("pResult","Error de conexión","err"); });
+}
+
+// ============================================================
+//  UTILIDADES
+// ============================================================
+function callAPI(params){
+  return fetch(API_URL + "?" + params, {redirect:"follow"}).then(function(r){ return r.json(); });
+}
+
+function triggerMakeWebhook(payload){
+  if(MAKE_WEBHOOK.indexOf("TU_WEBHOOK") !== -1){
+    console.log("Webhook de Make.com no configurado. Payload:", payload);
+    addLog("⚠️ Webhook no configurado — payload guardado en consola");
+    return;
+  }
+
+  fetch(MAKE_WEBHOOK, {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify(payload)
+  }).then(function(){
+    addLog("📲 Webhook disparado: " + payload.evento);
+  }).catch(function(){
+    addLog("⚠️ Error enviando webhook de Make");
+  });
+}
+
+function showResult(id, msg, type){
+  var el = document.getElementById(id);
+  el.textContent = msg;
+  el.className = "result show " + type;
+}
+function hideResult(id){
+  document.getElementById(id).classList.remove("show");
+}
+
+function showSection(name){
+  ["verificar","etapa","consultar","pins"].forEach(function(s){
+    var el = document.getElementById("sec-"+s);
+    if(el) el.style.display = s===name ? "block" : "none";
+  });
+}
+
+function addLog(msg){
+  var container = document.getElementById("logContainer");
+  var time = new Date().toLocaleTimeString("es-CO",{hour:"2-digit",minute:"2-digit"});
+  var item = document.createElement("div");
+  item.className = "log-item";
+  item.innerHTML = '<span class="log-time">'+time+'</span>' + msg;
+  if(container.querySelector(".log-item[style]")){
+    container.innerHTML = "";
+  }
+  container.insertBefore(item, container.firstChild);
+}
+
+document.getElementById("keyInput").addEventListener("keydown",function(e){if(e.key==="Enter")loginAdmin();});
+</script>
+</body>
+</html>
