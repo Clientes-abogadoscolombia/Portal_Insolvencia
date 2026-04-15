@@ -61,7 +61,7 @@
 <div class="top"><button class="ham" onclick="toggleSidebar()">☰</button><div class="top-brand">Colombia Abogados <i>ops</i></div><div class="top-nav" id="navTabs"></div><button onclick="cerrarSesion()" style="background:none;border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.5);padding:6px 12px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:Outfit;margin-left:8px">Salir</button></div>
 <div class="sidebar-overlay" id="sideOverlay" onclick="toggleSidebar()"></div>
 <div class="sidebar" id="sidebar"><button class="sidebar-close" onclick="toggleSidebar()">✕</button><h3>Navegación</h3><div id="sideNav"></div><button onclick="cerrarSesion()" style="margin-top:auto;width:100%;padding:12px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:Outfit">Cerrar sesión</button></div>
-<div id="loginPage"><div class="login-wrap"><div class="login-card"><h2>Operaciones</h2><p class="login-sub">Panel administrativo</p><input type="password" id="keyInput" placeholder="API Key" onkeydown="if(event.key==='Enter')doLogin()"><button type="button" onclick="togglePw()" style="background:none;border:none;color:rgba(255,255,255,0.3);cursor:pointer;font-size:13px;margin-bottom:10px" id="pwToggle">👁 Mostrar clave</button><label style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:10px;cursor:pointer;color:rgba(255,255,255,0.3);font-size:12px;font-weight:500"><input type="checkbox" id="rememberMe" checked style="accent-color:var(--gold)"> Recordar sesión</label><button onclick="doLogin()">Ingresar</button><div class="msg" id="loginMsg"></div></div></div></div>
+<div id="loginPage"><div class="login-wrap"><div class="login-card"><h2>Operaciones</h2><p class="login-sub">Panel administrativo</p><input type="password" id="keyInput" placeholder="API Key" onkeydown="if(event.key==='Enter')doLogin()"><button type="button" onclick="togglePw()" style="background:none;border:none;color:rgba(255,255,255,0.3);cursor:pointer;font-size:13px;margin-bottom:10px" id="pwToggle">👁 Mostrar clave</button><button onclick="doLogin()">Ingresar</button><label style="display:block;margin-top:16px;cursor:pointer;color:rgba(255,255,255,0.2);font-size:11px;font-weight:500"><input type="checkbox" id="rememberMe" checked style="display:none"><span id="remToggle">🔒 Recordar sesión</span></label><div class="msg" id="loginMsg"></div></div></div></div>
 <div id="appPage" class="hidden"><div class="wrap">
 <div class="pg on" id="pg-dash"><div class="kpis" id="kpiBar"></div><div class="acts"><div class="act" onclick="goTab('pagos')"><div class="act-icon">💰</div><div class="act-title">Gestión de pagos</div><div class="act-sub">Verificar transferencias</div></div><div class="act" onclick="goTab('casos')"><div class="act-icon">📋</div><div class="act-title">Gestión de procesos</div><div class="act-sub">Mover etapas</div></div></div><div style="margin-bottom:16px"><button onclick="window.open('Propuesta_CRM.html','_blank')" style="width:100%;padding:14px;background:var(--sf);border:1.5px dashed var(--bd);border-radius:16px;cursor:pointer;font-family:Outfit;font-size:13px;font-weight:700;color:var(--ac);transition:all 0.2s" onmouseover="this.style.borderColor='var(--ac)'" onmouseout="this.style.borderColor='var(--bd)'">📝 Crear propuesta económica</button></div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><h3 style="font-size:14px;font-weight:800;color:var(--nv)">Clientes activos</h3><button class="btn btn-ghost" onclick="DASH_CACHE=null;cargarDashboard(true)" style="font-size:10px;padding:5px 10px">↻ Refresh</button></div><div class="grid" id="clientsGrid"></div></div>
 <div class="pg" id="pg-prop"><div class="card"><h3>Pipeline de propuestas</h3><button class="btn btn-nv" onclick="cargarPropuestas()" style="margin-bottom:12px">Actualizar</button><div id="propOut"></div></div><div class="msg" id="propMsg"></div></div>
@@ -80,7 +80,7 @@
 <div class="kpis" id="anKpis"></div>
 <div class="an-grid2">
 <div class="an-card"><div class="an-card-h">Embudo de conversión</div><div id="funnelChart"></div></div>
-<div class="an-card"><div class="an-card-h">Leads vs Clientes por mes</div><div id="anCombo" style="height:140px;display:flex;align-items:flex-end;gap:2px"></div><div id="anComboLabels" style="display:flex;gap:2px;margin-top:4px"></div><div class="an-legend"><span class="an-leg-dot" style="background:var(--ac)"></span>Leads <span class="an-leg-dot" style="background:var(--ok);margin-left:12px"></span>Clientes</div></div>
+<div class="an-card"><div class="an-card-h">Leads vs Clientes por mes</div><div id="anCombo" style="height:140px;display:flex;align-items:flex-end;gap:2px"></div><div id="anComboLabels" style="display:flex;gap:2px;margin-top:4px"></div><div class="an-legend"><span class="an-leg-dot" style="background:#3b82f6"></span>En proceso <span class="an-leg-dot" style="background:#f59f00;margin-left:8px"></span>Propuesta <span class="an-leg-dot" style="background:#22c55e;margin-left:8px"></span>Cliente <span class="an-leg-dot" style="background:#ef4444;margin-left:8px"></span>Descartado</div></div>
 </div>
 <div class="an-grid2">
 <div class="an-card"><div class="an-card-h">Por canal</div><div id="anCanal"></div></div>
@@ -136,102 +136,125 @@ function cargarAnalytics(){
   callAPI("action=analytics&key="+enc(KEY)).then(function(d){
     if(!d.ok){showMsg("anMsg",d.error,"err");return}
     hideMsg("anMsg");AN_CACHE=d;
-    // Populate month filter
     var sel=document.getElementById("anMesFilter");sel.innerHTML='<option value="all">Todo el periodo</option>';
-    if(d.leadsPorMes){d.leadsPorMes.forEach(function(m){var parts=m.label.split("-");var ml=MESES[parseInt(parts[1])-1]+" "+parts[0];sel.innerHTML+='<option value="'+m.label+'">'+ml+'</option>'});}
+    if(d.leadsPorMes){d.leadsPorMes.forEach(function(m){var p=m.label.split("-");sel.innerHTML+='<option value="'+m.label+'">'+MESES[parseInt(p[1])-1]+" "+p[0]+"</option>"});}
     renderAnalytics(d);
   }).catch(function(){showMsg("anMsg","Error","err")});
 }
 function filtrarAnalytics(){AN_FILTER=document.getElementById("anMesFilter").value;if(AN_CACHE)renderAnalytics(AN_CACHE);}
+function fmm(v){if(v>=1e9)return"$"+Math.round(v/1e9)+"B";if(v>=1e6)return"$"+Math.round(v/1e6)+"mm";if(v>=1e3)return"$"+Math.round(v/1e3)+"k";return fm(v)}
 
 function renderAnalytics(d){
   var f=AN_FILTER;
-  // Filter data by selected month
-  var filteredLeads=f==="all"?d.leadsPorMes:d.leadsPorMes.filter(function(m){return m.label===f});
-  var filteredClientes=f==="all"?d.clientesPorMes:d.clientesPorMes.filter(function(m){return m.label===f});
-  var totalL=0;filteredLeads.forEach(function(m){totalL+=m.value});
-  var totalC=0;filteredClientes.forEach(function(m){totalC+=m.value});
+  var lkup=function(arr,k){for(var i=0;i<arr.length;i++){if(arr[i].label===k)return arr[i].value}return 0};
+  var sumArr=function(arr){var t=0;arr.forEach(function(a){t+=a.value});return t};
 
-  // Use filtered or total counts
-  var fLeads=f==="all"?d.totalLeads:totalL;
-  var fProp=f==="all"?d.funnel.propuestas:Math.round(d.funnel.propuestas*(totalL/Math.max(d.totalLeads,1)));
-  var fClientes=f==="all"?d.funnel.clientes:totalC;
-  var fDesc=f==="all"?d.funnel.descartados:Math.round(d.funnel.descartados*(totalL/Math.max(d.totalLeads,1)));
+  var fLeads=f==="all"?d.totalLeads:lkup(d.leadsPorMes,f);
+  var fProp=f==="all"?d.funnel.propuestas:lkup(d.propPorMes||[],f);
+  var fClientes=f==="all"?d.funnel.clientes:lkup(d.clientesPorMes,f);
+  var fDesc=f==="all"?d.funnel.descartados:lkup(d.descPorMes||[],f);
   var conv=fLeads>0?Math.round(fClientes/fLeads*100):0;
-  var propRate=fLeads>0?(fProp/fLeads*100).toFixed(1):0;
-  var descRate=fLeads>0?(fDesc/fLeads*100).toFixed(1):0;
+  var propR=fLeads>0?(fProp/fLeads*100).toFixed(1):0;
+  var descR=fLeads>0?(fDesc/fLeads*100).toFixed(1):0;
 
-  // Sum deuda from propuestas
-  var totalDeuda=0;if(d.leadsPorEtapa){d.leadsPorEtapa.forEach(function(e){});}
-  // Actually calculate from funnel data
-  var propCount=d.funnel?d.funnel.propuestas:0;
-
-  // KPIs with subtexts
-  var h='<div class="kpi"><div class="kpi-stripe" style="background:var(--ac)"></div><div class="kpi-label">Total leads</div><div class="kpi-val">'+fLeads+'</div><div class="kpi-sub">'+f.replace("all","Acumulado")+'</div></div>';
-  h+='<div class="kpi"><div class="kpi-stripe" style="background:var(--warn)"></div><div class="kpi-label">Propuestas</div><div class="kpi-val" style="color:var(--warn)">'+fProp+'</div><div class="kpi-sub">Tasa: '+propRate+'%</div></div>';
-  h+='<div class="kpi"><div class="kpi-stripe" style="background:var(--ok)"></div><div class="kpi-label">Clientes</div><div class="kpi-val" style="color:var(--ok)">'+fClientes+'</div><div class="kpi-sub">Conversión: '+conv+'%</div></div>';
-  h+='<div class="kpi"><div class="kpi-stripe" style="background:var(--err)"></div><div class="kpi-label">Descartados</div><div class="kpi-val" style="color:var(--err)">'+fDesc+'</div><div class="kpi-sub">'+descRate+'% del total</div></div>';
+  // KPIs
+  var h='<div class="kpi"><div class="kpi-stripe" style="background:#3b82f6"></div><div class="kpi-label">Total leads</div><div class="kpi-val" style="color:#60a5fa">'+fLeads+'</div><div class="kpi-sub">'+(f==="all"?"Acumulado":f)+'</div></div>';
+  h+='<div class="kpi"><div class="kpi-stripe" style="background:#f59f00"></div><div class="kpi-label">Propuestas</div><div class="kpi-val" style="color:#f59f00">'+fProp+'</div><div class="kpi-sub">Tasa: '+propR+'%</div></div>';
+  h+='<div class="kpi"><div class="kpi-stripe" style="background:#22c55e"></div><div class="kpi-label">Clientes</div><div class="kpi-val" style="color:#22c55e">'+fClientes+'</div><div class="kpi-sub">Conv: '+conv+'%</div></div>';
+  h+='<div class="kpi"><div class="kpi-stripe" style="background:#ef4444"></div><div class="kpi-label">Descartados</div><div class="kpi-val" style="color:#ef4444">'+fDesc+'</div><div class="kpi-sub">'+descR+'%</div></div>';
   document.getElementById("anKpis").innerHTML=h;
 
-  // Funnel
-  var stages=[{n:"Leads",v:fLeads,c:"#3b5bdb"},{n:"Propuestas",v:fProp,c:"#f59f00"},{n:"Clientes",v:fClientes,c:"#2b8a3e"},{n:"Descartados",v:fDesc,c:"#c92a2a"}];
-  var maxF=stages[0].v||1;
-  var fh="";stages.forEach(function(s){var w=Math.max(Math.round(s.v/maxF*100),6);fh+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><div style="width:80px;font-size:11px;font-weight:700;color:rgba(255,255,255,0.5);text-align:right">'+s.n+'</div><div style="flex:1;height:28px;background:rgba(255,255,255,0.04);border-radius:6px;overflow:hidden"><div style="width:'+w+'%;height:100%;background:'+s.c+';border-radius:6px;display:flex;align-items:center;padding-left:8px;min-width:36px"><span style="color:#fff;font-size:10px;font-weight:800">'+s.v+'</span></div></div></div>'});
+  // Funnel - gradient style
+  var stages=[{n:"Leads",v:fLeads,c:"#3b82f6"},{n:"Propuestas",v:fProp,c:"#f59f00"},{n:"Clientes",v:fClientes,c:"#22c55e"},{n:"Descartados",v:fDesc,c:"#ef4444"}];
+  var mxF=stages[0].v||1;
+  var fh="";stages.forEach(function(s,i){var w=Math.max(Math.round(s.v/mxF*100),8);var op=1-i*0.05;fh+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px"><div style="width:80px;font-size:11px;font-weight:700;color:rgba(255,255,255,0.45);text-align:right">'+s.n+'</div><div style="flex:1;height:32px;background:rgba(255,255,255,0.03);border-radius:6px;overflow:hidden"><div style="width:'+w+'%;height:100%;background:linear-gradient(90deg,'+s.c+','+s.c+'aa);border-radius:6px;display:flex;align-items:center;padding-left:10px;min-width:40px"><span style="color:#fff;font-size:11px;font-weight:800">'+s.v+'</span></div></div></div>'});
   document.getElementById("funnelChart").innerHTML=fh;
 
-  // Combo chart: leads + clientes by month
-  var allMeses={};
-  d.leadsPorMes.forEach(function(m){allMeses[m.label]={leads:m.value,clientes:0}});
-  d.clientesPorMes.forEach(function(m){if(!allMeses[m.label])allMeses[m.label]={leads:0,clientes:0};allMeses[m.label].clientes=m.value});
-  var sortedM=Object.keys(allMeses).sort();
-  var maxCombo=1;sortedM.forEach(function(k){maxCombo=Math.max(maxCombo,allMeses[k].leads,allMeses[k].clientes)});
+  // Combo chart - stacked style
+  var allM={};
+  d.leadsPorMes.forEach(function(m){allM[m.label]={l:m.value,c:0,p:0,d:0}});
+  d.clientesPorMes.forEach(function(m){if(!allM[m.label])allM[m.label]={l:0,c:0,p:0,d:0};allM[m.label].c=m.value});
+  if(d.propPorMes)d.propPorMes.forEach(function(m){if(allM[m.label])allM[m.label].p=m.value});
+  if(d.descPorMes)d.descPorMes.forEach(function(m){if(allM[m.label])allM[m.label].d=m.value});
+  var sM=Object.keys(allM).sort();
+  var mxC=1;sM.forEach(function(k){mxC=Math.max(mxC,allM[k].l)});
   var ch="",cl2="";
-  sortedM.forEach(function(k){
-    var d2=allMeses[k];var hL=Math.max(Math.round(d2.leads/maxCombo*100),3);var hC=Math.max(Math.round(d2.clientes/maxCombo*100),3);
+  sM.forEach(function(k){
+    var v=allM[k];var hL=Math.max(Math.round(v.l/mxC*100),3);
+    var hP=v.l>0?Math.round(v.p/v.l*hL):0;
+    var hC=v.l>0?Math.round(v.c/v.l*hL):0;
+    var hD=v.l>0?Math.round(v.d/v.l*hL):0;
+    var hRest=hL-hP-hC-hD;if(hRest<0)hRest=0;
     var parts=k.split("-");var ml=MESES[parseInt(parts[1])-1]||k;
-    ch+='<div style="flex:1;display:flex;gap:2px;align-items:flex-end"><div style="flex:1;height:'+hL+'%;background:#3b5bdb;border-radius:3px 3px 0 0;position:relative;cursor:pointer" title="'+ml+" leads: "+d2.leads+'"><div style="position:absolute;top:-16px;width:100%;text-align:center;font-size:8px;font-weight:800;color:rgba(255,255,255,0.5)">'+d2.leads+'</div></div><div style="flex:1;height:'+(d2.clientes>0?hC:0)+'%;background:#2b8a3e;border-radius:3px 3px 0 0;cursor:pointer" title="'+ml+" clientes: "+d2.clientes+'"></div></div>';
-    cl2+='<span style="flex:1;text-align:center;font-size:8px;color:rgba(255,255,255,0.3);font-weight:600">'+ml+'</span>';
+    ch+="<div style='flex:1;display:flex;flex-direction:column;justify-content:flex-end;min-width:30px;height:100%'>";
+    ch+="<div style='display:flex;flex-direction:column'>";
+    if(hRest>0)ch+="<div style='height:"+hRest+"%;background:#3b82f6;border-radius:3px 3px 0 0'></div>";
+    if(hP>0)ch+="<div style='height:"+hP+"%;background:#f59f00'></div>";
+    if(hC>0)ch+="<div style='height:"+hC+"%;background:#22c55e'></div>";
+    if(hD>0)ch+="<div style='height:"+hD+"%;background:#ef4444;border-radius:0 0 3px 3px'></div>";
+    ch+="</div>";
+    ch+="<div style='text-align:center;font-size:9px;font-weight:800;color:rgba(255,255,255,0.6);margin-top:2px'>"+v.l+"</div></div>";
+    cl2+="<span style='flex:1;text-align:center;font-size:8px;color:rgba(255,255,255,0.3);font-weight:600'>"+ml+"</span>";
   });
   document.getElementById("anCombo").innerHTML=ch;
   document.getElementById("anComboLabels").innerHTML=cl2;
 
-  // H-bars dark theme
-  renderDarkBars("anCanal",d.leadsPorCanal,"#3b5bdb");
-  renderDarkBars("anCiudad",d.leadsPorCiudad,"#7048e8");
-  renderDarkBars("anEtapas",d.leadsPorEtapa,"#f59f00");
-  renderDarkBars("anDescartados",d.descartados,"#c92a2a");
+  // Colored h-bars for canal
+  var canalColors=["#3b82f6","#8b5cf6","#06b6d4","#f59f00","#ef4444","#22c55e","#ec4899","#64748b"];
+  renderColorBars("anCanal",d.leadsPorCanal,canalColors);
+  
+  // City bars with purple tones
+  var cityColors=["#8b5cf6","#7c3aed","#6d28d9","#a78bfa","#c4b5fd","#ddd6fe","#6366f1","#818cf8"];
+  renderColorBars("anCiudad",d.leadsPorCiudad,cityColors);
 
-  // Weekly detail table
-  renderWeeklyTable(d);
+  // Etapa with warm tones
+  var etapaColors=["#3b82f6","#ef4444","#f59f00","#22c55e","#8b5cf6","#06b6d4","#ec4899","#64748b"];
+  renderColorBars("anEtapas",d.leadsPorEtapa,etapaColors);
+
+  // Descartados with red spectrum
+  var descColors=["#ef4444","#f97316","#eab308","#64748b","#a3a3a3"];
+  renderColorBars("anDescartados",d.descartados,descColors);
+
+  // Detail table
+  renderDetailTable(d,allM,sM);
 }
 
-function renderDarkBars(id,data,color){
+function renderColorBars(id,data,colors){
   if(!data||!data.length){document.getElementById(id).innerHTML='<p style="font-size:11px;color:rgba(255,255,255,0.3)">Sin datos</p>';return}
   var mx=data[0].value||1;var h="";
-  data.slice(0,8).forEach(function(d){
-    var w=Math.max(Math.round(d.value/mx*100),4);
-    h+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:5px"><div style="min-width:90px;max-width:90px;font-size:10px;font-weight:600;color:rgba(255,255,255,0.45);white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="'+d.label+'">'+d.label+'</div><div style="flex:1;height:18px;background:rgba(255,255,255,0.04);border-radius:4px;overflow:hidden"><div style="width:'+w+'%;height:100%;background:'+color+';border-radius:4px;display:flex;align-items:center;padding-left:6px;min-width:28px"><span style="color:#fff;font-size:9px;font-weight:700">'+d.value+'</span></div></div></div>';
+  data.slice(0,8).forEach(function(d,i){
+    var w=Math.max(Math.round(d.value/mx*100),6);var c=colors[i%colors.length];
+    h+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:5px"><div style="min-width:90px;max-width:90px;font-size:10px;font-weight:600;color:rgba(255,255,255,0.5);white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="'+d.label+'">'+d.label+'</div><div style="flex:1;height:22px;background:rgba(255,255,255,0.03);border-radius:4px;overflow:hidden"><div style="width:'+w+'%;height:100%;background:'+c+';border-radius:4px;display:flex;align-items:center;padding-left:8px;min-width:32px"><span style="color:#fff;font-size:10px;font-weight:800">'+d.value+'</span></div></div></div>';
   });
   document.getElementById(id).innerHTML=h;
 }
 
-function renderWeeklyTable(d){
-  if(!d.leadsPorMes||!d.leadsPorMes.length){document.getElementById("anTabla").innerHTML='<p style="color:rgba(255,255,255,0.3);font-size:11px">Sin datos</p>';return}
-  var h='<table class="an-tbl"><thead><tr><th>Mes</th><th>Leads</th><th>Propuestas</th><th>Desc.</th><th>Clientes</th><th>Conversión</th></tr></thead><tbody>';
-  // Build per-month summary
-  var clientesMap={};d.clientesPorMes.forEach(function(m){clientesMap[m.label]=m.value});
-  d.leadsPorMes.forEach(function(m){
-    var parts=m.label.split("-");var ml=MESES[parseInt(parts[1])-1]+" "+parts[0];
-    var leads=m.value;
-    var clientes=clientesMap[m.label]||0;
-    var conv=leads>0?Math.round(clientes/leads*100):0;
-    var convColor=conv>=10?"#2b8a3e":conv>=5?"#f59f00":"#c92a2a";
+function renderDetailTable(d,allM,sortedM){
+  var propMap={},descMap={},cliMap={},ventMap={};
+  if(d.propPorMes)d.propPorMes.forEach(function(m){propMap[m.label]=m.value});
+  if(d.descPorMes)d.descPorMes.forEach(function(m){descMap[m.label]=m.value});
+  d.clientesPorMes.forEach(function(m){cliMap[m.label]=m.value});
+  if(d.ventasPorMes)d.ventasPorMes.forEach(function(m){ventMap[m.label]=m.value});
+
+  var h='<table class="an-tbl"><thead><tr><th>Mes</th><th>Leads</th><th>Propuestas</th><th>Desc.</th><th>Clientes</th><th>Ventas</th><th>Conv.</th><th>Distribución</th></tr></thead><tbody>';
+  sortedM.forEach(function(k){
+    var parts=k.split("-");var ml=MESES[parseInt(parts[1])-1]+" "+parts[0];
+    var v=allM[k];var leads=v.l;var prop=propMap[k]||0;var desc=descMap[k]||0;var cli=cliMap[k]||0;var vent=ventMap[k]||0;
+    var conv=leads>0?Math.round(cli/leads*100):0;
+    var convC=conv>=5?"#22c55e":conv>0?"#f59f00":"#ef4444";
+    // Distribution bar
+    var pP=leads>0?Math.round(prop/leads*100):0;
+    var pC=leads>0?Math.round(cli/leads*100):0;
+    var pD=leads>0?Math.round(desc/leads*100):0;
+    var pR=100-pP-pC-pD;if(pR<0)pR=0;
     h+='<tr><td style="font-weight:700;color:#fff">'+ml+'</td>';
     h+='<td class="num">'+leads+'</td>';
-    h+='<td style="color:#f59f00;font-weight:700">—</td>';
-    h+='<td style="color:#c92a2a;font-weight:700">—</td>';
-    h+='<td style="color:#2b8a3e;font-weight:800">'+clientes+'</td>';
-    h+='<td><span class="an-badge" style="background:'+convColor+'22;color:'+convColor+'">'+conv+'%</span></td></tr>';
+    h+='<td style="color:#f59f00;font-weight:700">'+prop+'</td>';
+    h+='<td style="color:#ef4444;font-weight:700">'+desc+'</td>';
+    h+='<td style="color:#22c55e;font-weight:800">'+cli+'</td>';
+    h+='<td style="color:rgba(255,255,255,0.5);font-weight:600">'+(vent>0?fmm(vent):"—")+'</td>';
+    h+='<td><span class="an-badge" style="background:'+convC+'22;color:'+convC+'">'+conv+'%</span></td>';
+    h+='<td><div class="an-dist"><div style="width:'+pR+'%;background:#3b82f6"></div><div style="width:'+pP+'%;background:#f59f00"></div><div style="width:'+pC+'%;background:#22c55e"></div><div style="width:'+pD+'%;background:#ef4444"></div></div></td></tr>';
   });
   h+='</tbody></table>';
   document.getElementById("anTabla").innerHTML=h;
