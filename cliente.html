@@ -191,7 +191,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:#1a1a2e;min-heig
   </div>
   <div class="cnt">
     <div class="crds" id="cards"></div>
-    <div id="actBox"></div>
+    <div class="refresh-bar"><button class="refresh-btn" id="refreshBtn" onclick="refrescar()"><span class="refresh-spin">↻</span> Actualizar</button><span class="refresh-time" id="refreshTime"></span></div><div id="actBox"></div>
     <div class="sec"><button class="sec-btn" onclick="tog(this)"><span class="sec-t">📌 Contexto del caso</span><span class="sec-arr">▾</span></button><div class="sec-body" id="ctx"></div></div>
     <div class="sec"><button class="sec-btn" onclick="tog(this)"><span class="sec-t">📋 Detalle del proceso</span><span class="sec-arr">▾</span></button><div class="sec-body" id="tl"></div></div>
     <div class="sec"><button class="sec-btn" onclick="tog(this)"><span class="sec-t">💰 Detalle de pagos</span><span class="sec-arr">▾</span></button><div class="sec-body" id="pays"></div></div>
@@ -547,6 +547,36 @@ function checkFormulario(c){
 function dRow(lb,vl){return'<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(0,0,0,0.04)"><span style="font-size:12px;color:var(--muted);font-weight:600">'+lb+'</span><span style="font-size:13px;font-weight:700;color:var(--navy-d)">'+vl+'</span></div>';}
 function eRow(lb,id,ph){return'<div style="display:flex;align-items:center;gap:8px"><span style="font-size:11px;font-weight:600;color:var(--muted);min-width:90px">'+lb+'</span><input type="number" id="'+id+'" class="fi" style="margin:0" placeholder="'+ph+'" inputmode="numeric" oninput="calcEgresos()"></div>';}
 function esc(v){return v?String(v).replace(/"/g,"&quot;"):"";}
+
+function calcEgresos(){
+  var ids=["eArriendo","eAlimentacion","eServicios","eTransporte","eOtros"];
+  var t=0;ids.forEach(function(id){var el=document.getElementById(id);if(el)t+=Number(el.value)||0;});
+  var te=document.getElementById("eTotalEgr");if(te)te.textContent=fm(t);
+  var ov=document.getElementById("eOtros");var od=document.getElementById("eOtrosDetalle");
+  if(ov&&od)od.style.display=(Number(ov.value)||0)>0?"block":"none";
+}
+
+function enviarFormulario(){
+  var dir=document.getElementById("fDireccion").value.trim();
+  var ing=document.getElementById("fIngresos").value;
+  var monto=document.getElementById("fMontoPago").value;
+  var motivo=document.getElementById("fMotivo").value.trim();
+  if(!dir||!ing||!motivo||!monto){
+    var f2=document.getElementById("formMsg");if(f2){f2.textContent="Complete los campos marcados con *";f2.style.display="block";f2.style.background="var(--warn-bg)";f2.style.color="var(--warn)";}return;
+  }
+  var egresos={arriendo:Number(document.getElementById("eArriendo").value)||0,alimentacion:Number(document.getElementById("eAlimentacion").value)||0,servicios:Number(document.getElementById("eServicios").value)||0,transporte:Number(document.getElementById("eTransporte").value)||0,otros:Number(document.getElementById("eOtros").value)||0,otrosDesc:(document.getElementById("eOtrosDesc")?document.getElementById("eOtrosDesc").value:"")};
+  var f2=document.getElementById("formMsg");if(f2){f2.textContent="Guardando...";f2.style.display="block";f2.style.background="var(--info-bg)";f2.style.color="var(--info)";}
+  var params="action=completar_datos&cedula="+encodeURIComponent(CED_ACTUAL)+"&pin="+encodeURIComponent(PIN_ACTUAL);
+  params+="&direccion="+encodeURIComponent(dir);
+  params+="&ingresos="+encodeURIComponent(ing);
+  params+="&egresos_json="+encodeURIComponent(JSON.stringify(egresos));
+  params+="&monto_pago="+encodeURIComponent(monto);
+  params+="&motivo="+encodeURIComponent(motivo);
+  fetch(API_URL+"?"+params,{redirect:"follow"}).then(function(r){return r.json();}).then(function(d){
+    if(d.ok){if(f2){f2.textContent="\u2705 Información guardada correctamente";f2.style.background="var(--ok-bg)";f2.style.color="var(--ok)";}if(CASO)CASO.formCompleto=true;showToast("Datos guardados");setTimeout(function(){refrescar();},1500);}
+    else{if(f2){f2.textContent=d.error||"Error";f2.style.background="var(--warn-bg)";f2.style.color="var(--warn)";}}
+  }).catch(function(){if(f2){f2.textContent="Error de conexión";f2.style.background="var(--warn-bg)";f2.style.color="var(--warn)";}});
+}
 
 
 function abrirAyuda(){
