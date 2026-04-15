@@ -75,7 +75,7 @@
 <div><h3 class="an-title">Analytics</h3><p class="an-sub">Rendimiento comercial</p></div>
 <div class="an-filters">
 <select id="anMesFilter" onchange="filtrarAnalytics()" class="an-select"><option value="all">Todo el periodo</option></select>
-<button class="btn btn-nv" onclick="AN_CACHE=null;cargarAnalytics()" style="font-size:11px">↻</button>
+<button class="btn btn-nv" onclick="AN_CACHE={};cargarAnalytics(true)" style="font-size:11px">↻</button>
 </div>
 </div>
 <div class="kpis" id="anKpis"></div>
@@ -130,20 +130,25 @@ function moverEtapa(ced,eid,nmE,nombreE,celE){var estado=document.getElementById
 function cargarComisiones(){if(DASH_CACHE&&DASH_CACHE.comisiones){renderComisiones(DASH_CACHE.comisiones);return}callAPI("action=listar_comisiones&key="+enc(KEY)).then(function(d){if(!d.ok)return;renderComisiones(d)}).catch(function(){})}
 function renderComisiones(d){var h='<div class="kpi"><div class="kpi-stripe" style="background:var(--warn)"></div><div class="kpi-label">Pendiente</div><div class="kpi-val" style="color:var(--warn);font-size:18px">'+fm(d.totalPendiente)+'</div></div><div class="kpi"><div class="kpi-stripe" style="background:var(--ok)"></div><div class="kpi-label">Pagada</div><div class="kpi-val" style="color:var(--ok);font-size:18px">'+fm(d.totalPagada)+'</div></div><div class="kpi"><div class="kpi-stripe" style="background:var(--ac)"></div><div class="kpi-label">Ventas</div><div class="kpi-val" style="color:var(--ac)">'+d.total+"</div></div>";document.getElementById("comKpis").innerHTML=h;if(!d.data.length){document.getElementById("comOut").innerHTML='<p style="color:var(--tx3)">Sin comisiones</p>';return}var t='<table class="tbl"><thead><tr><th>Cliente</th><th>Asesor</th><th>Honorarios</th><th>Comisión</th><th>P1</th><th>Estado</th></tr></thead><tbody>';d.data.forEach(function(c){var pc=(c.estado==="PAGADA"||c.estado==="PAGADO")?"pill-ok":c.estado==="POR PAGAR"?"pill-warn":"pill-info";t+='<tr><td style="font-weight:600">'+c.nombre+'</td><td style="font-size:11px">'+c.asesor+"</td><td>"+fm(c.honorarios)+'</td><td style="font-weight:800">'+fm(c.comision)+'</td><td><span class="pill '+(c.p1Estado==="PAGADO"?"pill-ok":"pill-warn")+'">'+(c.p1Estado==="PAGADO"?"Pagado":"Pend.")+'</span></td><td><span class="pill '+pc+'">'+c.estado+"</span></td></tr>"});t+="</tbody></table>";document.getElementById("comOut").innerHTML=t}
 // === ANALYTICS ===
-var AN_CACHE=null,AN_FILTER="all";
+var AN_CACHE={},AN_FILTER="all";
 var AC=["#3b5bdb","#f59f00","#2b8a3e","#c92a2a","#7048e8","#1971c2","#e64980","#495057","#0ca678","#f76707"];
-function cargarAnalytics(){
-  if(AN_CACHE){renderAN(AN_CACHE);return}
+function cargarAnalytics(force){
+  var f=AN_FILTER;
+  if(!force&&AN_CACHE[f]){renderAN(AN_CACHE[f]);return}
   showMsg("anMsg","Cargando...","info");
-  callAPI("action=analytics&key="+enc(KEY)).then(function(d){
+  var params="action=analytics&key="+enc(KEY);
+  if(f!=="all")params+="&mes="+enc(f);
+  callAPI(params).then(function(d){
     if(!d.ok){showMsg("anMsg",d.error,"err");return}
-    hideMsg("anMsg");AN_CACHE=d;
-    var sel=document.getElementById("anMesFilter");sel.innerHTML='<option value="all">Todo el periodo</option>';
-    d.leadsPorMes.forEach(function(m){var p=m.label.split("-");sel.innerHTML+='<option value="'+m.label+'">'+MESES[parseInt(p[1])-1]+" "+p[0]+"</option>";});
+    hideMsg("anMsg");AN_CACHE[f]=d;
+    if(f==="all"){
+      var sel=document.getElementById("anMesFilter");sel.innerHTML='<option value="all">Todo el periodo</option>';
+      d.leadsPorMes.forEach(function(m){var p=m.label.split("-");sel.innerHTML+='<option value="'+m.label+'">'+MESES[parseInt(p[1])-1]+" "+p[0]+"</option>";});
+    }
     renderAN(d);
   }).catch(function(){showMsg("anMsg","Error","err")});
 }
-function filtrarAnalytics(){AN_FILTER=document.getElementById("anMesFilter").value;if(AN_CACHE)renderAN(AN_CACHE);}
+function filtrarAnalytics(){AN_FILTER=document.getElementById("anMesFilter").value;cargarAnalytics();}
 function fmm(v){if(v>=1e9)return"$"+(v/1e9).toFixed(1)+"B";if(v>=1e6)return"$"+Math.round(v/1e6)+"mm";if(v>=1e3)return"$"+Math.round(v/1e3)+"k";return fm(v)}
 function lk(arr,k){for(var i=0;i<arr.length;i++){if(arr[i].label===k)return arr[i].value}return 0}
 function mesNm(k){var p=k.split("-");return MESES[parseInt(p[1])-1]||k}
