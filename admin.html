@@ -184,9 +184,9 @@ function renderAN(d){
   drawDonut("anCanal",d.leadsPorCanal);
   drawDonut("anCiudad",d.leadsPorCiudad);
 
-  // Vertical bars
-  drawVBars("anEtapas",d.leadsPorEtapa);
-  drawVBars("anDescartados",d.descartados);
+  // Etapas: horizontal bars (long labels), Descartados: donut
+  drawHBars("anEtapas",d.leadsPorEtapa);
+  drawDonut("anDescartados",d.descartados);
 
   // Table
   drawTable(d);
@@ -289,6 +289,18 @@ function drawVBars(id,data){
   });
   svg+='</svg>';
   el.innerHTML=svg;
+}
+
+// === HORIZONTAL BARS (full labels) ===
+function drawHBars(id,data){
+  var el=document.getElementById(id);
+  if(!data||!data.length){el.innerHTML='<p style="font-size:11px;color:var(--tx3)">Sin datos</p>';return}
+  var mx=data[0].value||1;var h="";
+  data.slice(0,7).forEach(function(d2,i){
+    var w=Math.max(Math.round(d2.value/mx*100),5);var c=AC[i%AC.length];
+    h+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><div style="min-width:120px;max-width:120px;font-size:10px;font-weight:600;color:var(--tx2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="'+d2.label+'">'+d2.label+'</div><div style="flex:1;height:22px;background:var(--sf2);border-radius:5px;overflow:hidden"><div style="width:'+w+'%;height:100%;background:'+c+';border-radius:5px;display:flex;align-items:center;padding-left:8px;min-width:30px"><span style="color:#fff;font-size:10px;font-weight:800">'+d2.value+'</span></div></div></div>';
+  });
+  el.innerHTML=h;
 }
 
 // === DETAIL TABLE with mini bar labels ===
