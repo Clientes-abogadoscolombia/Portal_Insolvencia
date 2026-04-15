@@ -140,6 +140,10 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:#1a1a2e;min-heig
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;box-shadow:0 8px 30px rgba(0,0,0,0.2);z-index:999;opacity:0;transition:opacity 0.3s;pointer-events:none}
 .toast.show{opacity:1}
 
+.fl{display:block;font-size:10px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:1.5px;margin:12px 0 4px}
+.fi{width:100%;padding:12px 14px;border:1.5px solid var(--light);border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:border-color 0.2s;color:var(--navy-d);background:var(--bg)}
+.fi:focus{border-color:var(--navy)}
+.fi::placeholder{color:#b0b8c8}
 @media(max-width:480px){
   .hdr h1{font-size:20px}
   .crds{grid-template-columns:1fr 1fr}
@@ -197,6 +201,46 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:#1a1a2e;min-heig
     </div>
     <div class="ftr"><p>Colombia Abogados · Powered by ALIA</p></div>
   </div>
+</div>
+
+<!-- FORMULARIO DATOS -->
+<div id="formOverlay" style="display:none;position:fixed;inset:0;background:rgba(10,22,40,0.7);z-index:500;backdrop-filter:blur(6px);overflow-y:auto;padding:20px">
+<div style="max-width:440px;margin:40px auto;background:var(--white);border-radius:20px;padding:28px;box-shadow:0 20px 60px rgba(0,0,0,0.3)">
+  <div style="text-align:center;margin-bottom:20px">
+    <div style="font-size:28px;margin-bottom:8px">📋</div>
+    <h2 style="font-size:20px;font-weight:800;color:var(--navy);margin-bottom:4px">Complete sus datos</h2>
+    <p style="font-size:12px;color:var(--muted);line-height:1.6">Para avanzar con su proceso necesitamos la siguiente información. Solo tomará un momento.</p>
+  </div>
+  <div id="formFields">
+    <div style="background:var(--bg);border-radius:10px;padding:12px 14px;margin-bottom:14px">
+      <div style="font-size:10px;color:var(--muted);font-weight:600">NOMBRE</div>
+      <div id="fNombre" style="font-size:15px;font-weight:700;color:var(--navy)">—</div>
+      <div style="font-size:10px;color:var(--muted);font-weight:600;margin-top:6px">CÉDULA</div>
+      <div id="fCedula" style="font-size:15px;font-weight:700;color:var(--navy)">—</div>
+    </div>
+    <label class="fl">Dirección de residencia *</label>
+    <input type="text" id="fDireccion" class="fi" placeholder="Cra 50 #30-20, Apto 301">
+    <label class="fl">Ingresos mensuales estimados *</label>
+    <input type="number" id="fIngresos" class="fi" placeholder="2500000" inputmode="numeric">
+    <label class="fl" style="margin-top:16px">Egresos mensuales (desglose) *</label>
+    <div style="background:var(--bg);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;align-items:center;gap:8px"><span style="font-size:11px;font-weight:600;color:var(--muted);min-width:90px">Arriendo</span><input type="number" id="eArriendo" class="fi" style="margin:0" placeholder="800000" inputmode="numeric" oninput="calcEgresos()"></div>
+      <div style="display:flex;align-items:center;gap:8px"><span style="font-size:11px;font-weight:600;color:var(--muted);min-width:90px">Alimentación</span><input type="number" id="eAlimentacion" class="fi" style="margin:0" placeholder="400000" inputmode="numeric" oninput="calcEgresos()"></div>
+      <div style="display:flex;align-items:center;gap:8px"><span style="font-size:11px;font-weight:600;color:var(--muted);min-width:90px">Servicios</span><input type="number" id="eServicios" class="fi" style="margin:0" placeholder="200000" inputmode="numeric" oninput="calcEgresos()"></div>
+      <div style="display:flex;align-items:center;gap:8px"><span style="font-size:11px;font-weight:600;color:var(--muted);min-width:90px">Transporte</span><input type="number" id="eTransporte" class="fi" style="margin:0" placeholder="150000" inputmode="numeric" oninput="calcEgresos()"></div>
+      <div style="display:flex;align-items:center;gap:8px"><span style="font-size:11px;font-weight:600;color:var(--muted);min-width:90px">Otros</span><input type="number" id="eOtros" class="fi" style="margin:0" placeholder="100000" inputmode="numeric" oninput="calcEgresos()"></div>
+      <div id="eOtrosDetalle" style="display:none"><input type="text" id="eOtrosDesc" class="fi" style="margin:0" placeholder="Describa otros gastos..."></div>
+      <div style="text-align:right;font-size:12px;font-weight:800;color:var(--navy);padding-top:4px;border-top:1px solid var(--light)">Total egresos: <span id="eTotalEgr">$0</span></div>
+    </div>
+    <label class="fl">Monto estimado para pago mensual de deudas *</label>
+    <input type="number" id="fMontoPago" class="fi" placeholder="500000" inputmode="numeric">
+    <label class="fl">Motivo de insolvencia *</label>
+    <textarea id="fMotivo" class="fi" style="min-height:70px;resize:vertical" placeholder="Ej: Disminución de ingresos por pérdida de empleo, acumulación de deudas por créditos..."></textarea>
+  </div>
+  <div id="formMsg" style="display:none;padding:10px;border-radius:10px;font-size:12px;font-weight:600;margin-top:12px;text-align:center"></div>
+  <button onclick="enviarFormulario()" style="width:100%;margin-top:16px;padding:16px;border-radius:12px;border:none;background:var(--navy);color:#fff;font-weight:800;font-size:15px;cursor:pointer;font-family:inherit">Guardar información</button>
+  <button onclick="cerrarFormulario()" style="width:100%;margin-top:8px;padding:12px;border-radius:12px;border:1.5px solid var(--light);background:none;color:var(--muted);font-weight:600;font-size:12px;cursor:pointer;font-family:inherit">Completar después</button>
+</div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -480,6 +524,65 @@ function volver(){document.getElementById("portalView").style.display="none";doc
 // Enter en cédula → focus PIN, Enter en PIN → buscar
 document.getElementById("cedInput").addEventListener("keydown",function(e){if(e.key==="Enter"){e.preventDefault();document.getElementById("pinInput").focus();}});
 document.getElementById("pinInput").addEventListener("keydown",function(e){if(e.key==="Enter")buscar();});
+
+function checkFormulario(c){
+  if(!c.formCompleto){
+    document.getElementById("fNombre").textContent=c.nm||"—";
+    document.getElementById("fCedula").textContent=c.ced||"—";
+    if(c.form){
+      if(c.form.direccion)document.getElementById("fDireccion").value=c.form.direccion;
+      if(c.form.ingresos)document.getElementById("fIngresos").value=c.form.ingresos;
+      if(c.form.montoPago)document.getElementById("fMontoPago").value=c.form.montoPago;
+      if(c.form.motivo)document.getElementById("fMotivo").value=c.form.motivo;
+      if(c.form.egresos_json){
+        try{var eg=JSON.parse(c.form.egresos_json);
+          if(eg.arriendo)document.getElementById("eArriendo").value=eg.arriendo;
+          if(eg.alimentacion)document.getElementById("eAlimentacion").value=eg.alimentacion;
+          if(eg.servicios)document.getElementById("eServicios").value=eg.servicios;
+          if(eg.transporte)document.getElementById("eTransporte").value=eg.transporte;
+          if(eg.otros)document.getElementById("eOtros").value=eg.otros;
+          if(eg.otrosDesc){document.getElementById("eOtrosDetalle").style.display="block";document.getElementById("eOtrosDesc").value=eg.otrosDesc;}
+          calcEgresos();
+        }catch(e){}
+      }
+    }
+    setTimeout(function(){document.getElementById("formOverlay").style.display="block";},800);
+  }
+}
+
+function calcEgresos(){
+  var ids=["eArriendo","eAlimentacion","eServicios","eTransporte","eOtros"];
+  var t=0;ids.forEach(function(id){t+=Number(document.getElementById(id).value)||0;});
+  document.getElementById("eTotalEgr").textContent=fm(t);
+  // Show otros description if otros has value
+  var ov=Number(document.getElementById("eOtros").value)||0;
+  document.getElementById("eOtrosDetalle").style.display=ov>0?"block":"none";
+}
+
+function enviarFormulario(){
+  var dir=document.getElementById("fDireccion").value.trim();
+  var ing=document.getElementById("fIngresos").value;
+  var monto=document.getElementById("fMontoPago").value;
+  var motivo=document.getElementById("fMotivo").value.trim();
+  var arr=document.getElementById("eArriendo").value;
+  if(!dir||!ing||!motivo||!monto){
+    var fm2=document.getElementById("formMsg");fm2.textContent="Complete los campos marcados con *";fm2.style.display="block";fm2.style.background="var(--warn-bg)";fm2.style.color="var(--warn)";return;
+  }
+  var egresos={arriendo:Number(document.getElementById("eArriendo").value)||0,alimentacion:Number(document.getElementById("eAlimentacion").value)||0,servicios:Number(document.getElementById("eServicios").value)||0,transporte:Number(document.getElementById("eTransporte").value)||0,otros:Number(document.getElementById("eOtros").value)||0,otrosDesc:document.getElementById("eOtrosDesc").value||""};
+  var fm2=document.getElementById("formMsg");fm2.textContent="Guardando...";fm2.style.display="block";fm2.style.background="var(--info-bg)";fm2.style.color="var(--info)";
+  var params="action=completar_datos&cedula="+encodeURIComponent(CED_ACTUAL)+"&pin="+encodeURIComponent(PIN_ACTUAL);
+  params+="&direccion="+encodeURIComponent(dir);
+  params+="&ingresos="+encodeURIComponent(ing);
+  params+="&egresos_json="+encodeURIComponent(JSON.stringify(egresos));
+  params+="&monto_pago="+encodeURIComponent(monto);
+  params+="&motivo="+encodeURIComponent(motivo);
+  fetch(API_URL+"?"+params,{redirect:"follow"}).then(function(r){return r.json();}).then(function(d){
+    if(d.ok){fm2.textContent="\u2705 Información guardada correctamente";fm2.style.background="var(--ok-bg)";fm2.style.color="var(--ok)";if(CASO)CASO.formCompleto=true;setTimeout(function(){document.getElementById("formOverlay").style.display="none";showToast("Datos guardados exitosamente");},1500);}
+    else{fm2.textContent=d.error||"Error";fm2.style.background="var(--warn-bg)";fm2.style.color="var(--warn)";}
+  }).catch(function(){fm2.textContent="Error de conexión";fm2.style.background="var(--warn-bg)";fm2.style.color="var(--warn)";});
+}
+
+function cerrarFormulario(){document.getElementById("formOverlay").style.display="none";}
 
 function abrirAyuda(){
   if(!CASO) return;
