@@ -286,6 +286,7 @@ function buscar(){
         PIN_ACTUAL=pin;
         CASO=data.data;
         render(data.data);
+        LAST_REFRESH=new Date();updateRefreshTime();startAutoRefresh();checkFormulario(data.data);
       } else {
         document.getElementById("errMsg").textContent=data.error||"Error al consultar";
       }
