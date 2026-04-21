@@ -56,45 +56,68 @@
 .an-trend-val{display:flex;justify-content:space-between;margin-top:6px}
 .an-trend-val span{font-size:9px;color:var(--tx3);font-weight:600}
 @media(max-width:768px){.an-grid2{grid-template-columns:1fr}.top-nav{display:none}.ham{display:block}.kpis{grid-template-columns:1fr 1fr}.info-row{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.acts{grid-template-columns:1fr}.tbl th:nth-child(n+4),.tbl td:nth-child(n+4){display:none}}
-/* Comisiones */
-.com-asesor{background:var(--sf);padding:12px 14px;border-radius:10px;border:1.5px solid var(--bd);margin-bottom:8px}
-.com-asesor-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:10px}
-.com-asesor-nm{font-size:13px;font-weight:800;color:var(--nv);letter-spacing:0.3px}
-.com-asesor-casos{font-size:10px;color:var(--tx3);font-weight:700}
-.com-asesor-nums{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:11px;margin-top:6px}
-.com-asesor-num{padding:6px 10px;background:var(--sf2);border-radius:6px}
-.com-asesor-num-lbl{font-size:9px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:0.5px}
-.com-asesor-num-val{font-size:13px;font-weight:800;margin-top:2px}
-.com-asesor-bar{height:6px;background:var(--sf2);border-radius:3px;overflow:hidden;margin-top:8px}
-.com-asesor-bar-fill{height:100%;background:linear-gradient(90deg,var(--ok),var(--ac));border-radius:3px;transition:width 0.6s}
-.com-caso{background:var(--sf);border:1.5px solid var(--bd);border-radius:10px;margin-bottom:8px;overflow:hidden}
-.com-caso-head{padding:12px 14px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px;transition:background 0.15s}
-.com-caso-head:hover{background:var(--sf2)}
-.com-caso-info{flex:1}
-.com-caso-nm{font-size:13px;font-weight:700;color:var(--nv)}
-.com-caso-meta{font-size:10px;color:var(--tx3);margin-top:3px}
-.com-caso-right{display:flex;flex-direction:column;align-items:flex-end;gap:3px}
-.com-caso-mount{font-size:13px;font-weight:800;color:var(--nv)}
-.com-caso-mount-sub{font-size:10px;color:var(--tx2);font-weight:600}
-.com-caso-toggle{width:24px;height:24px;border-radius:50%;background:var(--sf2);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--tx2);transition:transform 0.2s}
-.com-caso.open .com-caso-toggle{transform:rotate(180deg)}
-.com-caso-body{display:none;padding:14px;border-top:1px solid var(--bd);background:var(--sf2)}
-.com-caso.open .com-caso-body{display:block}
-.com-comp{background:var(--sf);padding:10px 12px;border-radius:8px;margin-bottom:6px;border-left:3px solid var(--bd)}
-.com-comp.done{border-left-color:var(--ok)}
-.com-comp.partial{border-left-color:var(--warn)}
-.com-comp.pending{border-left-color:var(--err)}
-.com-comp-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:2px}
-.com-comp-nm{font-size:11px;font-weight:800;color:var(--nv);text-transform:uppercase;letter-spacing:0.3px}
-.com-comp-amt{font-size:13px;font-weight:800;color:var(--nv)}
-.com-comp-detail{font-size:10px;color:var(--tx2);margin-top:3px}
-.com-evt{font-size:11px;color:var(--tx2);padding:6px 10px;background:var(--sf);border-radius:6px;margin-top:4px;display:flex;justify-content:space-between;gap:8px}
-.com-evt-date{color:var(--tx3);font-size:10px;font-weight:600}
-.com-evt-type{font-size:9px;padding:2px 6px;border-radius:4px;font-weight:700;text-transform:uppercase;letter-spacing:0.3px}
-.com-evt-type.base{background:var(--acl);color:var(--ac)}
-.com-evt-type.sobreprecio{background:#e0e7ff;color:#4338ca}
-.com-evt-type.centro{background:var(--okb);color:var(--ok)}
-.com-evt-amt{font-weight:700;color:var(--nv);font-size:11px}
+/* Comisiones — Diseño tabular */
+.comt{width:100%;border-collapse:collapse;font-size:12px}
+.comt thead{background:var(--nv);color:white;position:sticky;top:0;z-index:2}
+.comt thead th{padding:10px 10px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;text-align:left;white-space:nowrap}
+.comt thead th.num{text-align:right}
+.comt thead th.c{text-align:center}
+.comt tbody tr{border-bottom:1px solid var(--bd);transition:background 0.1s}
+.comt tbody tr:hover{background:var(--sf2)}
+.comt tbody tr.open{background:var(--acl)}
+.comt tbody tr.sum{background:var(--sf2);font-weight:700}
+.comt tbody td{padding:10px 10px;vertical-align:middle}
+.comt tbody td.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+.comt tbody td.c{text-align:center}
+.comt tbody td.nm{font-weight:700;color:var(--nv);max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.comt tbody td.sub{font-size:10px;color:var(--tx3)}
+.com-exp-btn{background:var(--sf);border:1px solid var(--bd);width:22px;height:22px;border-radius:4px;cursor:pointer;font-size:10px;color:var(--tx2);padding:0;transition:all 0.15s}
+.com-exp-btn:hover{background:var(--ac);color:white;border-color:var(--ac)}
+.comt tbody tr.open .com-exp-btn{background:var(--ac);color:white;border-color:var(--ac);transform:rotate(180deg)}
+.com-progress{display:inline-block;width:60px;height:6px;background:var(--sf2);border-radius:3px;overflow:hidden;vertical-align:middle;margin-right:6px}
+.com-progress-fill{height:100%;background:linear-gradient(90deg,var(--ok),var(--ac));border-radius:3px;transition:width 0.4s}
+.com-pill{display:inline-block;padding:2px 7px;border-radius:4px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.3px}
+.com-pill.ok{background:var(--okb);color:var(--ok)}
+.com-pill.partial{background:var(--warnb);color:var(--warn)}
+.com-pill.pending{background:var(--errb);color:var(--err)}
+.com-pill.zero{background:var(--sf2);color:var(--tx3)}
+.com-exp-row td{padding:0 !important;background:var(--sf2) !important}
+.com-exp-panel{padding:16px 18px;border-top:3px solid var(--ac);display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.com-exp-sec{background:var(--sf);border-radius:8px;padding:12px 14px;border:1px solid var(--bd)}
+.com-exp-sec-title{font-size:10px;font-weight:800;color:var(--ac);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid var(--acl)}
+.com-exp-row-data{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px dashed var(--bd);font-size:11px}
+.com-exp-row-data:last-child{border-bottom:none}
+.com-exp-label{color:var(--tx2);font-weight:500}
+.com-exp-val{font-weight:700;color:var(--nv);font-variant-numeric:tabular-nums}
+.com-exp-val.green{color:var(--ok)}
+.com-exp-val.orange{color:var(--warn)}
+.com-exp-val.red{color:var(--err)}
+.com-exp-val.blue{color:var(--info)}
+.com-comp-row{display:grid;grid-template-columns:1fr auto auto;gap:10px;padding:8px 10px;background:var(--sf2);border-radius:6px;margin-bottom:6px;align-items:center;border-left:3px solid var(--bd)}
+.com-comp-row.done{border-left-color:var(--ok)}
+.com-comp-row.partial{border-left-color:var(--warn)}
+.com-comp-row.pending{border-left-color:var(--err)}
+.com-comp-row-nm{font-size:10px;font-weight:800;color:var(--nv);text-transform:uppercase;letter-spacing:0.3px}
+.com-comp-row-detail{font-size:9px;color:var(--tx3);margin-top:2px}
+.com-comp-row-val{font-size:12px;font-weight:700;color:var(--nv);font-variant-numeric:tabular-nums}
+.com-comp-row-pct{font-size:9px;color:var(--tx2);font-weight:700;min-width:40px;text-align:right}
+.com-tl-evt{display:grid;grid-template-columns:80px 80px 1fr auto;gap:8px;font-size:11px;padding:5px 10px;background:var(--sf);border-radius:4px;margin-top:4px;align-items:center}
+.com-tl-evt-date{color:var(--tx3);font-size:10px;font-weight:600}
+.com-tl-evt-type{font-size:9px;padding:2px 6px;border-radius:3px;font-weight:700;text-transform:uppercase;letter-spacing:0.3px;text-align:center}
+.com-tl-evt-type.base{background:var(--acl);color:var(--ac)}
+.com-tl-evt-type.sobreprecio{background:#e0e7ff;color:#4338ca}
+.com-tl-evt-type.centro{background:var(--okb);color:var(--ok)}
+.com-tl-evt-desc{color:var(--tx2);font-size:10px}
+.com-tl-evt-amt{font-weight:800;color:var(--nv);font-variant-numeric:tabular-nums;font-size:11px}
+/* Resumen por comercial en tabla compacta */
+.comres{width:100%;border-collapse:collapse;font-size:12px}
+.comres th{background:var(--sf2);padding:7px 10px;font-size:9px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:1px;text-align:left}
+.comres th.num{text-align:right}
+.comres td{padding:7px 10px;border-top:1px solid var(--bd);font-variant-numeric:tabular-nums}
+.comres td.nm{font-weight:700;color:var(--nv)}
+.comres td.num{text-align:right;font-weight:600}
+.comres tr:hover td{background:var(--sf2)}
+@media(max-width:900px){.com-exp-panel{grid-template-columns:1fr}.comt{font-size:11px}.comt td,.comt th{padding:7px 6px}}
 </style>
 </head>
 <body>
@@ -107,7 +130,25 @@
 <div class="pg" id="pg-prop"><div class="card"><h3>Pipeline de propuestas</h3><button class="btn btn-nv" onclick="cargarPropuestas()" style="margin-bottom:12px">Actualizar</button><div id="propOut"></div></div><div class="msg" id="propMsg"></div></div>
 <div class="pg" id="pg-pagos"><div class="sb"><input type="text" id="pagCed" placeholder="Cédula" inputmode="numeric" onkeydown="if(event.key==='Enter')buscarPagos()"><button onclick="buscarPagos()">Buscar</button></div><div id="pagOut"></div><div class="msg" id="pagMsg"></div></div>
 <div class="pg" id="pg-casos"><div class="sb"><input type="text" id="casCed" placeholder="Cédula" inputmode="numeric" onkeydown="if(event.key==='Enter')buscarCaso()"><button onclick="buscarCaso()">Buscar</button></div><div id="casOut"></div><div class="msg" id="casMsg"></div></div>
-<div class="pg" id="pg-com"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px"><div style="display:flex;gap:8px;align-items:center"><label style="font-size:11px;font-weight:700;color:var(--tx2);text-transform:uppercase">Comercial:</label><select id="comFiltro" onchange="renderComisiones()" style="padding:8px 12px;border:1.5px solid var(--bd);border-radius:8px;font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;background:var(--sf)"><option value="">Todos</option></select></div><div style="display:flex;gap:8px"><button class="btn btn-ghost" onclick="COM_CACHE=null;cargarComisiones()" style="font-size:11px">↻ Refresh</button><button class="btn btn-nv" onclick="exportarPDFComisiones()" style="font-size:11px">📄 Exportar PDF</button></div></div><div id="comKpis" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:14px"></div><div class="card" style="margin-bottom:12px"><h3 style="margin-bottom:10px">Resumen por comercial</h3><div id="comPorComercial"></div></div><div class="card"><h3 style="margin-bottom:10px">Detalle por caso</h3><div id="comCasos"></div></div><div class="msg" id="comMsg"></div></div>
+<div class="pg" id="pg-com">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px">
+<div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+<label style="font-size:11px;font-weight:700;color:var(--tx2);text-transform:uppercase">Comercial:</label>
+<select id="comFiltro" onchange="renderComisiones()" style="padding:8px 12px;border:1.5px solid var(--bd);border-radius:8px;font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;background:var(--sf);min-width:180px"><option value="">Todos los comerciales</option></select>
+<label style="font-size:11px;font-weight:700;color:var(--tx2);text-transform:uppercase;margin-left:8px">Estado:</label>
+<select id="comEstado" onchange="renderComisiones()" style="padding:8px 12px;border:1.5px solid var(--bd);border-radius:8px;font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;background:var(--sf)"><option value="">Todos</option><option value="con_pendiente">Con pendiente</option><option value="sin_pagos">Sin pagos</option><option value="completos">Liquidados 100%</option></select>
+</div>
+<div style="display:flex;gap:6px">
+<button class="btn btn-ghost" onclick="COM_CACHE=null;cargarComisiones()" style="font-size:11px;padding:7px 12px">↻ Refresh</button>
+<button class="btn btn-ghost" onclick="exportarCSVComisiones()" style="font-size:11px;padding:7px 12px">📊 CSV</button>
+<button class="btn btn-nv" onclick="exportarPDFComisiones()" style="font-size:11px;padding:7px 12px">📄 PDF</button>
+</div>
+</div>
+<div id="comKpis" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-bottom:12px"></div>
+<div class="card" style="padding:12px;margin-bottom:12px"><div style="font-size:11px;font-weight:800;color:var(--tx3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Resumen por comercial</div><div id="comPorComercialTabla"></div></div>
+<div class="card" style="padding:0;overflow:hidden"><div style="padding:12px 14px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center"><div style="font-size:11px;font-weight:800;color:var(--tx3);text-transform:uppercase;letter-spacing:1px">Detalle por caso</div><div style="font-size:10px;color:var(--tx3)"><span id="comCount">0</span> casos</div></div><div id="comTablaWrap" style="overflow-x:auto"></div></div>
+<div class="msg" id="comMsg"></div>
+</div>
 <div class="pg" id="pg-analytics">
 <div class="an-wrap">
 <div class="an-header">
@@ -223,175 +264,293 @@ function buscarCaso(){var ced=document.getElementById("casCed").value.trim();if(
 function renderCaso(c,ced){var vis=c.steps.filter(function(s){return!(s.op&&s.est==="PENDIENTE")});var done=vis.filter(function(s){return s.est==="COMPLETADO"}).length;var total=vis.length;var pct=total?Math.round(done/total*100):0;var h='<div class="ch"><h2>'+c.nm+"</h2><p>"+c.mod+" · "+c.ab+'</p><div class="ch-tags"><div class="ch-tag">'+pct+'%</div><div class="ch-tag pin">PIN: '+c.pin+'</div></div></div><div class="prog"><div class="prog-row"><span>'+done+" completadas</span><span>"+total+'</span></div><div class="prog-bar"><div class="prog-fill" style="width:'+pct+'%;background:var(--ac)"></div></div></div><div class="card"><h3>Línea de tiempo</h3>';vis.forEach(function(s,i){var isDone=s.est==="COMPLETADO",isAct=s.est==="ACTIVO";var dot=isDone?"var(--ok)":isAct?"var(--ac)":"var(--bd)";var isLast=i===vis.length-1;h+='<div class="tl-item"><div class="tl-left"><div class="tl-dot" style="background:'+dot+'">'+(isDone?"✓":"")+"</div>";if(!isLast)h+='<div class="tl-line" style="background:'+(isDone?"var(--ok)":"var(--bd)")+'"></div>';h+='</div><div class="tl-right"><div class="tl-head"><span class="tl-name" style="color:'+(isDone||isAct?"var(--nv)":"var(--tx3)")+'">'+s.n+"</span>";if(s.fecha)h+='<span class="tl-date">'+fD(s.fecha)+"</span>";h+="</div>";if(isDone||isAct)h+='<div class="tl-desc">'+s.cd+"</div>";if(!isDone){h+='<div class="tl-form"><select id="es_'+s.id+'"><option value="COMPLETADO">Completado</option><option value="ACTIVO"'+(isAct?" selected":"")+'>Activo</option><option value="PENDIENTE">Pendiente</option></select><input type="date" id="dt_'+s.id+'" value="'+(fDi(s.fecha)||new Date().toISOString().split("T")[0])+'"><button class="btn btn-ok" onclick="moverEtapa(\''+ced+"','"+s.id+"','"+enc(s.n)+"','"+enc(c.nm)+"','"+enc(c.cel||"")+"')\">OK</button></div>"}h+="</div></div>"});h+="</div>";document.getElementById("casOut").innerHTML=h}
 function moverEtapa(ced,eid,nmE,nombreE,celE){var estado=document.getElementById("es_"+eid).value,fecha=document.getElementById("dt_"+eid).value;var etNm=decodeURIComponent(nmE),nombre=decodeURIComponent(nombreE),cel=decodeURIComponent(celE);showMsg("casMsg","✅ "+etNm+" → "+estado,"ok");var params="action=actualizar&key="+enc(KEY)+"&cedula="+enc(ced)+"&etapa="+eid+"&estado="+estado;if(fecha)params+="&fecha="+fecha;callAPI(params).then(function(d){if(!d.ok){showMsg("casMsg",d.error,"err");return}showMsg("casMsg","✅ "+etNm+" → "+estado,"ok");addLog("📋 "+etNm+" → "+estado+" — "+nombre);DASH_CACHE=null;setTimeout(function(){buscarCaso()},600);var HITOS=["s7","s8","s9","fn"];if(HITOS.indexOf(eid)!==-1&&estado==="COMPLETADO")triggerWH({evento:"hito_alcanzado",cedula:ced,nombre:nombre,celular:cel,etapa:eid,etapaNombre:etNm})}).catch(function(){showMsg("casMsg","Error","err")})}
 var COM_CACHE=null;
-function cargarComisiones(){if(COM_CACHE){renderComisiones();return}var el=document.getElementById("comCasos");if(el)el.innerHTML='<p style="color:var(--tx3)">Cargando...</p>';callAPI("action=comisiones_detalle&key="+enc(KEY)).then(function(d){if(!d.ok){if(el)el.innerHTML='<p style="color:var(--err)">'+(d.error||"Error")+'</p>';return}COM_CACHE=d;var sel=document.getElementById("comFiltro");if(sel){var opts='<option value="">Todos los comerciales</option>';d.comerciales.forEach(function(a){opts+='<option value="'+a.nombre+'">'+a.nombre+'</option>'});sel.innerHTML=opts}renderComisiones()}).catch(function(){if(el)el.innerHTML='<p style="color:var(--err)">Error de conexión. <button class="btn btn-ghost" onclick="COM_CACHE=null;cargarComisiones()">Reintentar</button></p>'})}
+function cargarComisiones(){if(COM_CACHE){renderComisiones();return}var el=document.getElementById("comTablaWrap");if(el)el.innerHTML='<p style="padding:20px;color:var(--tx3);text-align:center">Cargando...</p>';callAPI("action=comisiones_detalle&key="+enc(KEY)).then(function(d){if(!d.ok){if(el)el.innerHTML='<p style="padding:20px;color:var(--err);text-align:center">'+(d.error||"Error")+'</p>';return}COM_CACHE=d;var sel=document.getElementById("comFiltro");if(sel){var opts='<option value="">Todos los comerciales</option>';d.comerciales.forEach(function(a){opts+='<option value="'+a.nombre+'">'+a.nombre+'</option>'});sel.innerHTML=opts}renderComisiones()}).catch(function(){if(el)el.innerHTML='<p style="padding:20px;color:var(--err);text-align:center">Error de conexión. <button class="btn btn-ghost" onclick="COM_CACHE=null;cargarComisiones()">Reintentar</button></p>'})}
+
+function filtrarComisiones(){
+  if(!COM_CACHE)return{clientes:[],comerciales:[]};
+  var f=document.getElementById("comFiltro").value;
+  var est=document.getElementById("comEstado").value;
+  var cli=COM_CACHE.clientes.slice();
+  if(f)cli=cli.filter(function(c){return c.asesor===f});
+  if(est==="con_pendiente")cli=cli.filter(function(c){return c.comision.totales.pendiente>0&&c.comision.totales.liquidado>0});
+  else if(est==="sin_pagos")cli=cli.filter(function(c){return c.comision.totales.liquidado===0&&c.comision.totales.teorico>0});
+  else if(est==="completos")cli=cli.filter(function(c){return c.comision.totales.teorico>0&&c.comision.totales.liquidado===c.comision.totales.teorico});
+  var com=f?COM_CACHE.comerciales.filter(function(a){return a.nombre===f}):COM_CACHE.comerciales;
+  return{clientes:cli,comerciales:com};
+}
 
 function renderComisiones(){
   if(!COM_CACHE)return;
-  var d=COM_CACHE;
-  var filtro=document.getElementById("comFiltro").value;
-  var clientesFilt=filtro?d.clientes.filter(function(c){return c.asesor===filtro}):d.clientes;
-  var comercialesFilt=filtro?d.comerciales.filter(function(a){return a.nombre===filtro}):d.comerciales;
+  var fl=filtrarComisiones();
+  var cli=fl.clientes,com=fl.comerciales;
 
-  // KPIs agregados
+  // KPIs
   var tot={teorico:0,liquidado:0,pendiente:0};
-  clientesFilt.forEach(function(c){
-    tot.teorico+=c.comision.totales.teorico;
-    tot.liquidado+=c.comision.totales.liquidado;
-    tot.pendiente+=c.comision.totales.pendiente;
-  });
-
+  cli.forEach(function(c){tot.teorico+=c.comision.totales.teorico;tot.liquidado+=c.comision.totales.liquidado;tot.pendiente+=c.comision.totales.pendiente});
+  var pctGlobal=tot.teorico>0?Math.round(tot.liquidado/tot.teorico*100):0;
   var h=''
-    +'<div class="kpi"><div class="kpi-stripe" style="background:var(--ac)"></div><div class="kpi-label">Teórico</div><div class="kpi-val" style="color:var(--ac);font-size:17px">'+fm(tot.teorico)+'</div></div>'
-    +'<div class="kpi"><div class="kpi-stripe" style="background:var(--ok)"></div><div class="kpi-label">Liquidado</div><div class="kpi-val" style="color:var(--ok);font-size:17px">'+fm(tot.liquidado)+'</div></div>'
-    +'<div class="kpi"><div class="kpi-stripe" style="background:var(--warn)"></div><div class="kpi-label">Pendiente</div><div class="kpi-val" style="color:var(--warn);font-size:17px">'+fm(tot.pendiente)+'</div></div>'
-    +'<div class="kpi"><div class="kpi-stripe" style="background:var(--nv)"></div><div class="kpi-label">Casos</div><div class="kpi-val" style="color:var(--nv)">'+clientesFilt.length+'</div></div>';
+    +'<div class="kpi"><div class="kpi-stripe" style="background:var(--ac)"></div><div class="kpi-label">Teórico</div><div class="kpi-val" style="color:var(--ac);font-size:16px">'+fm(tot.teorico)+'</div></div>'
+    +'<div class="kpi"><div class="kpi-stripe" style="background:var(--ok)"></div><div class="kpi-label">Liquidado</div><div class="kpi-val" style="color:var(--ok);font-size:16px">'+fm(tot.liquidado)+'</div></div>'
+    +'<div class="kpi"><div class="kpi-stripe" style="background:var(--warn)"></div><div class="kpi-label">Pendiente</div><div class="kpi-val" style="color:var(--warn);font-size:16px">'+fm(tot.pendiente)+'</div></div>'
+    +'<div class="kpi"><div class="kpi-stripe" style="background:var(--info)"></div><div class="kpi-label">% Liquidado</div><div class="kpi-val" style="color:var(--info);font-size:18px">'+pctGlobal+'%</div></div>'
+    +'<div class="kpi"><div class="kpi-stripe" style="background:var(--nv)"></div><div class="kpi-label">Casos</div><div class="kpi-val" style="color:var(--nv);font-size:18px">'+cli.length+'</div></div>';
   document.getElementById("comKpis").innerHTML=h;
 
-  // Resumen por comercial
-  var cc="";
-  if(!comercialesFilt.length){cc='<p style="color:var(--tx3);font-size:12px">No hay comerciales con comisiones</p>'}
+  // Resumen por comercial (tabla compacta)
+  var cr="";
+  if(!com.length)cr='<p style="color:var(--tx3);font-size:11px;padding:4px">Sin datos</p>';
   else {
-    comercialesFilt.forEach(function(a){
+    cr='<table class="comres"><thead><tr><th>Comercial</th><th class="num">Casos</th><th class="num">Teórico</th><th class="num">Liquidado</th><th class="num">Pendiente</th><th class="num">% Liq.</th></tr></thead><tbody>';
+    com.forEach(function(a){
       var pct=a.teorico>0?Math.round(a.liquidado/a.teorico*100):0;
-      cc+='<div class="com-asesor"><div class="com-asesor-head"><div class="com-asesor-nm">'+a.nombre+'</div><div class="com-asesor-casos">'+a.casos+' casos · '+pct+'% liquidado</div></div>';
-      cc+='<div class="com-asesor-nums">';
-      cc+='<div class="com-asesor-num"><div class="com-asesor-num-lbl">Teórico</div><div class="com-asesor-num-val" style="color:var(--ac)">'+fm(a.teorico)+'</div></div>';
-      cc+='<div class="com-asesor-num"><div class="com-asesor-num-lbl">Liquidado</div><div class="com-asesor-num-val" style="color:var(--ok)">'+fm(a.liquidado)+'</div></div>';
-      cc+='<div class="com-asesor-num"><div class="com-asesor-num-lbl">Pendiente</div><div class="com-asesor-num-val" style="color:var(--warn)">'+fm(a.pendiente)+'</div></div>';
-      cc+='</div><div class="com-asesor-bar"><div class="com-asesor-bar-fill" style="width:'+pct+'%"></div></div></div>';
+      cr+='<tr><td class="nm">'+a.nombre+'</td><td class="num">'+a.casos+'</td><td class="num" style="color:var(--ac)">'+fm(a.teorico)+'</td><td class="num" style="color:var(--ok)">'+fm(a.liquidado)+'</td><td class="num" style="color:var(--warn)">'+fm(a.pendiente)+'</td><td class="num"><span class="com-progress"><span class="com-progress-fill" style="display:block;width:'+pct+'%"></span></span>'+pct+'%</td></tr>';
     });
+    cr+='</tbody></table>';
   }
-  document.getElementById("comPorComercial").innerHTML=cc;
+  document.getElementById("comPorComercialTabla").innerHTML=cr;
 
-  // Detalle por caso (expandibles)
-  var cs="";
-  if(!clientesFilt.length){cs='<p style="color:var(--tx3);font-size:12px">No hay casos</p>'}
-  else {
-    // Ordenar: más pendientes primero
-    var sorted=clientesFilt.slice().sort(function(a,b){return b.comision.totales.pendiente-a.comision.totales.pendiente});
-    sorted.forEach(function(c,idx){
-      var t=c.comision.totales;
-      var pct=t.teorico>0?Math.round(t.liquidado/t.teorico*100):0;
-      cs+='<div class="com-caso" id="com-caso-'+idx+'"><div class="com-caso-head" onclick="toggleComCaso('+idx+')">';
-      cs+='<div class="com-caso-info"><div class="com-caso-nm">'+c.nombre+'</div>';
-      cs+='<div class="com-caso-meta">CC '+c.cedula+' · '+c.modalidad+' · '+c.asesor+' · Deuda '+fm(c.deuda)+'</div></div>';
-      cs+='<div class="com-caso-right"><div class="com-caso-mount">'+fm(t.teorico)+'</div>';
-      cs+='<div class="com-caso-mount-sub" style="color:var(--ok)">'+fm(t.liquidado)+' liquidado ('+pct+'%)</div></div>';
-      cs+='<div class="com-caso-toggle">▼</div></div>';
+  // Tabla principal
+  document.getElementById("comCount").innerText=cli.length;
+  if(!cli.length){
+    document.getElementById("comTablaWrap").innerHTML='<p style="padding:20px;color:var(--tx3);text-align:center">No hay casos que coincidan con el filtro</p>';
+    return;
+  }
+  // Ordenar por pendiente descendente
+  var sorted=cli.slice().sort(function(a,b){return b.comision.totales.pendiente-a.comision.totales.pendiente});
 
-      // Body expandible
-      cs+='<div class="com-caso-body">';
-      // Pricing info
-      cs+='<div style="padding:8px 10px;background:var(--sf);border-radius:6px;font-size:10px;color:var(--tx2);margin-bottom:8px;display:grid;grid-template-columns:1fr 1fr;gap:6px">';
-      cs+='<div><strong>Tramo:</strong> '+c.comision.pricing.tramo+'</div>';
-      cs+='<div><strong>Esquema:</strong> '+c.comision.pricing.esquema+'</div>';
-      cs+='<div><strong>Hon. pricing:</strong> '+fm(c.comision.pricing.honorariosPricing)+'</div>';
-      cs+='<div><strong>Hon. vendido:</strong> '+fm(c.comision.vendido.honorarios)+'</div>';
-      cs+='<div><strong>Centro pricing:</strong> '+fm(c.comision.pricing.centroPricing)+'</div>';
-      cs+='<div><strong>Descuento:</strong> '+(c.comision.vendido.descuentoPct||0)+'%</div>';
-      cs+='</div>';
+  var t='<table class="comt"><thead><tr>'
+    +'<th style="width:28px"></th>'
+    +'<th>Cliente</th>'
+    +'<th>Comercial</th>'
+    +'<th class="c">Mod.</th>'
+    +'<th class="num">Deuda</th>'
+    +'<th class="num" style="border-left:2px solid rgba(255,255,255,0.15)">Teórico</th>'
+    +'<th class="num">Liquidado</th>'
+    +'<th class="num">Pendiente</th>'
+    +'<th class="c">Progreso</th>'
+    +'</tr></thead><tbody>';
+  sorted.forEach(function(c,idx){
+    var T=c.comision.totales;
+    var pct=T.teorico>0?Math.round(T.liquidado/T.teorico*100):0;
+    var pillCls=T.teorico===0?"zero":T.liquidado===T.teorico?"ok":T.liquidado>0?"partial":"pending";
+    var pillTx=T.teorico===0?"—":T.liquidado===T.teorico?"OK":T.liquidado>0?"Parcial":"Pendiente";
+    var mod=(c.modalidad||"").substring(0,3);
+    t+='<tr id="com-r-'+idx+'">'
+      +'<td class="c"><button class="com-exp-btn" onclick="toggleComCaso('+idx+')">▼</button></td>'
+      +'<td class="nm" title="'+c.nombre+'">'+c.nombre+'<div class="sub">CC '+c.cedula+'</div></td>'
+      +'<td style="font-size:11px">'+c.asesor+'</td>'
+      +'<td class="c"><span class="com-pill" style="background:var(--sf2);color:var(--nv)">'+mod+'</span></td>'
+      +'<td class="num" style="font-size:11px;color:var(--tx2)">'+fm(c.deuda)+'</td>'
+      +'<td class="num" style="color:var(--ac);border-left:2px solid var(--bd)">'+fm(T.teorico)+'</td>'
+      +'<td class="num" style="color:var(--ok)">'+fm(T.liquidado)+'</td>'
+      +'<td class="num" style="color:var(--warn)">'+fm(T.pendiente)+'</td>'
+      +'<td class="c"><div style="display:flex;align-items:center;gap:6px;justify-content:center"><span class="com-progress"><span class="com-progress-fill" style="display:block;width:'+pct+'%"></span></span><span class="com-pill '+pillCls+'">'+pct+'%</span></div></td>'
+      +'</tr>';
+    // Row expandible (oculta inicialmente)
+    t+='<tr class="com-exp-row" id="com-x-'+idx+'" style="display:none"><td colspan="9">'+renderExpanded(c)+'</td></tr>';
+  });
+  t+='</tbody></table>';
+  document.getElementById("comTablaWrap").innerHTML=t;
+}
 
-      // Componentes
-      var comps=c.comision.componentes;
-      ['base','sobreprecio','centro'].forEach(function(k){
-        var comp=comps[k];
-        if(comp.teorico===0&&k!=='base')return;
-        var st=comp.teorico===comp.liquidado&&comp.teorico>0?"done":comp.liquidado>0?"partial":"pending";
-        var lbl=k==='base'?'Base':k==='sobreprecio'?'Sobreprecio (50%)':'Centro (10% sin descuento)';
-        cs+='<div class="com-comp '+st+'">';
-        cs+='<div class="com-comp-head"><div class="com-comp-nm">'+lbl+'</div><div class="com-comp-amt">'+fm(comp.liquidado)+' / '+fm(comp.teorico)+'</div></div>';
-        var detail="";
-        if(k==='base'&&comp.fecha)detail='Liberado '+comp.fecha;
-        else if(k==='sobreprecio')detail=c.comision.pagos.pctHonPagado+'% de honorarios pagado por cliente';
-        else if(k==='centro')detail=c.comision.pagos.pctCenPagado+'% del centro pagado por cliente';
-        if(comp.pendiente>0)detail+=' · <strong style="color:var(--warn)">Pendiente '+fm(comp.pendiente)+'</strong>';
-        cs+='<div class="com-comp-detail">'+detail+'</div></div>';
-      });
+function renderExpanded(c){
+  var P=c.comision.pricing,V=c.comision.vendido,K=c.comision.componentes,G=c.comision.pagos;
+  var diferencia=V.honorarios-P.honorariosPricing;
 
-      // Eventos
-      if(c.comision.eventos.length){
-        cs+='<div style="font-size:10px;font-weight:800;color:var(--tx3);text-transform:uppercase;letter-spacing:1px;margin:10px 0 4px">Historial de liquidaciones</div>';
-        c.comision.eventos.forEach(function(ev){
-          cs+='<div class="com-evt"><span class="com-evt-date">'+ev.fecha+'</span><span class="com-evt-type '+ev.tipo+'">'+ev.tipo+'</span><span style="flex:1;color:var(--tx2)">'+ev.descripcion+'</span><span class="com-evt-amt">'+fm(ev.monto)+'</span></div>';
-        });
-      }
-      cs+='</div></div>';
+  var h='<div class="com-exp-panel">';
+
+  // PANEL IZQUIERDO: Datos económicos
+  h+='<div class="com-exp-sec">';
+  h+='<div class="com-exp-sec-title">📋 Datos económicos del caso</div>';
+  h+='<div class="com-exp-row-data"><span class="com-exp-label">Tramo pricing</span><span class="com-exp-val" style="font-size:10px">'+P.tramo+'</span></div>';
+  h+='<div class="com-exp-row-data"><span class="com-exp-label">Esquema comisional</span><span class="com-exp-val" style="font-size:10px">'+P.esquema+'</span></div>';
+  h+='<div style="margin:10px 0 6px;padding-top:8px;border-top:2px solid var(--acl);font-size:9px;font-weight:800;color:var(--tx3);text-transform:uppercase;letter-spacing:1px">HONORARIOS JURÍDICOS</div>';
+  h+='<div class="com-exp-row-data"><span class="com-exp-label">Pricing</span><span class="com-exp-val blue">'+fm(P.honorariosPricing)+'</span></div>';
+  h+='<div class="com-exp-row-data"><span class="com-exp-label">Vendido al cliente</span><span class="com-exp-val">'+fm(V.honorarios)+'</span></div>';
+  h+='<div class="com-exp-row-data"><span class="com-exp-label">Diferencia (adicional)</span><span class="com-exp-val '+(diferencia>0?"green":"red")+'">'+(diferencia>=0?"+":"")+fm(diferencia)+'</span></div>';
+  h+='<div style="margin:10px 0 6px;padding-top:8px;border-top:2px solid var(--acl);font-size:9px;font-weight:800;color:var(--tx3);text-transform:uppercase;letter-spacing:1px">CENTRO DE CONCILIACIÓN</div>';
+  h+='<div class="com-exp-row-data"><span class="com-exp-label">Pricing</span><span class="com-exp-val blue">'+fm(P.centroPricing)+'</span></div>';
+  h+='<div class="com-exp-row-data"><span class="com-exp-label">Vendido al cliente</span><span class="com-exp-val">'+fm(V.centro)+'</span></div>';
+  h+='<div class="com-exp-row-data"><span class="com-exp-label">Descuento aplicado</span><span class="com-exp-val '+(V.descuentoPct>0?"orange":"green")+'">'+(V.descuentoPct||0)+'%</span></div>';
+  h+='<div style="margin:10px 0 6px;padding-top:8px;border-top:2px solid var(--acl);font-size:9px;font-weight:800;color:var(--tx3);text-transform:uppercase;letter-spacing:1px">PAGOS DEL CLIENTE</div>';
+  h+='<div class="com-exp-row-data"><span class="com-exp-label">Honorarios pagados</span><span class="com-exp-val green">'+fm(G.honPagado)+' / '+fm(G.honTotal)+' ('+G.pctHonPagado+'%)</span></div>';
+  h+='<div class="com-exp-row-data"><span class="com-exp-label">Centro pagado</span><span class="com-exp-val green">'+fm(G.cenPagado)+' / '+fm(G.cenTotal)+' ('+G.pctCenPagado+'%)</span></div>';
+  h+='</div>';
+
+  // PANEL DERECHO: Componentes de comisión
+  h+='<div class="com-exp-sec">';
+  h+='<div class="com-exp-sec-title">💼 Desglose de comisión</div>';
+
+  // Base
+  var sB=K.base.teorico===K.base.liquidado&&K.base.teorico>0?"done":K.base.liquidado>0?"partial":K.base.teorico>0?"pending":"";
+  h+='<div class="com-comp-row '+sB+'">';
+  h+='<div><div class="com-comp-row-nm">Comisión Base</div><div class="com-comp-row-detail">'+P.esquema+(K.base.fecha?" · Liberada "+K.base.fecha:"")+'</div></div>';
+  h+='<div class="com-comp-row-val">'+fm(K.base.liquidado)+' / '+fm(K.base.teorico)+'</div>';
+  h+='<div class="com-comp-row-pct">'+(K.base.teorico>0?Math.round(K.base.liquidado/K.base.teorico*100):0)+'%</div>';
+  h+='</div>';
+
+  // Valor adicional
+  var sV=K.sobreprecio.teorico===K.sobreprecio.liquidado&&K.sobreprecio.teorico>0?"done":K.sobreprecio.liquidado>0?"partial":K.sobreprecio.teorico>0?"pending":"";
+  h+='<div class="com-comp-row '+sV+'">';
+  h+='<div><div class="com-comp-row-nm">Valor Adicional Honorarios</div><div class="com-comp-row-detail">Diferencia vendido-pricing, proporcional a pagos ('+G.pctHonPagado+'% pagado)</div></div>';
+  h+='<div class="com-comp-row-val">'+fm(K.sobreprecio.liquidado)+' / '+fm(K.sobreprecio.teorico)+'</div>';
+  h+='<div class="com-comp-row-pct">'+(K.sobreprecio.teorico>0?Math.round(K.sobreprecio.liquidado/K.sobreprecio.teorico*100):0)+'%</div>';
+  h+='</div>';
+
+  // Centro
+  var sC=K.centro.teorico===K.centro.liquidado&&K.centro.teorico>0?"done":K.centro.liquidado>0?"partial":K.centro.teorico>0?"pending":"";
+  h+='<div class="com-comp-row '+sC+'">';
+  h+='<div><div class="com-comp-row-nm">Comisión Centro (10%)</div><div class="com-comp-row-detail">'+(V.descuentoPct>0?"⚠️ Aplicado descuento "+V.descuentoPct+"% — Sin comisión centro":"Sin descuento · Proporcional al pago de centro ("+G.pctCenPagado+"%)")+'</div></div>';
+  h+='<div class="com-comp-row-val">'+fm(K.centro.liquidado)+' / '+fm(K.centro.teorico)+'</div>';
+  h+='<div class="com-comp-row-pct">'+(K.centro.teorico>0?Math.round(K.centro.liquidado/K.centro.teorico*100):0)+'%</div>';
+  h+='</div>';
+
+  // Total
+  var T=c.comision.totales;
+  var pctT=T.teorico>0?Math.round(T.liquidado/T.teorico*100):0;
+  h+='<div style="margin-top:12px;padding-top:10px;border-top:2px solid var(--nv);display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center">';
+  h+='<div><div style="font-size:10px;font-weight:800;color:var(--nv);text-transform:uppercase;letter-spacing:1px">TOTAL COMISIÓN</div></div>';
+  h+='<div class="com-comp-row-val" style="font-size:14px">'+fm(T.liquidado)+' / '+fm(T.teorico)+'</div>';
+  h+='<div class="com-comp-row-pct" style="font-size:11px;color:var(--ac)">'+pctT+'%</div>';
+  h+='</div>';
+
+  // Eventos
+  if(c.comision.eventos.length){
+    h+='<div style="margin-top:14px;padding-top:10px;border-top:1px solid var(--bd)"><div style="font-size:9px;font-weight:800;color:var(--tx3);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px">Historial de liquidaciones</div>';
+    c.comision.eventos.forEach(function(ev){
+      h+='<div class="com-tl-evt"><span class="com-tl-evt-date">'+ev.fecha+'</span><span class="com-tl-evt-type '+ev.tipo+'">'+ev.tipo+'</span><span class="com-tl-evt-desc">'+ev.descripcion+'</span><span class="com-tl-evt-amt">'+fm(ev.monto)+'</span></div>';
     });
+    h+='</div>';
   }
-  document.getElementById("comCasos").innerHTML=cs;
+  h+='</div>';
+  h+='</div>';
+
+  return h;
 }
 
 function toggleComCaso(idx){
-  var el=document.getElementById("com-caso-"+idx);
-  if(el)el.classList.toggle("open");
+  var row=document.getElementById("com-r-"+idx);
+  var exp=document.getElementById("com-x-"+idx);
+  if(!row||!exp)return;
+  var isOpen=row.classList.contains("open");
+  // Cerrar todas las demás
+  document.querySelectorAll(".com-exp-row").forEach(function(r){r.style.display="none"});
+  document.querySelectorAll(".comt tbody tr.open").forEach(function(r){r.classList.remove("open")});
+  if(!isOpen){row.classList.add("open");exp.style.display="table-row"}
 }
 
+// ====================== EXPORT CSV ======================
+function exportarCSVComisiones(){
+  if(!COM_CACHE){showMsg("comMsg","Primero carga los datos","err");return}
+  var fl=filtrarComisiones();
+  if(!fl.clientes.length){showMsg("comMsg","Sin datos para exportar","err");return}
+  var filtro=document.getElementById("comFiltro").value;
+
+  // Encabezados
+  var headers=["Cliente","Cédula","Comercial","Modalidad","Deuda","Tramo","Esquema","Honorarios Pricing","Honorarios Vendido","Diferencia","Centro Pricing","Centro Vendido","Descuento %","% Hon Pagado","% Cen Pagado","Base Teórico","Base Liquidado","Adicional Teórico","Adicional Liquidado","Centro Teórico","Centro Liquidado","Total Teórico","Total Liquidado","Total Pendiente"];
+  var rows=[headers];
+  fl.clientes.forEach(function(c){
+    var P=c.comision.pricing,V=c.comision.vendido,K=c.comision.componentes,G=c.comision.pagos,T=c.comision.totales;
+    rows.push([
+      c.nombre,c.cedula,c.asesor,c.modalidad,c.deuda,P.tramo,P.esquema,
+      P.honorariosPricing,V.honorarios,V.honorarios-P.honorariosPricing,
+      P.centroPricing,V.centro,V.descuentoPct,
+      G.pctHonPagado,G.pctCenPagado,
+      K.base.teorico,K.base.liquidado,
+      K.sobreprecio.teorico,K.sobreprecio.liquidado,
+      K.centro.teorico,K.centro.liquidado,
+      T.teorico,T.liquidado,T.pendiente
+    ]);
+  });
+  var csv=rows.map(function(r){return r.map(function(v){var s=String(v==null?"":v);return s.indexOf(",")>-1||s.indexOf('"')>-1||s.indexOf("\n")>-1?'"'+s.replace(/"/g,'""')+'"':s}).join(",")}).join("\n");
+  var blob=new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8;"});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement("a");
+  a.href=url;a.download="Comisiones_"+(filtro?filtro.replace(/\s+/g,"_"):"Todos")+"_"+new Date().toISOString().slice(0,10)+".csv";
+  document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+  showMsg("comMsg","✅ CSV generado","ok");
+}
+
+// ====================== EXPORT PDF ======================
 function exportarPDFComisiones(){
   if(!COM_CACHE){showMsg("comMsg","Primero carga los datos","err");return}
-  var filtro=document.getElementById("comFiltro").value;
-  var clientesFilt=filtro?COM_CACHE.clientes.filter(function(c){return c.asesor===filtro}):COM_CACHE.clientes;
-  if(!clientesFilt.length){showMsg("comMsg","Sin datos para exportar","err");return}
-
+  var fl=filtrarComisiones();
+  if(!fl.clientes.length){showMsg("comMsg","Sin datos para exportar","err");return}
   showMsg("comMsg","Generando PDF...","info");
+  var filtro=document.getElementById("comFiltro").value;
 
-  // Carga html2pdf bajo demanda
   function gen(){
     var tot={teorico:0,liquidado:0,pendiente:0};
-    clientesFilt.forEach(function(c){
-      tot.teorico+=c.comision.totales.teorico;
-      tot.liquidado+=c.comision.totales.liquidado;
-      tot.pendiente+=c.comision.totales.pendiente;
-    });
+    fl.clientes.forEach(function(c){tot.teorico+=c.comision.totales.teorico;tot.liquidado+=c.comision.totales.liquidado;tot.pendiente+=c.comision.totales.pendiente});
 
     var titulo=filtro?("Comisiones — "+filtro):"Comisiones — Todos los comerciales";
-    var html='<div style="font-family:Outfit,sans-serif;color:#0a1628;padding:30px;max-width:750px">';
-    html+='<div style="border-bottom:3px solid #c9a449;padding-bottom:12px;margin-bottom:20px">';
-    html+='<div style="font-size:10px;font-weight:700;color:#94a3b8;letter-spacing:2px;text-transform:uppercase">Colombia Abogados</div>';
-    html+='<div style="font-size:22px;font-weight:800;margin-top:4px">'+titulo+'</div>';
-    html+='<div style="font-size:11px;color:#475569;margin-top:4px">Generado: '+new Date().toLocaleDateString('es-CO',{dateStyle:'long'})+' · '+clientesFilt.length+' casos</div>';
+    var html='<div style="font-family:Outfit,sans-serif;color:#0a1628;padding:25px;width:1050px">';
+    html+='<div style="border-bottom:3px solid #c9a449;padding-bottom:12px;margin-bottom:18px">';
+    html+='<div style="font-size:9px;font-weight:700;color:#94a3b8;letter-spacing:2px;text-transform:uppercase">Colombia Abogados · Reporte de Comisiones</div>';
+    html+='<div style="font-size:20px;font-weight:800;margin-top:4px">'+titulo+'</div>';
+    html+='<div style="font-size:10px;color:#475569;margin-top:4px">Generado: '+new Date().toLocaleDateString('es-CO',{dateStyle:'long'})+' · '+fl.clientes.length+' casos</div>';
     html+='</div>';
 
-    // Resumen
-    html+='<div style="display:flex;gap:10px;margin-bottom:20px">';
-    html+='<div style="flex:1;padding:12px;background:#f8f1dc;border-radius:8px"><div style="font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase">Teórico</div><div style="font-size:18px;font-weight:800;color:#c9a449">'+fm(tot.teorico)+'</div></div>';
-    html+='<div style="flex:1;padding:12px;background:#dcfce7;border-radius:8px"><div style="font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase">Liquidado</div><div style="font-size:18px;font-weight:800;color:#16a34a">'+fm(tot.liquidado)+'</div></div>';
-    html+='<div style="flex:1;padding:12px;background:#fef3c7;border-radius:8px"><div style="font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase">Pendiente</div><div style="font-size:18px;font-weight:800;color:#f59e0b">'+fm(tot.pendiente)+'</div></div>';
+    // KPIs
+    html+='<div style="display:flex;gap:8px;margin-bottom:18px">';
+    html+='<div style="flex:1;padding:10px;background:#f8f1dc;border-radius:6px"><div style="font-size:9px;font-weight:700;color:#94a3b8;text-transform:uppercase">Teórico</div><div style="font-size:16px;font-weight:800;color:#c9a449">'+fm(tot.teorico)+'</div></div>';
+    html+='<div style="flex:1;padding:10px;background:#dcfce7;border-radius:6px"><div style="font-size:9px;font-weight:700;color:#94a3b8;text-transform:uppercase">Liquidado</div><div style="font-size:16px;font-weight:800;color:#16a34a">'+fm(tot.liquidado)+'</div></div>';
+    html+='<div style="flex:1;padding:10px;background:#fef3c7;border-radius:6px"><div style="font-size:9px;font-weight:700;color:#94a3b8;text-transform:uppercase">Pendiente</div><div style="font-size:16px;font-weight:800;color:#f59e0b">'+fm(tot.pendiente)+'</div></div>';
     html+='</div>';
 
-    // Casos
-    clientesFilt.forEach(function(c){
-      var t=c.comision.totales;
-      html+='<div style="border:1px solid #e2e8f0;border-radius:8px;padding:12px;margin-bottom:10px;page-break-inside:avoid">';
-      html+='<div style="display:flex;justify-content:space-between;margin-bottom:6px"><div><div style="font-size:13px;font-weight:800">'+c.nombre+'</div><div style="font-size:10px;color:#475569">CC '+c.cedula+' · '+c.modalidad+' · '+c.asesor+'</div></div>';
-      html+='<div style="text-align:right"><div style="font-size:14px;font-weight:800">'+fm(t.teorico)+'</div><div style="font-size:10px;color:#16a34a">Liquidado '+fm(t.liquidado)+'</div></div></div>';
-
-      html+='<table style="width:100%;font-size:10px;border-collapse:collapse;margin-top:8px">';
-      html+='<tr style="background:#f0f3f8"><td style="padding:4px 8px;font-weight:700;color:#94a3b8">COMPONENTE</td><td style="padding:4px 8px;font-weight:700;color:#94a3b8;text-align:right">TEÓRICO</td><td style="padding:4px 8px;font-weight:700;color:#94a3b8;text-align:right">LIQUIDADO</td><td style="padding:4px 8px;font-weight:700;color:#94a3b8;text-align:right">PENDIENTE</td></tr>';
-      ['base','sobreprecio','centro'].forEach(function(k){
-        var comp=c.comision.componentes[k];
-        if(comp.teorico===0&&k!=='base')return;
-        var lbl=k==='base'?'Base':k==='sobreprecio'?'Sobreprecio 50%':'Centro 10%';
-        html+='<tr><td style="padding:4px 8px">'+lbl+'</td><td style="padding:4px 8px;text-align:right">'+fm(comp.teorico)+'</td><td style="padding:4px 8px;text-align:right;color:#16a34a">'+fm(comp.liquidado)+'</td><td style="padding:4px 8px;text-align:right;color:#f59e0b">'+fm(comp.pendiente)+'</td></tr>';
-      });
-      html+='</table>';
-
-      if(c.comision.eventos.length){
-        html+='<div style="margin-top:8px;font-size:9px;color:#475569"><strong>Historial:</strong> ';
-        html+=c.comision.eventos.map(function(e){return e.fecha+' '+e.tipo+' '+fm(e.monto)}).join(' · ');
-        html+='</div>';
-      }
-      html+='</div>';
+    // Tabla principal
+    html+='<table style="width:100%;border-collapse:collapse;font-size:9px;margin-bottom:20px">';
+    html+='<thead><tr style="background:#0a1628;color:white">'
+      +'<th style="padding:6px;text-align:left">Cliente</th>'
+      +'<th style="padding:6px;text-align:left">Comercial</th>'
+      +'<th style="padding:6px;text-align:center">Mod</th>'
+      +'<th style="padding:6px;text-align:right">Hon Pricing</th>'
+      +'<th style="padding:6px;text-align:right">Hon Vendido</th>'
+      +'<th style="padding:6px;text-align:right">Base</th>'
+      +'<th style="padding:6px;text-align:right">Adicional</th>'
+      +'<th style="padding:6px;text-align:right">Centro</th>'
+      +'<th style="padding:6px;text-align:right;border-left:1px solid rgba(255,255,255,.3)">Teórico</th>'
+      +'<th style="padding:6px;text-align:right">Liquidado</th>'
+      +'<th style="padding:6px;text-align:right">Pend.</th>'
+      +'</tr></thead><tbody>';
+    fl.clientes.forEach(function(c,i){
+      var P=c.comision.pricing,V=c.comision.vendido,K=c.comision.componentes,T=c.comision.totales;
+      var bg=i%2===0?"#ffffff":"#f5f7fa";
+      html+='<tr style="background:'+bg+';border-bottom:1px solid #e2e8f0">'
+        +'<td style="padding:5px 6px;font-weight:700">'+c.nombre+'<div style="font-size:8px;color:#94a3b8">CC '+c.cedula+'</div></td>'
+        +'<td style="padding:5px 6px;font-size:9px">'+c.asesor+'</td>'
+        +'<td style="padding:5px 6px;text-align:center;font-size:8px">'+c.modalidad.substring(0,4)+'</td>'
+        +'<td style="padding:5px 6px;text-align:right;color:#2563eb">'+fm(P.honorariosPricing)+'</td>'
+        +'<td style="padding:5px 6px;text-align:right">'+fm(V.honorarios)+'</td>'
+        +'<td style="padding:5px 6px;text-align:right">'+fm(K.base.liquidado)+'<div style="font-size:8px;color:#94a3b8">/'+fm(K.base.teorico)+'</div></td>'
+        +'<td style="padding:5px 6px;text-align:right">'+fm(K.sobreprecio.liquidado)+'<div style="font-size:8px;color:#94a3b8">/'+fm(K.sobreprecio.teorico)+'</div></td>'
+        +'<td style="padding:5px 6px;text-align:right">'+fm(K.centro.liquidado)+'<div style="font-size:8px;color:#94a3b8">/'+fm(K.centro.teorico)+'</div></td>'
+        +'<td style="padding:5px 6px;text-align:right;font-weight:800;color:#c9a449;border-left:2px solid #e2e8f0">'+fm(T.teorico)+'</td>'
+        +'<td style="padding:5px 6px;text-align:right;font-weight:800;color:#16a34a">'+fm(T.liquidado)+'</td>'
+        +'<td style="padding:5px 6px;text-align:right;font-weight:800;color:#f59e0b">'+fm(T.pendiente)+'</td>'
+        +'</tr>';
     });
+    html+='</tbody></table>';
 
-    html+='<div style="margin-top:30px;text-align:center;font-size:9px;color:#94a3b8;letter-spacing:1px">COLOMBIA ABOGADOS · SISTEMA DE GESTIÓN INTERNO</div>';
+    // Resumen por comercial
+    if(fl.comerciales.length>1){
+      html+='<div style="font-size:11px;font-weight:800;margin-top:20px;margin-bottom:8px;text-transform:uppercase;letter-spacing:1px;color:#94a3b8">Resumen por comercial</div>';
+      html+='<table style="width:100%;border-collapse:collapse;font-size:10px">';
+      html+='<thead><tr style="background:#f0f3f8"><th style="padding:6px;text-align:left">Comercial</th><th style="padding:6px;text-align:right">Casos</th><th style="padding:6px;text-align:right">Teórico</th><th style="padding:6px;text-align:right">Liquidado</th><th style="padding:6px;text-align:right">Pendiente</th></tr></thead><tbody>';
+      fl.comerciales.forEach(function(a){
+        html+='<tr style="border-bottom:1px solid #e2e8f0"><td style="padding:5px 6px;font-weight:700">'+a.nombre+'</td><td style="padding:5px 6px;text-align:right">'+a.casos+'</td><td style="padding:5px 6px;text-align:right;color:#c9a449">'+fm(a.teorico)+'</td><td style="padding:5px 6px;text-align:right;color:#16a34a">'+fm(a.liquidado)+'</td><td style="padding:5px 6px;text-align:right;color:#f59e0b">'+fm(a.pendiente)+'</td></tr>';
+      });
+      html+='</tbody></table>';
+    }
+    html+='<div style="margin-top:25px;text-align:center;font-size:8px;color:#94a3b8;letter-spacing:1px">COLOMBIA ABOGADOS · SISTEMA DE GESTIÓN INTERNO</div>';
     html+='</div>';
 
     var hidden=document.createElement("div");
-    hidden.style.position="fixed";hidden.style.left="-9999px";hidden.innerHTML=html;
+    hidden.style.position="fixed";hidden.style.left="-99999px";hidden.innerHTML=html;
     document.body.appendChild(hidden);
 
     var filename="Comisiones_"+(filtro?filtro.replace(/\s+/g,"_"):"Todos")+"_"+new Date().toISOString().slice(0,10)+".pdf";
-    html2pdf().set({margin:[8,8,8,8],filename:filename,image:{type:'jpeg',quality:0.95},html2canvas:{scale:2},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}}).from(hidden.firstChild).save().then(function(){
+    html2pdf().set({margin:[6,6,6,6],filename:filename,image:{type:'jpeg',quality:0.95},html2canvas:{scale:2,width:1050},jsPDF:{unit:'mm',format:'a4',orientation:'landscape'}}).from(hidden.firstChild).save().then(function(){
       document.body.removeChild(hidden);
       showMsg("comMsg","✅ PDF generado","ok");
     }).catch(function(){
