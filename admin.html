@@ -56,6 +56,45 @@
 .an-trend-val{display:flex;justify-content:space-between;margin-top:6px}
 .an-trend-val span{font-size:9px;color:var(--tx3);font-weight:600}
 @media(max-width:768px){.an-grid2{grid-template-columns:1fr}.top-nav{display:none}.ham{display:block}.kpis{grid-template-columns:1fr 1fr}.info-row{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.acts{grid-template-columns:1fr}.tbl th:nth-child(n+4),.tbl td:nth-child(n+4){display:none}}
+/* Comisiones */
+.com-asesor{background:var(--sf);padding:12px 14px;border-radius:10px;border:1.5px solid var(--bd);margin-bottom:8px}
+.com-asesor-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:10px}
+.com-asesor-nm{font-size:13px;font-weight:800;color:var(--nv);letter-spacing:0.3px}
+.com-asesor-casos{font-size:10px;color:var(--tx3);font-weight:700}
+.com-asesor-nums{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:11px;margin-top:6px}
+.com-asesor-num{padding:6px 10px;background:var(--sf2);border-radius:6px}
+.com-asesor-num-lbl{font-size:9px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:0.5px}
+.com-asesor-num-val{font-size:13px;font-weight:800;margin-top:2px}
+.com-asesor-bar{height:6px;background:var(--sf2);border-radius:3px;overflow:hidden;margin-top:8px}
+.com-asesor-bar-fill{height:100%;background:linear-gradient(90deg,var(--ok),var(--ac));border-radius:3px;transition:width 0.6s}
+.com-caso{background:var(--sf);border:1.5px solid var(--bd);border-radius:10px;margin-bottom:8px;overflow:hidden}
+.com-caso-head{padding:12px 14px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px;transition:background 0.15s}
+.com-caso-head:hover{background:var(--sf2)}
+.com-caso-info{flex:1}
+.com-caso-nm{font-size:13px;font-weight:700;color:var(--nv)}
+.com-caso-meta{font-size:10px;color:var(--tx3);margin-top:3px}
+.com-caso-right{display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+.com-caso-mount{font-size:13px;font-weight:800;color:var(--nv)}
+.com-caso-mount-sub{font-size:10px;color:var(--tx2);font-weight:600}
+.com-caso-toggle{width:24px;height:24px;border-radius:50%;background:var(--sf2);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--tx2);transition:transform 0.2s}
+.com-caso.open .com-caso-toggle{transform:rotate(180deg)}
+.com-caso-body{display:none;padding:14px;border-top:1px solid var(--bd);background:var(--sf2)}
+.com-caso.open .com-caso-body{display:block}
+.com-comp{background:var(--sf);padding:10px 12px;border-radius:8px;margin-bottom:6px;border-left:3px solid var(--bd)}
+.com-comp.done{border-left-color:var(--ok)}
+.com-comp.partial{border-left-color:var(--warn)}
+.com-comp.pending{border-left-color:var(--err)}
+.com-comp-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:2px}
+.com-comp-nm{font-size:11px;font-weight:800;color:var(--nv);text-transform:uppercase;letter-spacing:0.3px}
+.com-comp-amt{font-size:13px;font-weight:800;color:var(--nv)}
+.com-comp-detail{font-size:10px;color:var(--tx2);margin-top:3px}
+.com-evt{font-size:11px;color:var(--tx2);padding:6px 10px;background:var(--sf);border-radius:6px;margin-top:4px;display:flex;justify-content:space-between;gap:8px}
+.com-evt-date{color:var(--tx3);font-size:10px;font-weight:600}
+.com-evt-type{font-size:9px;padding:2px 6px;border-radius:4px;font-weight:700;text-transform:uppercase;letter-spacing:0.3px}
+.com-evt-type.base{background:var(--acl);color:var(--ac)}
+.com-evt-type.sobreprecio{background:#e0e7ff;color:#4338ca}
+.com-evt-type.centro{background:var(--okb);color:var(--ok)}
+.com-evt-amt{font-weight:700;color:var(--nv);font-size:11px}
 </style>
 </head>
 <body>
@@ -68,7 +107,7 @@
 <div class="pg" id="pg-prop"><div class="card"><h3>Pipeline de propuestas</h3><button class="btn btn-nv" onclick="cargarPropuestas()" style="margin-bottom:12px">Actualizar</button><div id="propOut"></div></div><div class="msg" id="propMsg"></div></div>
 <div class="pg" id="pg-pagos"><div class="sb"><input type="text" id="pagCed" placeholder="Cédula" inputmode="numeric" onkeydown="if(event.key==='Enter')buscarPagos()"><button onclick="buscarPagos()">Buscar</button></div><div id="pagOut"></div><div class="msg" id="pagMsg"></div></div>
 <div class="pg" id="pg-casos"><div class="sb"><input type="text" id="casCed" placeholder="Cédula" inputmode="numeric" onkeydown="if(event.key==='Enter')buscarCaso()"><button onclick="buscarCaso()">Buscar</button></div><div id="casOut"></div><div class="msg" id="casMsg"></div></div>
-<div class="pg" id="pg-com"><div id="comKpis" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px"></div><div class="card"><h3>Comisiones</h3><div id="comOut"></div></div><div class="msg" id="comMsg"></div></div>
+<div class="pg" id="pg-com"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px"><div style="display:flex;gap:8px;align-items:center"><label style="font-size:11px;font-weight:700;color:var(--tx2);text-transform:uppercase">Comercial:</label><select id="comFiltro" onchange="renderComisiones()" style="padding:8px 12px;border:1.5px solid var(--bd);border-radius:8px;font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;background:var(--sf)"><option value="">Todos</option></select></div><div style="display:flex;gap:8px"><button class="btn btn-ghost" onclick="COM_CACHE=null;cargarComisiones()" style="font-size:11px">↻ Refresh</button><button class="btn btn-nv" onclick="exportarPDFComisiones()" style="font-size:11px">📄 Exportar PDF</button></div></div><div id="comKpis" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:14px"></div><div class="card" style="margin-bottom:12px"><h3 style="margin-bottom:10px">Resumen por comercial</h3><div id="comPorComercial"></div></div><div class="card"><h3 style="margin-bottom:10px">Detalle por caso</h3><div id="comCasos"></div></div><div class="msg" id="comMsg"></div></div>
 <div class="pg" id="pg-analytics">
 <div class="an-wrap">
 <div class="an-header">
@@ -105,7 +144,7 @@ var fm=function(v){return new Intl.NumberFormat("es-CO",{style:"currency",curren
 var TABS=[{id:"dash",label:"Dashboard",icon:"📊"},{id:"analytics",label:"Analytics",icon:"📈"},{id:"prop",label:"Propuestas",icon:"📨"},{id:"pagos",label:"Pagos",icon:"💰"},{id:"casos",label:"Procesos",icon:"📋"},{id:"com",label:"Comisiones",icon:"💼"},{id:"log",label:"Log",icon:"📝"}];
 // Auto-login if key is saved
 (function(){var saved=localStorage.getItem("admin_key");if(saved){document.getElementById("keyInput").value=saved;setTimeout(doLogin,300)}})();
-function buildTabs(){var h="",s="";TABS.forEach(function(t){h+='<div class="tn'+(t.id==="dash"?" on":"")+'" data-tab="'+t.id+'">'+t.label+'</div>';s+='<div class="sn'+(t.id==="dash"?" on":"")+'" data-tab="'+t.id+'">'+t.icon+" "+t.label+"</div>"});document.getElementById("navTabs").innerHTML=h;document.getElementById("sideNav").innerHTML=s;document.querySelectorAll(".tn,.sn").forEach(function(t){t.addEventListener("click",function(){goTab(t.dataset.tab);if(t.dataset.tab==="analytics")cargarAnalytics();if(t.classList.contains("sn"))toggleSidebar()})})}
+function buildTabs(){var h="",s="";TABS.forEach(function(t){h+='<div class="tn'+(t.id==="dash"?" on":"")+'" data-tab="'+t.id+'">'+t.label+'</div>';s+='<div class="sn'+(t.id==="dash"?" on":"")+'" data-tab="'+t.id+'">'+t.icon+" "+t.label+"</div>"});document.getElementById("navTabs").innerHTML=h;document.getElementById("sideNav").innerHTML=s;document.querySelectorAll(".tn,.sn").forEach(function(t){t.addEventListener("click",function(){goTab(t.dataset.tab);if(t.dataset.tab==="analytics")cargarAnalytics();if(t.dataset.tab==="com")cargarComisiones();if(t.classList.contains("sn"))toggleSidebar()})})}
 function goTab(n){document.querySelectorAll(".pg").forEach(function(p){p.classList.remove("on")});document.querySelectorAll(".tn,.sn").forEach(function(t){t.classList.remove("on")});var pg=document.getElementById("pg-"+n);if(pg)pg.classList.add("on");document.querySelectorAll(".tn,.sn").forEach(function(t){if(t.dataset.tab===n)t.classList.add("on")})}
 function cerrarSesion(){if(confirm("¿Cerrar sesión?")){localStorage.removeItem("admin_key");KEY="";DASH_CACHE=null;LEAD_ACTUAL=null;DETALLE_CED="";document.getElementById("appPage").classList.add("hidden");document.getElementById("loginPage").classList.remove("hidden");document.getElementById("loginPage").style.display="";document.getElementById("keyInput").value="";document.getElementById("keyInput").type="password";document.getElementById("navTabs").innerHTML="";document.getElementById("sideNav").innerHTML="";document.querySelectorAll(".pg").forEach(function(p){p.classList.remove("on")});document.getElementById("pg-dash").classList.add("on")}}
 function toggleSidebar(){document.getElementById("sidebar").classList.toggle("open");document.getElementById("sideOverlay").classList.toggle("show")}
@@ -183,8 +222,191 @@ function confirmarPago(ced,idx,nmE,nombreE,celE){var concepto=decodeURIComponent
 function buscarCaso(){var ced=document.getElementById("casCed").value.trim();if(!ced){showMsg("casMsg","Ingrese la cédula","err");return}showMsg("casMsg","Buscando...","info");fetchCliente(ced).then(function(c){hideMsg("casMsg");renderCaso(c,ced)}).catch(function(e){showMsg("casMsg",e.message,"err")})}
 function renderCaso(c,ced){var vis=c.steps.filter(function(s){return!(s.op&&s.est==="PENDIENTE")});var done=vis.filter(function(s){return s.est==="COMPLETADO"}).length;var total=vis.length;var pct=total?Math.round(done/total*100):0;var h='<div class="ch"><h2>'+c.nm+"</h2><p>"+c.mod+" · "+c.ab+'</p><div class="ch-tags"><div class="ch-tag">'+pct+'%</div><div class="ch-tag pin">PIN: '+c.pin+'</div></div></div><div class="prog"><div class="prog-row"><span>'+done+" completadas</span><span>"+total+'</span></div><div class="prog-bar"><div class="prog-fill" style="width:'+pct+'%;background:var(--ac)"></div></div></div><div class="card"><h3>Línea de tiempo</h3>';vis.forEach(function(s,i){var isDone=s.est==="COMPLETADO",isAct=s.est==="ACTIVO";var dot=isDone?"var(--ok)":isAct?"var(--ac)":"var(--bd)";var isLast=i===vis.length-1;h+='<div class="tl-item"><div class="tl-left"><div class="tl-dot" style="background:'+dot+'">'+(isDone?"✓":"")+"</div>";if(!isLast)h+='<div class="tl-line" style="background:'+(isDone?"var(--ok)":"var(--bd)")+'"></div>';h+='</div><div class="tl-right"><div class="tl-head"><span class="tl-name" style="color:'+(isDone||isAct?"var(--nv)":"var(--tx3)")+'">'+s.n+"</span>";if(s.fecha)h+='<span class="tl-date">'+fD(s.fecha)+"</span>";h+="</div>";if(isDone||isAct)h+='<div class="tl-desc">'+s.cd+"</div>";if(!isDone){h+='<div class="tl-form"><select id="es_'+s.id+'"><option value="COMPLETADO">Completado</option><option value="ACTIVO"'+(isAct?" selected":"")+'>Activo</option><option value="PENDIENTE">Pendiente</option></select><input type="date" id="dt_'+s.id+'" value="'+(fDi(s.fecha)||new Date().toISOString().split("T")[0])+'"><button class="btn btn-ok" onclick="moverEtapa(\''+ced+"','"+s.id+"','"+enc(s.n)+"','"+enc(c.nm)+"','"+enc(c.cel||"")+"')\">OK</button></div>"}h+="</div></div>"});h+="</div>";document.getElementById("casOut").innerHTML=h}
 function moverEtapa(ced,eid,nmE,nombreE,celE){var estado=document.getElementById("es_"+eid).value,fecha=document.getElementById("dt_"+eid).value;var etNm=decodeURIComponent(nmE),nombre=decodeURIComponent(nombreE),cel=decodeURIComponent(celE);showMsg("casMsg","✅ "+etNm+" → "+estado,"ok");var params="action=actualizar&key="+enc(KEY)+"&cedula="+enc(ced)+"&etapa="+eid+"&estado="+estado;if(fecha)params+="&fecha="+fecha;callAPI(params).then(function(d){if(!d.ok){showMsg("casMsg",d.error,"err");return}showMsg("casMsg","✅ "+etNm+" → "+estado,"ok");addLog("📋 "+etNm+" → "+estado+" — "+nombre);DASH_CACHE=null;setTimeout(function(){buscarCaso()},600);var HITOS=["s7","s8","s9","fn"];if(HITOS.indexOf(eid)!==-1&&estado==="COMPLETADO")triggerWH({evento:"hito_alcanzado",cedula:ced,nombre:nombre,celular:cel,etapa:eid,etapaNombre:etNm})}).catch(function(){showMsg("casMsg","Error","err")})}
-function cargarComisiones(){if(DASH_CACHE&&DASH_CACHE.comisiones){renderComisiones(DASH_CACHE.comisiones);return}callAPI("action=listar_comisiones&key="+enc(KEY)).then(function(d){if(!d.ok)return;renderComisiones(d)}).catch(function(){})}
-function renderComisiones(d){var h='<div class="kpi"><div class="kpi-stripe" style="background:var(--warn)"></div><div class="kpi-label">Pendiente</div><div class="kpi-val" style="color:var(--warn);font-size:18px">'+fm(d.totalPendiente)+'</div></div><div class="kpi"><div class="kpi-stripe" style="background:var(--ok)"></div><div class="kpi-label">Pagada</div><div class="kpi-val" style="color:var(--ok);font-size:18px">'+fm(d.totalPagada)+'</div></div><div class="kpi"><div class="kpi-stripe" style="background:var(--ac)"></div><div class="kpi-label">Ventas</div><div class="kpi-val" style="color:var(--ac)">'+d.total+"</div></div>";document.getElementById("comKpis").innerHTML=h;if(!d.data.length){document.getElementById("comOut").innerHTML='<p style="color:var(--tx3)">Sin comisiones</p>';return}var t='<table class="tbl"><thead><tr><th>Cliente</th><th>Asesor</th><th>Honorarios</th><th>Comisión</th><th>P1</th><th>Estado</th></tr></thead><tbody>';d.data.forEach(function(c){var pc=(c.estado==="PAGADA"||c.estado==="PAGADO")?"pill-ok":c.estado==="POR PAGAR"?"pill-warn":"pill-info";t+='<tr><td style="font-weight:600">'+c.nombre+'</td><td style="font-size:11px">'+c.asesor+"</td><td>"+fm(c.honorarios)+'</td><td style="font-weight:800">'+fm(c.comision)+'</td><td><span class="pill '+(c.p1Estado==="PAGADO"?"pill-ok":"pill-warn")+'">'+(c.p1Estado==="PAGADO"?"Pagado":"Pend.")+'</span></td><td><span class="pill '+pc+'">'+c.estado+"</span></td></tr>"});t+="</tbody></table>";document.getElementById("comOut").innerHTML=t}
+var COM_CACHE=null;
+function cargarComisiones(){if(COM_CACHE){renderComisiones();return}var el=document.getElementById("comCasos");if(el)el.innerHTML='<p style="color:var(--tx3)">Cargando...</p>';callAPI("action=comisiones_detalle&key="+enc(KEY)).then(function(d){if(!d.ok){if(el)el.innerHTML='<p style="color:var(--err)">'+(d.error||"Error")+'</p>';return}COM_CACHE=d;var sel=document.getElementById("comFiltro");if(sel){var opts='<option value="">Todos los comerciales</option>';d.comerciales.forEach(function(a){opts+='<option value="'+a.nombre+'">'+a.nombre+'</option>'});sel.innerHTML=opts}renderComisiones()}).catch(function(){if(el)el.innerHTML='<p style="color:var(--err)">Error de conexión. <button class="btn btn-ghost" onclick="COM_CACHE=null;cargarComisiones()">Reintentar</button></p>'})}
+
+function renderComisiones(){
+  if(!COM_CACHE)return;
+  var d=COM_CACHE;
+  var filtro=document.getElementById("comFiltro").value;
+  var clientesFilt=filtro?d.clientes.filter(function(c){return c.asesor===filtro}):d.clientes;
+  var comercialesFilt=filtro?d.comerciales.filter(function(a){return a.nombre===filtro}):d.comerciales;
+
+  // KPIs agregados
+  var tot={teorico:0,liquidado:0,pendiente:0};
+  clientesFilt.forEach(function(c){
+    tot.teorico+=c.comision.totales.teorico;
+    tot.liquidado+=c.comision.totales.liquidado;
+    tot.pendiente+=c.comision.totales.pendiente;
+  });
+
+  var h=''
+    +'<div class="kpi"><div class="kpi-stripe" style="background:var(--ac)"></div><div class="kpi-label">Teórico</div><div class="kpi-val" style="color:var(--ac);font-size:17px">'+fm(tot.teorico)+'</div></div>'
+    +'<div class="kpi"><div class="kpi-stripe" style="background:var(--ok)"></div><div class="kpi-label">Liquidado</div><div class="kpi-val" style="color:var(--ok);font-size:17px">'+fm(tot.liquidado)+'</div></div>'
+    +'<div class="kpi"><div class="kpi-stripe" style="background:var(--warn)"></div><div class="kpi-label">Pendiente</div><div class="kpi-val" style="color:var(--warn);font-size:17px">'+fm(tot.pendiente)+'</div></div>'
+    +'<div class="kpi"><div class="kpi-stripe" style="background:var(--nv)"></div><div class="kpi-label">Casos</div><div class="kpi-val" style="color:var(--nv)">'+clientesFilt.length+'</div></div>';
+  document.getElementById("comKpis").innerHTML=h;
+
+  // Resumen por comercial
+  var cc="";
+  if(!comercialesFilt.length){cc='<p style="color:var(--tx3);font-size:12px">No hay comerciales con comisiones</p>'}
+  else {
+    comercialesFilt.forEach(function(a){
+      var pct=a.teorico>0?Math.round(a.liquidado/a.teorico*100):0;
+      cc+='<div class="com-asesor"><div class="com-asesor-head"><div class="com-asesor-nm">'+a.nombre+'</div><div class="com-asesor-casos">'+a.casos+' casos · '+pct+'% liquidado</div></div>';
+      cc+='<div class="com-asesor-nums">';
+      cc+='<div class="com-asesor-num"><div class="com-asesor-num-lbl">Teórico</div><div class="com-asesor-num-val" style="color:var(--ac)">'+fm(a.teorico)+'</div></div>';
+      cc+='<div class="com-asesor-num"><div class="com-asesor-num-lbl">Liquidado</div><div class="com-asesor-num-val" style="color:var(--ok)">'+fm(a.liquidado)+'</div></div>';
+      cc+='<div class="com-asesor-num"><div class="com-asesor-num-lbl">Pendiente</div><div class="com-asesor-num-val" style="color:var(--warn)">'+fm(a.pendiente)+'</div></div>';
+      cc+='</div><div class="com-asesor-bar"><div class="com-asesor-bar-fill" style="width:'+pct+'%"></div></div></div>';
+    });
+  }
+  document.getElementById("comPorComercial").innerHTML=cc;
+
+  // Detalle por caso (expandibles)
+  var cs="";
+  if(!clientesFilt.length){cs='<p style="color:var(--tx3);font-size:12px">No hay casos</p>'}
+  else {
+    // Ordenar: más pendientes primero
+    var sorted=clientesFilt.slice().sort(function(a,b){return b.comision.totales.pendiente-a.comision.totales.pendiente});
+    sorted.forEach(function(c,idx){
+      var t=c.comision.totales;
+      var pct=t.teorico>0?Math.round(t.liquidado/t.teorico*100):0;
+      cs+='<div class="com-caso" id="com-caso-'+idx+'"><div class="com-caso-head" onclick="toggleComCaso('+idx+')">';
+      cs+='<div class="com-caso-info"><div class="com-caso-nm">'+c.nombre+'</div>';
+      cs+='<div class="com-caso-meta">CC '+c.cedula+' · '+c.modalidad+' · '+c.asesor+' · Deuda '+fm(c.deuda)+'</div></div>';
+      cs+='<div class="com-caso-right"><div class="com-caso-mount">'+fm(t.teorico)+'</div>';
+      cs+='<div class="com-caso-mount-sub" style="color:var(--ok)">'+fm(t.liquidado)+' liquidado ('+pct+'%)</div></div>';
+      cs+='<div class="com-caso-toggle">▼</div></div>';
+
+      // Body expandible
+      cs+='<div class="com-caso-body">';
+      // Pricing info
+      cs+='<div style="padding:8px 10px;background:var(--sf);border-radius:6px;font-size:10px;color:var(--tx2);margin-bottom:8px;display:grid;grid-template-columns:1fr 1fr;gap:6px">';
+      cs+='<div><strong>Tramo:</strong> '+c.comision.pricing.tramo+'</div>';
+      cs+='<div><strong>Esquema:</strong> '+c.comision.pricing.esquema+'</div>';
+      cs+='<div><strong>Hon. pricing:</strong> '+fm(c.comision.pricing.honorariosPricing)+'</div>';
+      cs+='<div><strong>Hon. vendido:</strong> '+fm(c.comision.vendido.honorarios)+'</div>';
+      cs+='<div><strong>Centro pricing:</strong> '+fm(c.comision.pricing.centroPricing)+'</div>';
+      cs+='<div><strong>Descuento:</strong> '+(c.comision.vendido.descuentoPct||0)+'%</div>';
+      cs+='</div>';
+
+      // Componentes
+      var comps=c.comision.componentes;
+      ['base','sobreprecio','centro'].forEach(function(k){
+        var comp=comps[k];
+        if(comp.teorico===0&&k!=='base')return;
+        var st=comp.teorico===comp.liquidado&&comp.teorico>0?"done":comp.liquidado>0?"partial":"pending";
+        var lbl=k==='base'?'Base':k==='sobreprecio'?'Sobreprecio (50%)':'Centro (10% sin descuento)';
+        cs+='<div class="com-comp '+st+'">';
+        cs+='<div class="com-comp-head"><div class="com-comp-nm">'+lbl+'</div><div class="com-comp-amt">'+fm(comp.liquidado)+' / '+fm(comp.teorico)+'</div></div>';
+        var detail="";
+        if(k==='base'&&comp.fecha)detail='Liberado '+comp.fecha;
+        else if(k==='sobreprecio')detail=c.comision.pagos.pctHonPagado+'% de honorarios pagado por cliente';
+        else if(k==='centro')detail=c.comision.pagos.pctCenPagado+'% del centro pagado por cliente';
+        if(comp.pendiente>0)detail+=' · <strong style="color:var(--warn)">Pendiente '+fm(comp.pendiente)+'</strong>';
+        cs+='<div class="com-comp-detail">'+detail+'</div></div>';
+      });
+
+      // Eventos
+      if(c.comision.eventos.length){
+        cs+='<div style="font-size:10px;font-weight:800;color:var(--tx3);text-transform:uppercase;letter-spacing:1px;margin:10px 0 4px">Historial de liquidaciones</div>';
+        c.comision.eventos.forEach(function(ev){
+          cs+='<div class="com-evt"><span class="com-evt-date">'+ev.fecha+'</span><span class="com-evt-type '+ev.tipo+'">'+ev.tipo+'</span><span style="flex:1;color:var(--tx2)">'+ev.descripcion+'</span><span class="com-evt-amt">'+fm(ev.monto)+'</span></div>';
+        });
+      }
+      cs+='</div></div>';
+    });
+  }
+  document.getElementById("comCasos").innerHTML=cs;
+}
+
+function toggleComCaso(idx){
+  var el=document.getElementById("com-caso-"+idx);
+  if(el)el.classList.toggle("open");
+}
+
+function exportarPDFComisiones(){
+  if(!COM_CACHE){showMsg("comMsg","Primero carga los datos","err");return}
+  var filtro=document.getElementById("comFiltro").value;
+  var clientesFilt=filtro?COM_CACHE.clientes.filter(function(c){return c.asesor===filtro}):COM_CACHE.clientes;
+  if(!clientesFilt.length){showMsg("comMsg","Sin datos para exportar","err");return}
+
+  showMsg("comMsg","Generando PDF...","info");
+
+  // Carga html2pdf bajo demanda
+  function gen(){
+    var tot={teorico:0,liquidado:0,pendiente:0};
+    clientesFilt.forEach(function(c){
+      tot.teorico+=c.comision.totales.teorico;
+      tot.liquidado+=c.comision.totales.liquidado;
+      tot.pendiente+=c.comision.totales.pendiente;
+    });
+
+    var titulo=filtro?("Comisiones — "+filtro):"Comisiones — Todos los comerciales";
+    var html='<div style="font-family:Outfit,sans-serif;color:#0a1628;padding:30px;max-width:750px">';
+    html+='<div style="border-bottom:3px solid #c9a449;padding-bottom:12px;margin-bottom:20px">';
+    html+='<div style="font-size:10px;font-weight:700;color:#94a3b8;letter-spacing:2px;text-transform:uppercase">Colombia Abogados</div>';
+    html+='<div style="font-size:22px;font-weight:800;margin-top:4px">'+titulo+'</div>';
+    html+='<div style="font-size:11px;color:#475569;margin-top:4px">Generado: '+new Date().toLocaleDateString('es-CO',{dateStyle:'long'})+' · '+clientesFilt.length+' casos</div>';
+    html+='</div>';
+
+    // Resumen
+    html+='<div style="display:flex;gap:10px;margin-bottom:20px">';
+    html+='<div style="flex:1;padding:12px;background:#f8f1dc;border-radius:8px"><div style="font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase">Teórico</div><div style="font-size:18px;font-weight:800;color:#c9a449">'+fm(tot.teorico)+'</div></div>';
+    html+='<div style="flex:1;padding:12px;background:#dcfce7;border-radius:8px"><div style="font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase">Liquidado</div><div style="font-size:18px;font-weight:800;color:#16a34a">'+fm(tot.liquidado)+'</div></div>';
+    html+='<div style="flex:1;padding:12px;background:#fef3c7;border-radius:8px"><div style="font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase">Pendiente</div><div style="font-size:18px;font-weight:800;color:#f59e0b">'+fm(tot.pendiente)+'</div></div>';
+    html+='</div>';
+
+    // Casos
+    clientesFilt.forEach(function(c){
+      var t=c.comision.totales;
+      html+='<div style="border:1px solid #e2e8f0;border-radius:8px;padding:12px;margin-bottom:10px;page-break-inside:avoid">';
+      html+='<div style="display:flex;justify-content:space-between;margin-bottom:6px"><div><div style="font-size:13px;font-weight:800">'+c.nombre+'</div><div style="font-size:10px;color:#475569">CC '+c.cedula+' · '+c.modalidad+' · '+c.asesor+'</div></div>';
+      html+='<div style="text-align:right"><div style="font-size:14px;font-weight:800">'+fm(t.teorico)+'</div><div style="font-size:10px;color:#16a34a">Liquidado '+fm(t.liquidado)+'</div></div></div>';
+
+      html+='<table style="width:100%;font-size:10px;border-collapse:collapse;margin-top:8px">';
+      html+='<tr style="background:#f0f3f8"><td style="padding:4px 8px;font-weight:700;color:#94a3b8">COMPONENTE</td><td style="padding:4px 8px;font-weight:700;color:#94a3b8;text-align:right">TEÓRICO</td><td style="padding:4px 8px;font-weight:700;color:#94a3b8;text-align:right">LIQUIDADO</td><td style="padding:4px 8px;font-weight:700;color:#94a3b8;text-align:right">PENDIENTE</td></tr>';
+      ['base','sobreprecio','centro'].forEach(function(k){
+        var comp=c.comision.componentes[k];
+        if(comp.teorico===0&&k!=='base')return;
+        var lbl=k==='base'?'Base':k==='sobreprecio'?'Sobreprecio 50%':'Centro 10%';
+        html+='<tr><td style="padding:4px 8px">'+lbl+'</td><td style="padding:4px 8px;text-align:right">'+fm(comp.teorico)+'</td><td style="padding:4px 8px;text-align:right;color:#16a34a">'+fm(comp.liquidado)+'</td><td style="padding:4px 8px;text-align:right;color:#f59e0b">'+fm(comp.pendiente)+'</td></tr>';
+      });
+      html+='</table>';
+
+      if(c.comision.eventos.length){
+        html+='<div style="margin-top:8px;font-size:9px;color:#475569"><strong>Historial:</strong> ';
+        html+=c.comision.eventos.map(function(e){return e.fecha+' '+e.tipo+' '+fm(e.monto)}).join(' · ');
+        html+='</div>';
+      }
+      html+='</div>';
+    });
+
+    html+='<div style="margin-top:30px;text-align:center;font-size:9px;color:#94a3b8;letter-spacing:1px">COLOMBIA ABOGADOS · SISTEMA DE GESTIÓN INTERNO</div>';
+    html+='</div>';
+
+    var hidden=document.createElement("div");
+    hidden.style.position="fixed";hidden.style.left="-9999px";hidden.innerHTML=html;
+    document.body.appendChild(hidden);
+
+    var filename="Comisiones_"+(filtro?filtro.replace(/\s+/g,"_"):"Todos")+"_"+new Date().toISOString().slice(0,10)+".pdf";
+    html2pdf().set({margin:[8,8,8,8],filename:filename,image:{type:'jpeg',quality:0.95},html2canvas:{scale:2},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}}).from(hidden.firstChild).save().then(function(){
+      document.body.removeChild(hidden);
+      showMsg("comMsg","✅ PDF generado","ok");
+    }).catch(function(){
+      document.body.removeChild(hidden);
+      showMsg("comMsg","Error generando PDF","err");
+    });
+  }
+  if(typeof html2pdf==="undefined"){
+    var s=document.createElement("script");
+    s.src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";
+    s.onload=gen;
+    s.onerror=function(){showMsg("comMsg","No se pudo cargar html2pdf","err")};
+    document.head.appendChild(s);
+  } else gen();
+}
 // === ANALYTICS ===
 var AN_CACHE={},AN_FILTER="all";
 var AC=["#3b5bdb","#f59f00","#2b8a3e","#c92a2a","#7048e8","#1971c2","#e64980","#495057","#0ca678","#f76707"];
