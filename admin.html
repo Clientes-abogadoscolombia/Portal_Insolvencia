@@ -12,7 +12,6 @@
 .top-web-btn{display:none}
 .web-back-link{display:inline-block;color:rgba(255,255,255,0.45);font-size:11px;font-weight:600;letter-spacing:0.5px;text-decoration:none;margin-bottom:20px;padding:6px 14px;border:1px solid rgba(255,255,255,0.15);border-radius:20px;transition:all 0.2s}
 .web-back-link:hover{color:var(--gold);border-color:var(--gold);background:rgba(201,164,73,0.08)}
-/* Barra web superior — fluye con scroll */
 .web-strip{background:linear-gradient(180deg,#050a14 0%,#0a1628 100%);border-bottom:1px solid rgba(201,164,73,0.25);padding:11px 24px;display:flex;align-items:center;gap:16px}
 .web-strip-brand-wrap{display:flex;align-items:center;gap:14px;min-width:0;flex:1}
 .web-strip-brand{font-family:'Belleza',serif;color:#fff;font-size:17px;letter-spacing:4px;text-transform:uppercase;font-weight:400;white-space:nowrap}
@@ -20,16 +19,8 @@
 .web-strip-current{font-family:'Belleza',serif;color:var(--gold);font-size:11px;letter-spacing:3px;text-transform:uppercase;font-weight:400;padding:5px 12px;border:1px solid rgba(201,164,73,0.4);border-radius:4px;background:rgba(201,164,73,0.06);white-space:nowrap}
 .web-strip-back{color:rgba(255,255,255,0.7);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:2px;padding:7px 14px;border-radius:20px;text-decoration:none;transition:all 0.2s;font-family:'Belleza',serif;border:1px solid rgba(255,255,255,0.2);white-space:nowrap;flex-shrink:0}
 .web-strip-back:hover{color:var(--nv);background:var(--gold);border-color:var(--gold)}
-@media(max-width:700px){
-  .web-strip{padding:10px 14px;gap:10px}
-  .web-strip-brand{font-size:13px;letter-spacing:2px}
-  .web-strip-sep{display:none}
-  .web-strip-current{display:none}
-  .web-strip-back{font-size:9px;padding:6px 11px;letter-spacing:1.5px}
-}
-/* Top bar: sticky en top:0, sin gap */
+@media(max-width:700px){.web-strip{padding:10px 14px;gap:10px}.web-strip-brand{font-size:13px;letter-spacing:2px}.web-strip-sep{display:none}.web-strip-current{display:none}.web-strip-back{font-size:9px;padding:6px 11px;letter-spacing:1.5px}}
 .top{top:0 !important}
-/* Footer web-style */
 .web-footer{background:#0a1628;color:rgba(255,255,255,0.7);padding:32px 24px 22px;margin-top:40px;border-top:3px solid var(--gold)}
 .web-footer-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:30px;margin-bottom:22px}
 .web-footer h4{font-family:'Belleza',serif;font-size:14px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;font-weight:400}
@@ -92,11 +83,9 @@
 .an-trend-val{display:flex;justify-content:space-between;margin-top:6px}
 .an-trend-val span{font-size:9px;color:var(--tx3);font-weight:600}
 @media(max-width:768px){.an-grid2{grid-template-columns:1fr}.top-nav{display:none}.ham{display:block}.kpis{grid-template-columns:1fr 1fr}.info-row{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.acts{grid-template-columns:1fr}.tbl th:nth-child(n+4),.tbl td:nth-child(n+4){display:none}}
-/* Sub-tabs de comisiones */
 .com-subtab{background:transparent;border:none;padding:8px 14px;font-family:inherit;font-size:11px;font-weight:700;color:var(--tx2);cursor:pointer;border-radius:7px;transition:all 0.15s;white-space:nowrap}
 .com-subtab:hover{background:var(--sf2);color:var(--nv)}
 .com-subtab.on{background:var(--nv);color:white}
-/* Tabla liquidaciones */
 .liqt{width:100%;border-collapse:collapse;font-size:12px}
 .liqt thead{background:var(--nv);color:white}
 .liqt thead th{padding:10px 8px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;text-align:left;white-space:nowrap}
@@ -118,14 +107,11 @@
 .liq-btn-edit{background:var(--sf);color:var(--info);border:1px solid var(--info);padding:5px 8px;border-radius:6px;font-family:inherit;font-size:11px;cursor:pointer}
 .liq-btn-edit:hover{background:var(--infob)}
 .liqt-footer td{border-top:2px solid var(--nv) !important;background:var(--sf2) !important}
-/* Dropdown de descarga */
 .dd-menu{position:absolute;right:0;top:calc(100% + 4px);background:var(--sf);border:1.5px solid var(--bd);border-radius:10px;box-shadow:0 8px 24px rgba(10,22,40,0.15);z-index:100;min-width:190px;overflow:hidden}
 .dd-menu button{display:block;width:100%;text-align:left;background:transparent;border:none;padding:10px 14px;font-family:inherit;font-size:12px;font-weight:600;color:var(--nv);cursor:pointer;border-bottom:1px solid var(--bd)}
 .dd-menu button:last-child{border-bottom:none}
 .dd-menu button:hover{background:var(--sf2);color:var(--ac)}
-/* Checkbox de selección en tabla liq */
 .liq-check{width:16px;height:16px;cursor:pointer;accent-color:var(--ac)}
-/* Botón WhatsApp */
 .wa-btn{background:#25d366;color:white;border:none;padding:9px 14px;border-radius:8px;font-family:inherit;font-size:11px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
 .wa-btn:hover{background:#1fa855}
 .liq-group-card{background:var(--sf);border:1.5px solid var(--bd);border-radius:10px;padding:12px 14px}
@@ -142,8 +128,6 @@
 .liq-input:focus{border-color:var(--ac)}
 .liq-field{margin-bottom:12px}
 .liq-field-lbl{font-size:10px;font-weight:700;color:var(--tx2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;display:block}
-
-/* Comisiones — Diseño tabular */
 .comt{width:100%;border-collapse:collapse;font-size:12px}
 .comt thead{background:var(--nv);color:white;position:sticky;top:0;z-index:2}
 .comt thead th{padding:10px 10px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;text-align:left;white-space:nowrap}
@@ -196,7 +180,6 @@
 .com-tl-evt-type.centro{background:var(--okb);color:var(--ok)}
 .com-tl-evt-desc{color:var(--tx2);font-size:10px}
 .com-tl-evt-amt{font-weight:800;color:var(--nv);font-variant-numeric:tabular-nums;font-size:11px}
-/* Resumen por comercial en tabla compacta */
 .comres{width:100%;border-collapse:collapse;font-size:12px}
 .comres th{background:var(--sf2);padding:7px 10px;font-size:9px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:1px;text-align:left}
 .comres th.num{text-align:right}
@@ -249,7 +232,6 @@
 </div>
 </div>
 
-<!-- SUB-VISTA: DETALLE POR CASO -->
 <div id="com-sub-det">
 <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px">
 <label style="font-size:11px;font-weight:700;color:var(--tx2);text-transform:uppercase">Comercial:</label>
@@ -270,7 +252,6 @@
 <div class="card" style="padding:0;overflow:hidden"><div style="padding:12px 14px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center"><div style="font-size:11px;font-weight:800;color:var(--tx3);text-transform:uppercase;letter-spacing:1px">Detalle por caso</div><div style="font-size:10px;color:var(--tx3)"><span id="comCount">0</span> casos</div></div><div id="comTablaWrap" style="overflow-x:auto"></div></div>
 </div>
 
-<!-- SUB-VISTA: LIQUIDACIONES -->
 <div id="com-sub-liq" style="display:none">
 <div id="liqKpis" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin-bottom:12px"></div>
 <div class="card" style="padding:12px;margin-bottom:12px"><div style="font-size:11px;font-weight:800;color:var(--tx3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Pendientes por comercial</div><div id="liqPorComercial"></div></div>
@@ -278,7 +259,6 @@
 <div style="padding:12px 14px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px"><div style="font-size:11px;font-weight:800;color:var(--tx3);text-transform:uppercase;letter-spacing:1px">Eventos de liquidación</div>
 <div style="display:flex;gap:4px"><button id="liq-v-pend" class="com-subtab on" onclick="cambiarVistaLiq('pend')" style="font-size:10px;padding:5px 10px">⏳ Pendientes (<span id="liqCountPend">0</span>)</button><button id="liq-v-hist" class="com-subtab" onclick="cambiarVistaLiq('hist')" style="font-size:10px;padding:5px 10px">✓ Historial (<span id="liqCountHist">0</span>)</button></div>
 </div>
-<!-- Barra de filtros -->
 <div style="padding:10px 14px;background:var(--sf2);border-bottom:1px solid var(--bd);display:flex;gap:8px;flex-wrap:wrap;align-items:center">
 <label style="font-size:10px;font-weight:700;color:var(--tx2);text-transform:uppercase">Comercial:</label>
 <select id="liqFiltroComercial" onchange="renderLiquidaciones()" style="padding:6px 10px;border:1px solid var(--bd);border-radius:6px;font-family:inherit;font-size:11px;font-weight:600;cursor:pointer;background:var(--sf)"><option value="">Todos</option></select>
@@ -294,7 +274,6 @@
 <div id="ddLiq" class="dd-menu" style="display:none"><button onclick="exportarCSVLiquidaciones();cerrarDD()">📊 Descargar CSV</button><button onclick="exportarPDFLiquidaciones();cerrarDD()">📄 Descargar PDF</button></div>
 </div>
 </div>
-<!-- Barra de selección en lote (aparece cuando hay items seleccionados) -->
 <div id="liqBatchBar" style="display:none;padding:10px 14px;background:var(--acl);border-bottom:1px solid var(--ac);align-items:center;gap:12px;flex-wrap:wrap">
 <div style="font-size:12px;font-weight:700;color:var(--nv)">✅ <span id="liqSelCount">0</span> seleccionados · Total <span id="liqSelTotal" style="color:var(--ac)">$0</span></div>
 <div style="margin-left:auto;display:flex;gap:6px">
@@ -308,14 +287,12 @@
 
 <div class="msg" id="comMsg"></div>
 
-<!-- Modal BD_PRICING -->
 <div id="pricingModal" style="display:none;position:fixed;inset:0;background:rgba(10,22,40,0.7);z-index:200;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto">
 <div style="background:var(--sf);border-radius:16px;max-width:900px;width:100%;margin-top:20px;max-height:90vh;overflow-y:auto">
 <div style="padding:16px 20px;border-bottom:1px solid var(--bd);position:sticky;top:0;background:var(--sf);border-radius:16px 16px 0 0;display:flex;justify-content:space-between;align-items:center;z-index:5"><div><div style="font-size:16px;font-weight:800;color:var(--nv)">📋 Tabla BD_PRICING</div><div style="font-size:11px;color:var(--tx3);margin-top:2px">Tramos actuales según la hoja BD_PRICING</div></div><button onclick="document.getElementById('pricingModal').style.display='none'" style="background:var(--sf2);border:none;width:32px;height:32px;border-radius:50%;font-size:18px;cursor:pointer">✕</button></div>
 <div style="padding:16px 20px" id="pricingModalBody"><p style="color:var(--tx3)">Cargando...</p></div>
 </div></div>
 
-<!-- Modal confirmar pago al comercial -->
 <div id="liqModal" style="display:none;position:fixed;inset:0;background:rgba(10,22,40,0.7);z-index:200;align-items:center;justify-content:center;padding:20px">
 <div style="background:var(--sf);border-radius:16px;max-width:480px;width:100%">
 <div style="padding:18px 22px;border-bottom:1px solid var(--bd)"><div style="font-size:15px;font-weight:800;color:var(--nv)">💸 Marcar como pagado al comercial</div><div id="liqModalSub" style="font-size:11px;color:var(--tx3);margin-top:3px"></div></div>
@@ -394,7 +371,6 @@
 var API="https://script.google.com/macros/s/AKfycbyAz9TGcQbu4nlmZ2NJuilBIe7bAPX8jKkcNTbfwv-Qd7zVV-1gbO2uxPmcV9kgWWSWHA/exec",MAKE_WH="https://hook.us2.make.com/c0jct73kn7k531b135cxnz1tceqc2hq6",KEY="",LEAD_ACTUAL=null,DETALLE_CED="",DASH_CACHE=null;
 var fm=function(v){return new Intl.NumberFormat("es-CO",{style:"currency",currency:"COP",maximumFractionDigits:0}).format(v||0)};function fD(v){if(!v)return"—";var d=new Date(v);return isNaN(d.getTime())?"—":d.toLocaleDateString("es-CO",{day:"numeric",month:"short",year:"numeric"})}function fDi(v){if(!v)return"";var d=new Date(v);return isNaN(d.getTime())?"":d.toISOString().split("T")[0]}function enc(v){return encodeURIComponent(v||"")}function callAPI(p){return fetch(API+"?"+p,{redirect:"follow"}).then(function(r){return r.json()})}var MESES=["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
 var TABS=[{id:"dash",label:"Dashboard",icon:"📊"},{id:"analytics",label:"Analytics",icon:"📈"},{id:"prop",label:"Propuestas",icon:"📨"},{id:"pagos",label:"Pagos",icon:"💰"},{id:"casos",label:"Procesos",icon:"📋"},{id:"com",label:"Comisiones",icon:"💼"},{id:"log",label:"Log",icon:"📝"}];
-// Auto-login if key is saved
 (function(){var saved=localStorage.getItem("admin_key");if(saved){document.getElementById("keyInput").value=saved;setTimeout(doLogin,300)}})();
 function buildTabs(){var h="",s="";TABS.forEach(function(t){h+='<div class="tn'+(t.id==="dash"?" on":"")+'" data-tab="'+t.id+'">'+t.label+'</div>';s+='<div class="sn'+(t.id==="dash"?" on":"")+'" data-tab="'+t.id+'">'+t.icon+" "+t.label+"</div>"});document.getElementById("navTabs").innerHTML=h;document.getElementById("sideNav").innerHTML=s;document.querySelectorAll(".tn,.sn").forEach(function(t){t.addEventListener("click",function(){goTab(t.dataset.tab);if(t.dataset.tab==="analytics")cargarAnalytics();if(t.dataset.tab==="com")cargarComisiones();if(t.classList.contains("sn"))toggleSidebar()})})}
 function goTab(n){document.querySelectorAll(".pg").forEach(function(p){p.classList.remove("on")});document.querySelectorAll(".tn,.sn").forEach(function(t){t.classList.remove("on")});var pg=document.getElementById("pg-"+n);if(pg)pg.classList.add("on");document.querySelectorAll(".tn,.sn").forEach(function(t){if(t.dataset.tab===n)t.classList.add("on")})}
@@ -404,14 +380,7 @@ function togglePw(){var i=document.getElementById("keyInput"),t=document.getElem
 function doLogin(){KEY=document.getElementById("keyInput").value.trim();if(!KEY){var saved=localStorage.getItem("admin_key");if(saved){KEY=saved}}if(document.getElementById("rememberMe").checked&&KEY){localStorage.setItem("admin_key",KEY)}if(!KEY){showMsg("loginMsg","Ingrese la API Key","err");return}showMsg("loginMsg","Verificando...","info");callAPI("action=info_cliente&key="+enc(KEY)+"&cedula=0").then(function(d){if(d.error==="API key inválida"){showMsg("loginMsg","Clave incorrecta","err");KEY="";return}document.getElementById("loginPage").classList.add("hidden");document.getElementById("appPage").classList.remove("hidden");buildTabs();addLog("Sesión iniciada");cargarDashboard(true)}).catch(function(){showMsg("loginMsg","Error de conexión","err")})}
 function cargarDashboard(force){if(DASH_CACHE&&!force){renderDashboard(DASH_CACHE);return}var sk="";for(var i=0;i<4;i++)sk+='<div class="skel-card"><div class="skel skel-line" style="width:60%"></div><div class="skel skel-line" style="width:40%;height:20px"></div></div>';document.getElementById("clientsGrid").innerHTML=sk;var to=setTimeout(function(){document.getElementById("clientsGrid").innerHTML='<p style="color:var(--tx3)">Timeout. <button class="btn btn-nv" onclick="cargarDashboard(true)">Reintentar</button></p>'},15000);callAPI("action=dashboard&key="+enc(KEY)).then(function(d){clearTimeout(to);if(!d.ok){if(d.error&&d.error.indexOf("no válida")!==-1){callAPI("action=listar_clientes&key="+enc(KEY)).then(function(d2){if(d2.ok){DASH_CACHE=d2;renderDashboard(d2)}});return}document.getElementById("clientsGrid").innerHTML='<p style="color:var(--err)">'+d.error+"</p>";return}DASH_CACHE=d;renderDashboard(d);renderComisiones(d.comisiones)}).catch(function(){clearTimeout(to);document.getElementById("clientsGrid").innerHTML='<p style="color:var(--tx3)">Error. <button class="btn btn-nv" onclick="cargarDashboard(true)">Reintentar</button></p>'})}
 
-// ============================================================
-//  badgeFase — Calcula texto + colores del plazo legal activo
-//  Prioriza c.faseActual (nuevo backend). Si no existe, cae al
-//  comportamiento anterior con diasAdmision/diasAudiencia para
-//  compatibilidad con despliegues que aún no se hayan actualizado.
-// ============================================================
 function badgeFase(c){
-  // Nuevo: objeto faseActual del backend
   if(c.faseActual){
     var fa=c.faseActual;
     var lb=fa.fase==="radicacion"?"radicar":fa.fase==="admision"?"admisión":fa.fase==="audiencia"?"audiencia":fa.fase;
@@ -423,7 +392,6 @@ function badgeFase(c){
       pill:"pill "+(pctR<=0.25?"pill-hot":pctR<=0.5?"pill-warn":"pill-ok")
     };
   }
-  // Fallback: backend viejo
   if(c.diasAdmision>=0){
     var rest=Math.max(0,15-c.diasAdmision),pct=rest/15;
     return {
@@ -442,7 +410,6 @@ function badgeFase(c){
       pill:"pill "+(pct<=0.25?"pill-hot":pct<=0.5?"pill-warn":"pill-ok")
     };
   }
-  // Sin plazo legal activo: mostrar días en etapa
   var de=c.diasEtapa||0;
   return {
     text:de+"d en etapa",
@@ -463,17 +430,91 @@ function renderPropuestas(d){hideMsg("propMsg");if(!d.data.length){document.getE
 function abrirConversion(lead){LEAD_ACTUAL=lead;document.getElementById("modalNombre").textContent=lead.nombre+" — "+lead.celular;document.getElementById("modNombre").value=lead.nombre||"";document.getElementById("modCedula").value="";document.getElementById("modCorreo").value="";document.getElementById("modHonorarios").value=lead.honorarios||"";document.getElementById("modCentro").value=lead.centro||"";document.getElementById("modDescuento").value=lead.descuento||"0";document.getElementById("modMotivo").value=lead.contexto||"";document.getElementById("modEstrategia").value="";var ms=document.getElementById("modModalidad");if(lead.modalidad){for(var i=0;i<ms.options.length;i++){if(ms.options[i].value.indexOf(lead.modalidad)!==-1||lead.modalidad.indexOf(ms.options[i].value)!==-1){ms.selectedIndex=i;break}}}var s=document.getElementById("modAsesor");for(var i=0;i<s.options.length;i++){if(s.options[i].value===lead.asesor){s.selectedIndex=i;break}}if(lead.honorarios)prevCom();else document.getElementById("modPreview").style.display="none";hideMsg("modMsg");document.getElementById("modalConvertir").classList.add("show")}function cerrarModal(){document.getElementById("modalConvertir").classList.remove("show");LEAD_ACTUAL=null}
 function prevCom(){var hon=Number(document.getElementById("modHonorarios").value)||0,centro=Number(document.getElementById("modCentro").value)||0,desc=Number(document.getElementById("modDescuento").value)||0;if(!hon){document.getElementById("modPreview").style.display="none";return}var cf=centro-centro*desc/100,com=hon<2e6?1e5:Math.round(hon*.08),ant=Math.round(hon*.5),c2=Math.round(hon*.25),c3=hon-ant-c2;var h="Anticipo: "+fm(ant)+" · C2: "+fm(c2)+" · C3: "+fm(c3)+"<br>Centro: "+fm(Math.round(cf*.5))+" × 2";if(desc>0)h+=' <span style="color:var(--ok)">(dto '+desc+"%)</span>";h+="<br><strong>Total: "+fm(hon+cf)+'</strong><br><span style="color:var(--gold);font-weight:700">Comisión: '+fm(com)+(hon<2e6?" (fija)":" (8%)")+"</span>";document.getElementById("modPrevContent").innerHTML=h;document.getElementById("modPreview").style.display="block"}
 function ejecutarConversion(){if(!LEAD_ACTUAL)return;var cedula=document.getElementById("modCedula").value.trim();if(!cedula){showMsg("modMsg","Cédula obligatoria","err");return}var honorarios=document.getElementById("modHonorarios").value;if(!honorarios){showMsg("modMsg","Honorarios obligatorios","err");return}showMsg("modMsg","Creando...","info");var params="action=crear_cliente&key="+enc(KEY)+"&cedula="+enc(cedula)+"&celular="+enc(LEAD_ACTUAL.celular)+"&idLead="+enc(LEAD_ACTUAL.idLead)+"&nombre="+enc(document.getElementById("modNombre").value||LEAD_ACTUAL.nombre)+"&correo="+enc(document.getElementById("modCorreo").value)+"&modalidad="+enc(document.getElementById("modModalidad").value)+"&deuda="+enc(LEAD_ACTUAL.deuda)+"&honorarios="+enc(honorarios)+"&centro="+enc(document.getElementById("modCentro").value)+"&descuento="+enc(document.getElementById("modDescuento").value)+"&asesor="+enc(document.getElementById("modAsesor").value)+"&descripcion="+enc(document.getElementById("modMotivo").value)+"&estrategia="+enc(document.getElementById("modEstrategia").value);callAPI(params).then(function(d){if(!d.ok){showMsg("modMsg",d.error,"err");return}showMsg("modMsg","✅ PIN: "+d.pin+" — Comisión: "+d.comisionTipo,"ok");addLog("🎉 "+d.nombre+" — PIN: "+d.pin);
-      // WhatsApp button with PIN
       var cel=LEAD_ACTUAL.celular.replace(/[^0-9]/g,"");if(cel.length===10)cel="57"+cel;
       var wMsg="Hola *"+d.nombre+"*, le saluda el equipo de *Colombia Abogados*.%0A%0ASu proceso de insolvencia ha sido registrado exitosamente.%0A%0APara consultar el estado de su caso en cualquier momento, ingrese a:%0A🔗 https://abogadodecolombia.com/abogados/%0A%0ASus datos de acceso:%0A📋 Cédula: *"+document.getElementById("modCedula").value+"*%0A🔐 PIN: *"+d.pin+"*%0A%0AGuarde este mensaje. ¡Estamos para servirle!";
       var wBtn=document.createElement("button");wBtn.className="btn btn-ok btn-lg";wBtn.style.marginTop="8px";wBtn.innerHTML="📲 Enviar PIN por WhatsApp";wBtn.onclick=function(){window.open("https://wa.me/"+cel+"?text="+wMsg,"_blank")};
       document.getElementById("modMsg").parentElement.insertBefore(wBtn,document.getElementById("modMsg").nextSibling);setTimeout(function(){cerrarModal();DASH_CACHE=null;cargarDashboard(true)},2500)}).catch(function(){showMsg("modMsg","Error","err")})}
 function buscarPagos(){var ced=document.getElementById("pagCed").value.trim();if(!ced){showMsg("pagMsg","Ingrese la cédula","err");return}showMsg("pagMsg","Buscando...","info");fetchCliente(ced).then(function(c){hideMsg("pagMsg");renderPagos(c,ced)}).catch(function(e){showMsg("pagMsg",e.message,"err")})}
+
+// ============================================================
+//  RENDER PAGOS — FIX: onclick pasa `this` y llama a confirmarPagoCliente
+// ============================================================
 function renderPagos(c,ced){var paid=0,total=0;c.pays.forEach(function(p){if(p.est==="PAGADO")paid+=p.mt;total+=p.mt});var pct=total?Math.round(paid/total*100):0;var h='<div class="ch"><h2>'+c.nm+'</h2><p>CC '+c.ced+'</p><div class="ch-tags"><div class="ch-tag">'+c.mod+'</div><div class="ch-tag pin">PIN: '+c.pin+'</div></div></div><div class="prog"><div class="prog-row"><span>'+fm(paid)+" ("+pct+'%)</span><span>'+fm(total)+'</span></div><div class="prog-bar"><div class="prog-fill" style="width:'+pct+'%;background:var(--ok)"></div></div></div><table class="tbl"><thead><tr><th>Concepto</th><th>Monto</th><th>Fecha</th><th>Estado</th><th></th></tr></thead><tbody>';c.pays.forEach(function(p,i){var isPd=p.est==="PAGADO",isVer=p.est==="VERIFICANDO";var pill=isPd?'<span class="pill pill-ok">Pagado</span>':isVer?'<span class="pill pill-info">Verificando</span>':'<span class="pill pill-warn">Pendiente</span>';var dt=isPd&&p.fe?fD(p.fe):"—";var btn=isPd?"✓":'<button class="btn btn-ok" id="bp'+i+'" onclick="confirmarPagoCliente(this,\''+ced+"',"+i+",'"+enc(p.nm)+"','"+enc(c.nm)+"','"+enc(c.cel||"")+"')\">"+(isVer?"Confirmar":"Pagado")+"</button>";h+='<tr id="pr'+i+'"><td style="font-weight:600">'+p.nm+'</td><td style="font-weight:800;color:'+(isPd?"var(--ok)":"var(--nv)")+'">'+fm(p.mt)+'</td><td style="font-size:11px;color:var(--tx3)">'+dt+"</td><td>"+pill+"</td><td>"+btn+"</td></tr>"});h+="</tbody></table>";document.getElementById("pagOut").innerHTML=h}
-function confirmarPago(ced,idx,nmE,nombreE,celE){var concepto=decodeURIComponent(nmE),nombre=decodeURIComponent(nombreE),cel=decodeURIComponent(celE);if(!confirm("¿Confirmar "+concepto+" de "+nombre+"?"))return;var row=document.getElementById("pr"+idx);if(row){row.cells[3].innerHTML='<span class="pill pill-ok">Pagado</span>';row.cells[4].innerHTML="✓";row.cells[1].style.color="var(--ok)";}showMsg("pagMsg","✅ "+concepto,"ok");callAPI("action=pago&key="+enc(KEY)+"&cedula="+enc(ced)+"&pago="+idx+"&estado=PAGADO").then(function(d){if(!d.ok){showMsg("pagMsg",d.error,"err");return}showMsg("pagMsg","✅ "+concepto,"ok");addLog("💰 "+concepto+" — "+nombre);DASH_CACHE=null;var row=document.getElementById("pr"+idx);if(row){row.cells[3].innerHTML='<span class="pill pill-ok">Pagado</span>';row.cells[4].innerHTML="✓";row.cells[1].style.color="var(--ok)"}triggerWH({evento:"pago_verificado",cedula:ced,nombre:nombre,celular:cel,concepto:concepto,pagoIndice:idx})}).catch(function(){showMsg("pagMsg","Error","err")})}
+
+// ============================================================
+//  FIX 1: confirmarPagoCliente (renombrada para evitar colisión con la de liquidaciones)
+//  + UI optimista con rollback si falla + lock anti-doble-clic
+// ============================================================
+function confirmarPagoCliente(btn,ced,idx,nmE,nombreE,celE){
+  if(btn&&btn.dataset.loading==="1")return;
+  var concepto=decodeURIComponent(nmE),nombre=decodeURIComponent(nombreE),cel=decodeURIComponent(celE);
+  if(!confirm("¿Confirmar "+concepto+" de "+nombre+"?"))return;
+  var row=document.getElementById("pr"+idx);
+  var prevCell3=row?row.cells[3].innerHTML:"",prevCell4=row?row.cells[4].innerHTML:"",prevCell1Color=row?row.cells[1].style.color:"";
+  if(btn){btn.dataset.loading="1";btn.disabled=true;btn.style.opacity="0.6";btn.innerText="Guardando…"}
+  if(row){row.cells[3].innerHTML='<span class="pill pill-ok">Pagado</span>';row.cells[1].style.color="var(--ok)"}
+  showMsg("pagMsg","✅ "+concepto,"ok");
+  callAPI("action=pago&key="+enc(KEY)+"&cedula="+enc(ced)+"&pago="+idx+"&estado=PAGADO").then(function(d){
+    if(!d.ok){
+      if(row){row.cells[3].innerHTML=prevCell3;row.cells[4].innerHTML=prevCell4;row.cells[1].style.color=prevCell1Color}
+      if(btn){btn.dataset.loading="0";btn.disabled=false;btn.style.opacity="1";btn.innerText="Pagado"}
+      showMsg("pagMsg",d.error||"Error","err");
+      return;
+    }
+    showMsg("pagMsg","✅ "+concepto,"ok");
+    addLog("💰 "+concepto+" — "+nombre);
+    DASH_CACHE=null;
+    if(row)row.cells[4].innerHTML="✓";
+    triggerWH({evento:"pago_verificado",cedula:ced,nombre:nombre,celular:cel,concepto:concepto,pagoIndice:idx});
+  }).catch(function(){
+    if(row){row.cells[3].innerHTML=prevCell3;row.cells[4].innerHTML=prevCell4;row.cells[1].style.color=prevCell1Color}
+    if(btn){btn.dataset.loading="0";btn.disabled=false;btn.style.opacity="1";btn.innerText="Pagado"}
+    showMsg("pagMsg","Error de conexión","err");
+  });
+}
+
 function buscarCaso(){var ced=document.getElementById("casCed").value.trim();if(!ced){showMsg("casMsg","Ingrese la cédula","err");return}showMsg("casMsg","Buscando...","info");fetchCliente(ced).then(function(c){hideMsg("casMsg");renderCaso(c,ced)}).catch(function(e){showMsg("casMsg",e.message,"err")})}
 function renderCaso(c,ced){var vis=c.steps.filter(function(s){return!(s.op&&s.est==="PENDIENTE")});var done=vis.filter(function(s){return s.est==="COMPLETADO"}).length;var total=vis.length;var pct=total?Math.round(done/total*100):0;var h='<div class="ch"><h2>'+c.nm+"</h2><p>"+c.mod+" · "+c.ab+'</p><div class="ch-tags"><div class="ch-tag">'+pct+'%</div><div class="ch-tag pin">PIN: '+c.pin+'</div></div></div><div class="prog"><div class="prog-row"><span>'+done+" completadas</span><span>"+total+'</span></div><div class="prog-bar"><div class="prog-fill" style="width:'+pct+'%;background:var(--ac)"></div></div></div><div class="card"><h3>Línea de tiempo</h3>';vis.forEach(function(s,i){var isDone=s.est==="COMPLETADO",isAct=s.est==="ACTIVO";var dot=isDone?"var(--ok)":isAct?"var(--ac)":"var(--bd)";var isLast=i===vis.length-1;h+='<div class="tl-item"><div class="tl-left"><div class="tl-dot" style="background:'+dot+'">'+(isDone?"✓":"")+"</div>";if(!isLast)h+='<div class="tl-line" style="background:'+(isDone?"var(--ok)":"var(--bd)")+'"></div>';h+='</div><div class="tl-right"><div class="tl-head"><span class="tl-name" style="color:'+(isDone||isAct?"var(--nv)":"var(--tx3)")+'">'+s.n+"</span>";if(s.fecha)h+='<span class="tl-date">'+fD(s.fecha)+"</span>";h+="</div>";if(isDone||isAct)h+='<div class="tl-desc">'+s.cd+"</div>";if(!isDone){h+='<div class="tl-form"><select id="es_'+s.id+'"><option value="COMPLETADO">Completado</option><option value="ACTIVO"'+(isAct?" selected":"")+'>Activo</option><option value="PENDIENTE">Pendiente</option></select><input type="date" id="dt_'+s.id+'" value="'+(fDi(s.fecha)||new Date().toISOString().split("T")[0])+'"><button class="btn btn-ok" onclick="moverEtapa(\''+ced+"','"+s.id+"','"+enc(s.n)+"','"+enc(c.nm)+"','"+enc(c.cel||"")+"')\">OK</button></div>"}h+="</div></div>"});h+="</div>";document.getElementById("casOut").innerHTML=h}
-function moverEtapa(ced,eid,nmE,nombreE,celE){   var btn=event&&event.target?event.target:null;   if(btn&&btn.dataset.loading==="1")return;   var estado=document.getElementById("es_"+eid).value,fecha=document.getElementById("dt_"+eid).value;   var etNm=decodeURIComponent(nmE),nombre=decodeURIComponent(nombreE),cel=decodeURIComponent(celE); if(btn){btn.dataset.loading="1";btn.disabled=true;btn.style.opacity="0.6";btn.innerText="…"} var sel=document.getElementById("es_"+eid),dt=document.getElementById("dt_"+eid);   if(sel)sel.disabled=true;if(dt)dt.disabled=true;   showMsg("casMsg","Guardando "+etNm+" → "+estado+"…","info");   var params="action=actualizar&key="+enc(KEY)+"&cedula="+enc(ced)+"&etapa="+eid+"&estado="+estado;   if(fecha)params+="&fecha="+fecha;   callAPI(params).then(function(d){     if(!d.ok){       showMsg("casMsg",d.error||"Error","err");       if(btn){btn.dataset.loading="0";btn.disabled=false;btn.style.opacity="1";btn.innerText="OK"}       if(sel)sel.disabled=false;if(dt)dt.disabled=false;       return;     }     showMsg("casMsg","✅ "+etNm+" → "+estado,"ok");     addLog("📋 "+etNm+" → "+estado+" — "+nombre);     DASH_CACHE=null; if(btn){btn.innerText="✓";btn.style.background="var(--ok)";btn.style.opacity="1"} var HITOS=["s5","s6","s7","s8","s9","fn"];     if(HITOS.indexOf(eid)!==-1&&estado==="COMPLETADO"){       triggerWH({evento:"hito_alcanzado",cedula:ced,nombre:nombre,celular:cel,etapa:eid,etapaNombre:etNm}); setTimeout(function(){buscarCaso()},400);     }   }).catch(function(){     showMsg("casMsg","Error de conexión","err");     if(btn){btn.dataset.loading="0";btn.disabled=false;btn.style.opacity="1";btn.innerText="OK"}     if(sel)sel.disabled=false;if(dt)dt.disabled=false;   }); }
+
+// ============================================================
+//  FIX 3: moverEtapa con UI optimista, lock anti-doble-clic y sin recargar todo
+//  - Deshabilita botón + select + date inmediatamente
+//  - Solo recarga en background si se completa un hito (para refrescar fase legal)
+//  - Revierte UI si falla
+// ============================================================
+function moverEtapa(ced,eid,nmE,nombreE,celE){
+  var btn=event&&event.target?event.target:null;
+  if(btn&&btn.dataset.loading==="1")return;
+  var estado=document.getElementById("es_"+eid).value,fecha=document.getElementById("dt_"+eid).value;
+  var etNm=decodeURIComponent(nmE),nombre=decodeURIComponent(nombreE),cel=decodeURIComponent(celE);
+  var sel=document.getElementById("es_"+eid),dt=document.getElementById("dt_"+eid);
+  if(btn){btn.dataset.loading="1";btn.disabled=true;btn.style.opacity="0.6";btn.innerText="…"}
+  if(sel)sel.disabled=true;if(dt)dt.disabled=true;
+  showMsg("casMsg","Guardando "+etNm+" → "+estado+"…","info");
+  var params="action=actualizar&key="+enc(KEY)+"&cedula="+enc(ced)+"&etapa="+eid+"&estado="+estado;
+  if(fecha)params+="&fecha="+fecha;
+  callAPI(params).then(function(d){
+    if(!d.ok){
+      showMsg("casMsg",d.error||"Error","err");
+      if(btn){btn.dataset.loading="0";btn.disabled=false;btn.style.opacity="1";btn.innerText="OK"}
+      if(sel)sel.disabled=false;if(dt)dt.disabled=false;
+      return;
+    }
+    showMsg("casMsg","✅ "+etNm+" → "+estado,"ok");
+    addLog("📋 "+etNm+" → "+estado+" — "+nombre);
+    DASH_CACHE=null;
+    if(btn){btn.innerText="✓";btn.style.background="var(--ok)";btn.style.opacity="1"}
+    var HITOS=["s5","s6","s7","s8","s9","fn"];
+    if(HITOS.indexOf(eid)!==-1&&estado==="COMPLETADO"){
+      triggerWH({evento:"hito_alcanzado",cedula:ced,nombre:nombre,celular:cel,etapa:eid,etapaNombre:etNm});
+      setTimeout(function(){buscarCaso()},400);
+    }
+  }).catch(function(){
+    showMsg("casMsg","Error de conexión","err");
+    if(btn){btn.dataset.loading="0";btn.disabled=false;btn.style.opacity="1";btn.innerText="OK"}
+    if(sel)sel.disabled=false;if(dt)dt.disabled=false;
+  });
+}
 var COM_CACHE=null;
 function cargarComisiones(){
   if(COM_CACHE){renderComisiones();return}
@@ -482,10 +523,8 @@ function cargarComisiones(){
   callAPI("action=comisiones_detalle&key="+enc(KEY)).then(function(d){
     if(!d.ok){if(el)el.innerHTML='<p style="padding:20px;color:var(--err);text-align:center">'+(d.error||"Error")+'</p>';return}
     COM_CACHE=d;
-    // Poblar filtro de comerciales
     var sel=document.getElementById("comFiltro");
     if(sel){var opts='<option value="">Todos los comerciales</option>';d.comerciales.forEach(function(a){opts+='<option value="'+a.nombre+'">'+a.nombre+'</option>'});sel.innerHTML=opts}
-    // Poblar filtro de meses basado en fechas de caso
     var selMes=document.getElementById("comFiltroMes");
     if(selMes){
       var meses={};
@@ -529,7 +568,6 @@ function filtrarComisiones(){
       return true;
     });
   }
-  // Recalcular comerciales con los clientes filtrados (para que el resumen cuadre)
   var porCom={};
   cli.forEach(function(c){
     if(!porCom[c.asesor])porCom[c.asesor]={nombre:c.asesor,teorico:0,liquidado:0,pendiente:0,casos:0};
@@ -542,7 +580,6 @@ function filtrarComisiones(){
   return{clientes:cli,comerciales:com};
 }
 
-// Maneja el filtro de día cuando cambia el mes
 function onComMesChange(){
   var mes=document.getElementById("comFiltroMes").value;
   var selDia=document.getElementById("comFiltroDia");
@@ -572,8 +609,6 @@ function renderComisiones(){
   if(!COM_CACHE)return;
   var fl=filtrarComisiones();
   var cli=fl.clientes,com=fl.comerciales;
-
-  // KPIs
   var tot={teorico:0,liquidado:0,pendiente:0};
   cli.forEach(function(c){tot.teorico+=c.comision.totales.teorico;tot.liquidado+=c.comision.totales.liquidado;tot.pendiente+=c.comision.totales.pendiente});
   var pctGlobal=tot.teorico>0?Math.round(tot.liquidado/tot.teorico*100):0;
@@ -584,8 +619,6 @@ function renderComisiones(){
     +'<div class="kpi"><div class="kpi-stripe" style="background:var(--info)"></div><div class="kpi-label">% Liquidado</div><div class="kpi-val" style="color:var(--info);font-size:18px">'+pctGlobal+'%</div></div>'
     +'<div class="kpi"><div class="kpi-stripe" style="background:var(--nv)"></div><div class="kpi-label">Casos</div><div class="kpi-val" style="color:var(--nv);font-size:18px">'+cli.length+'</div></div>';
   document.getElementById("comKpis").innerHTML=h;
-
-  // Resumen por comercial (tabla compacta)
   var cr="";
   if(!com.length)cr='<p style="color:var(--tx3);font-size:11px;padding:4px">Sin datos</p>';
   else {
@@ -597,16 +630,12 @@ function renderComisiones(){
     cr+='</tbody></table>';
   }
   document.getElementById("comPorComercialTabla").innerHTML=cr;
-
-  // Tabla principal
   document.getElementById("comCount").innerText=cli.length;
   if(!cli.length){
     document.getElementById("comTablaWrap").innerHTML='<p style="padding:20px;color:var(--tx3);text-align:center">No hay casos que coincidan con el filtro</p>';
     return;
   }
-  // Ordenar por pendiente descendente
   var sorted=cli.slice().sort(function(a,b){return b.comision.totales.pendiente-a.comision.totales.pendiente});
-
   var t='<table class="comt"><thead><tr>'
     +'<th style="width:28px"></th>'
     +'<th>Cliente</th>'
@@ -637,7 +666,6 @@ function renderComisiones(){
       +'<td class="num" style="color:var(--warn)">'+fm(T.pendiente)+'</td>'
       +'<td class="c"><span class="com-pill '+pillCls+'">'+pct+'%</span></td>'
       +'</tr>';
-    // Row expandible (oculta inicialmente)
     t+='<tr class="com-exp-row" id="com-x-'+idx+'" style="display:none"><td colspan="10">'+renderExpanded(c)+'</td></tr>';
   });
   t+='</tbody></table>';
@@ -649,31 +677,23 @@ function renderExpanded(c){
   var diferencia=V.honorarios-P.honorariosPricing;
   var T=c.comision.totales;
   var pctT=T.teorico>0?Math.round(T.liquidado/T.teorico*100):0;
-
   var h='<div class="com-exp-panel">';
-
-  // ━━━━━━ BANNER SUPERIOR: Progreso global tipo Rappi ━━━━━━
   h+='<div style="grid-column:1/-1;background:var(--sf);border:1.5px solid var(--bd);padding:16px 18px;border-radius:12px;margin-bottom:4px;box-shadow:0 2px 6px rgba(10,22,40,0.04)">';
   h+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:10px">';
   h+='<div><div style="font-size:10px;font-weight:800;color:var(--tx3);text-transform:uppercase;letter-spacing:1.5px">Comisión total del caso</div>';
   h+='<div style="font-size:22px;font-weight:800;margin-top:2px;color:var(--nv)">'+fm(T.liquidado)+' <span style="color:var(--tx3);font-size:16px;font-weight:600">/ '+fm(T.teorico)+'</span></div></div>';
   h+='<div style="text-align:right"><div style="font-size:32px;font-weight:800;color:var(--ac);line-height:1">'+pctT+'%</div><div style="font-size:10px;color:var(--tx3);font-weight:700;letter-spacing:0.5px;text-transform:uppercase">liquidado</div></div></div>';
-  // Barra de progreso
   h+='<div style="height:10px;background:var(--sf2);border-radius:6px;overflow:hidden;margin-top:6px;border:1px solid var(--bd)"><div style="height:100%;width:'+pctT+'%;background:linear-gradient(90deg,var(--ok),var(--ac));border-radius:6px;transition:width 0.5s"></div></div>';
   h+='<div style="display:flex;justify-content:space-between;margin-top:8px;font-size:11px;font-weight:700"><span style="color:var(--ok)">✓ Liquidado '+fm(T.liquidado)+'</span><span style="color:var(--warn)">⏳ Pendiente '+fm(T.pendiente)+'</span></div>';
   h+='</div>';
-
-  // ━━━━━━ PANEL IZQUIERDO: Datos económicos ━━━━━━
   h+='<div class="com-exp-sec">';
   h+='<div class="com-exp-sec-title">📋 Plan de pagos del caso</div>';
   h+='<div class="com-exp-row-data"><span class="com-exp-label">Tramo pricing</span><span class="com-exp-val" style="font-size:10px">'+P.tramo+'</span></div>';
   h+='<div class="com-exp-row-data"><span class="com-exp-label">Esquema comisional</span><span class="com-exp-val" style="font-size:10px">'+P.esquema+'</span></div>';
-
   h+='<div style="margin:10px 0 6px;padding-top:8px;border-top:2px solid var(--acl);font-size:9px;font-weight:800;color:var(--tx3);text-transform:uppercase;letter-spacing:1px">⚖️ HONORARIOS JURÍDICOS</div>';
   h+='<div class="com-exp-row-data"><span class="com-exp-label">Pricing</span><span class="com-exp-val blue">'+fm(P.honorariosPricing)+'</span></div>';
   h+='<div class="com-exp-row-data"><span class="com-exp-label">Vendido al cliente</span><span class="com-exp-val">'+fm(V.honorarios)+'</span></div>';
   h+='<div class="com-exp-row-data"><span class="com-exp-label">Diferencia (adicional)</span><span class="com-exp-val '+(diferencia>0?"green":diferencia<0?"red":"")+'">'+(diferencia>0?"+":"")+fm(diferencia)+'</span></div>';
-
   h+='<div style="margin:10px 0 6px;padding-top:8px;border-top:2px solid var(--acl);font-size:9px;font-weight:800;color:var(--tx3);text-transform:uppercase;letter-spacing:1px">🏛️ CENTRO DE CONCILIACIÓN</div>';
   h+='<div class="com-exp-row-data"><span class="com-exp-label">Pricing</span><span class="com-exp-val blue">'+fm(P.centroPricing)+'</span></div>';
   h+='<div class="com-exp-row-data"><span class="com-exp-label">Vendido al cliente</span><span class="com-exp-val">'+fm(V.centro)+'</span></div>';
@@ -682,19 +702,14 @@ function renderExpanded(c){
   } else {
     h+='<div class="com-exp-row-data"><span class="com-exp-label">Descuento</span><span class="com-exp-val green">Sin descuento ✓</span></div>';
   }
-
   h+='<div style="margin:10px 0 6px;padding-top:8px;border-top:2px solid var(--acl);font-size:9px;font-weight:800;color:var(--tx3);text-transform:uppercase;letter-spacing:1px">💳 PAGOS DEL CLIENTE</div>';
   h+='<div class="com-exp-row-data"><span class="com-exp-label">Honorarios</span><span class="com-exp-val green">'+fm(G.honPagado)+' / '+fm(G.honTotal)+' ('+G.pctHonPagado+'%)</span></div>';
   h+='<div style="margin-top:2px;height:4px;background:var(--sf2);border-radius:2px;overflow:hidden"><div style="height:100%;width:'+G.pctHonPagado+'%;background:var(--ok)"></div></div>';
   h+='<div class="com-exp-row-data" style="margin-top:8px"><span class="com-exp-label">Centro</span><span class="com-exp-val green">'+fm(G.cenPagado)+' / '+fm(G.cenTotal)+' ('+G.pctCenPagado+'%)</span></div>';
   h+='<div style="margin-top:2px;height:4px;background:var(--sf2);border-radius:2px;overflow:hidden"><div style="height:100%;width:'+G.pctCenPagado+'%;background:var(--ok)"></div></div>';
   h+='</div>';
-
-  // ━━━━━━ PANEL DERECHO: Desglose de comisión tipo Rappi ━━━━━━
   h+='<div class="com-exp-sec">';
   h+='<div class="com-exp-sec-title">💼 Desglose de comisión</div>';
-
-  // Helper para renderear una componente tipo tarjeta Rappi
   function renderComp(titulo, icono, comp, detail, teoricoSuffix){
     var pct=comp.teorico>0?Math.round(comp.liquidado/comp.teorico*100):0;
     var st=comp.teorico===comp.liquidado&&comp.teorico>0?"done":comp.liquidado>0?"partial":comp.teorico>0?"pending":"zero";
@@ -706,31 +721,23 @@ function renderExpanded(c){
     html+='<div style="font-size:9px;color:var(--tx3);margin-top:2px">'+detail+'</div></div>';
     html+='<div style="text-align:right"><div style="font-size:13px;font-weight:800;color:var(--nv);font-variant-numeric:tabular-nums">'+fm(comp.liquidado)+'</div>';
     html+='<div style="font-size:9px;color:var(--tx3);font-weight:600">de '+fm(comp.teorico)+teoricoSuffix+'</div></div></div>';
-    // barra de progreso
     html+='<div style="display:flex;gap:6px;align-items:center"><div style="flex:1;height:6px;background:'+bg+';border-radius:3px;overflow:hidden"><div style="height:100%;width:'+pct+'%;background:'+color+';border-radius:3px;transition:width 0.4s"></div></div>';
     html+='<div style="font-size:10px;font-weight:800;color:'+color+';min-width:34px;text-align:right">'+pct+'%</div></div>';
     html+='</div>';
     return html;
   }
-
   var detailBase=P.esquema+(K.base.fecha?" · Liberada "+K.base.fecha:" · Aún no liberada");
   h+=renderComp('Comisión Base', '⭐', K.base, detailBase, '');
-
   var detailAdic='100% del adicional · proporcional al '+G.pctHonPagado+'% pagado';
   h+=renderComp('Valor Adicional Honorarios', '➕', K.sobreprecio, detailAdic, '');
-
   var detailCen=V.hayDescuentoReal?'⚠️ Descuento '+V.pctDescuentoReal+'% aplicado · SIN comisión centro':'10% del centro · proporcional al '+G.pctCenPagado+'% pagado';
   h+=renderComp('Comisión Centro', '🏛️', K.centro, detailCen, '');
-
-  // Total destacado
   h+='<div style="margin-top:12px;padding:12px 14px;background:linear-gradient(135deg,var(--acl),var(--sf2));border-radius:10px;border:1.5px solid var(--ac)">';
   h+='<div style="display:flex;justify-content:space-between;align-items:center"><div style="font-size:10px;font-weight:800;color:var(--ac);text-transform:uppercase;letter-spacing:1.5px">TOTAL COMISIÓN</div>';
   h+='<div style="font-size:11px;color:var(--ac);font-weight:800">'+pctT+'%</div></div>';
   h+='<div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:6px"><div><div style="font-size:20px;font-weight:800;color:var(--nv)">'+fm(T.liquidado)+'</div><div style="font-size:10px;color:var(--tx2);font-weight:600">liquidado</div></div>';
   h+='<div style="text-align:right"><div style="font-size:14px;font-weight:700;color:var(--warn)">'+fm(T.pendiente)+'</div><div style="font-size:10px;color:var(--tx2);font-weight:600">pendiente</div></div></div>';
   h+='</div>';
-
-  // Eventos
   if(c.comision.eventos.length){
     h+='<div style="margin-top:14px;padding-top:10px;border-top:1px solid var(--bd)"><div style="font-size:9px;font-weight:800;color:var(--tx3);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px">📍 Historial de liberaciones</div>';
     c.comision.eventos.forEach(function(ev){
@@ -740,7 +747,6 @@ function renderExpanded(c){
   }
   h+='</div>';
   h+='</div>';
-
   return h;
 }
 
@@ -749,13 +755,11 @@ function toggleComCaso(idx){
   var exp=document.getElementById("com-x-"+idx);
   if(!row||!exp)return;
   var isOpen=row.classList.contains("open");
-  // Cerrar todas las demás
   document.querySelectorAll(".com-exp-row").forEach(function(r){r.style.display="none"});
   document.querySelectorAll(".comt tbody tr.open").forEach(function(r){r.classList.remove("open")});
   if(!isOpen){row.classList.add("open");exp.style.display="table-row"}
 }
 
-// ====================== VER BD_PRICING ======================
 var PRICING_CACHE_FE=null;
 function verPricing(){
   var m=document.getElementById("pricingModal");
@@ -801,7 +805,6 @@ function renderPricingModal(d){
   document.getElementById("pricingModalBody").innerHTML=h;
 }
 
-// ====================== LIQUIDACIONES AL COMERCIAL ======================
 var LIQ_CACHE=null, LIQ_VISTA="pend";
 
 function cambiarSubTab(t){
@@ -809,7 +812,6 @@ function cambiarSubTab(t){
   document.getElementById("com-tab-liq").classList.toggle("on",t==="liq");
   document.getElementById("com-sub-det").style.display=t==="det"?"block":"none";
   document.getElementById("com-sub-liq").style.display=t==="liq"?"block":"none";
-  // Limpiar selección al cambiar de tab
   LIQ_SELECCION={};
   var bar=document.getElementById("liqBatchBar");
   if(bar)bar.style.display="none";
@@ -820,13 +822,11 @@ function cambiarVistaLiq(v){
   LIQ_VISTA=v;
   document.getElementById("liq-v-pend").classList.toggle("on",v==="pend");
   document.getElementById("liq-v-hist").classList.toggle("on",v==="hist");
-  // Si cambias a Historial, limpiar selección (los checkboxes solo aparecen en Pendientes)
   if(v==="hist"){
     LIQ_SELECCION={};
     var bar=document.getElementById("liqBatchBar");
     if(bar)bar.style.display="none";
   }
-  // Re-calcular filtro de día si hay mes seleccionado (usa distinta referencia según vista)
   var mes=document.getElementById("liqFiltroMes");
   if(mes&&mes.value)onMesChange();
   else renderLiquidaciones();
@@ -845,16 +845,12 @@ function cargarLiquidaciones(){
 function renderLiquidaciones(){
   if(!LIQ_CACHE)return;
   var d=LIQ_CACHE;
-
-  // Poblar filtro de comercial (una sola vez)
   var selCom=document.getElementById("liqFiltroComercial");
   if(selCom && selCom.options.length<=1){
     d.comerciales.forEach(function(c){
       var o=document.createElement("option");o.value=c.nombre;o.text=c.nombre;selCom.add(o);
     });
   }
-
-  // Poblar filtro de meses (una sola vez) basado en fechas reales de eventos
   var selMes=document.getElementById("liqFiltroMes");
   if(selMes && selMes.options.length<=1){
     var mesesSet={};
@@ -873,13 +869,10 @@ function renderLiquidaciones(){
       selMes.add(o);
     });
   }
-
-  // Aplicar filtros
   var fCom=document.getElementById("liqFiltroComercial").value;
   var fTipo=document.getElementById("liqFiltroTipo").value;
   var fMes=document.getElementById("liqFiltroMes").value;
   var fDia=document.getElementById("liqFiltroDia").value;
-
   function matchFiltros(ev, usarFechaPago){
     if(fCom && ev.comercial!==fCom)return false;
     if(fTipo && ev.tipo!==fTipo)return false;
@@ -893,27 +886,19 @@ function renderLiquidaciones(){
     }
     return true;
   }
-
   var pendFilt=d.pendientes.filter(function(e){return matchFiltros(e,false)});
   var histFilt=d.pagados.filter(function(e){return matchFiltros(e,true)});
-
-  // Counts en toggles
   document.getElementById("liqCountPend").innerText=pendFilt.length;
   document.getElementById("liqCountHist").innerText=histFilt.length;
-
-  // KPIs basados en filtros (para que cambien al filtrar)
   var kpiPend=0, kpiPagado=0;
   pendFilt.forEach(function(e){kpiPend+=e.montoCalculado});
   histFilt.forEach(function(e){kpiPagado+=e.montoPagado||e.montoCalculado});
-
   var kh=''
     +'<div class="kpi"><div class="kpi-stripe" style="background:var(--warn)"></div><div class="kpi-label">Pendiente por pagar</div><div class="kpi-val" style="color:var(--warn);font-size:18px">'+fm(kpiPend)+'</div></div>'
     +'<div class="kpi"><div class="kpi-stripe" style="background:var(--ok)"></div><div class="kpi-label">Pagado al comercial</div><div class="kpi-val" style="color:var(--ok);font-size:18px">'+fm(kpiPagado)+'</div></div>'
     +'<div class="kpi"><div class="kpi-stripe" style="background:var(--info)"></div><div class="kpi-label">Eventos pendientes</div><div class="kpi-val" style="color:var(--info);font-size:18px">'+pendFilt.length+'</div></div>'
     +'<div class="kpi"><div class="kpi-stripe" style="background:var(--nv)"></div><div class="kpi-label">Eventos pagados</div><div class="kpi-val" style="color:var(--nv);font-size:18px">'+histFilt.length+'</div></div>';
   document.getElementById("liqKpis").innerHTML=kh;
-
-  // Resumen por comercial (basado en filtros activos)
   var porCom={};
   pendFilt.forEach(function(e){
     if(!porCom[e.comercial])porCom[e.comercial]={pendiente:0,pagado:0,eventos:0};
@@ -941,14 +926,11 @@ function renderLiquidaciones(){
     cc+='</div>';
   }
   document.getElementById("liqPorComercial").innerHTML=cc;
-
-  // Tabla según vista (pendientes / historial)
   var items=LIQ_VISTA==="pend"?pendFilt:histFilt;
   if(!items.length){
     document.getElementById("liqTablaWrap").innerHTML='<p style="padding:24px;color:var(--tx3);text-align:center">'+(LIQ_VISTA==="pend"?(fCom||fTipo||fMes?"Sin eventos pendientes con los filtros aplicados":"🎉 No hay eventos pendientes de pago al comercial"):"No hay historial con los filtros aplicados")+'</p>';
     return;
   }
-
   var t='<table class="liqt"><thead><tr>';
   if(LIQ_VISTA==="pend"){
     t+='<th style="width:28px" class="c"><input type="checkbox" class="liq-check" onclick="toggleSeleccionAll(this)" title="Seleccionar todos"></th><th>Fecha liberación</th><th>Cliente</th><th>Comercial</th><th class="c">Tipo</th><th class="num">Monto</th><th class="c">Acciones</th>';
@@ -956,7 +938,6 @@ function renderLiquidaciones(){
     t+='<th>Fecha pago</th><th>Cliente</th><th>Comercial</th><th class="c">Tipo</th><th class="num">Monto pagado</th><th class="num">Calculado</th><th>Motivo</th><th class="c">Acciones</th>';
   }
   t+='</tr></thead><tbody>';
-
   items.forEach(function(ev,i){
     var globalIdx=LIQ_CACHE[LIQ_VISTA==="pend"?"pendientes":"pagados"].findIndex(function(e){return e.id===ev.id});
     t+='<tr>';
@@ -983,8 +964,6 @@ function renderLiquidaciones(){
     }
     t+='</tr>';
   });
-
-  // FOOTER con totales
   if(LIQ_VISTA==="pend"){
     t+='<tr class="liqt-footer"><td colspan="5" style="text-align:right;font-weight:800;color:var(--tx2);padding:10px 8px;background:var(--sf2)">TOTAL FILTRADO:</td><td class="num" style="padding:10px 8px;background:var(--sf2);color:var(--warn);font-weight:800;font-size:13px">'+fm(kpiPend)+'</td><td style="background:var(--sf2)"></td></tr>';
   } else {
@@ -992,7 +971,6 @@ function renderLiquidaciones(){
   }
   t+='</tbody></table>';
   document.getElementById("liqTablaWrap").innerHTML=t;
-  // Actualizar barra de selección (puede haber selecciones vigentes al re-render)
   actualizarBarraSeleccion();
 }
 
@@ -1006,6 +984,9 @@ function limpiarFiltrosLiq(){
   renderLiquidaciones();
 }
 
+// ============================================================
+//  FIX 4: abrirModalPago llama ahora a confirmarPagoComercial
+// ============================================================
 function abrirModalPago(id,i){
   var ev=LIQ_CACHE.pendientes[i];
   if(!ev)return;
@@ -1028,6 +1009,10 @@ function checkMotivoLiq(calculado){
   wrap.style.display=monto!==calculado?"block":"none";
 }
 
+// ============================================================
+//  FIX 4: Renombrada confirmarPago → confirmarPagoComercial
+//  (evita colisión con confirmarPagoCliente del módulo de pagos)
+// ============================================================
 function confirmarPagoComercial(id,calculado){
   var fecha=document.getElementById("liqFechaPago").value;
   var monto=Number(document.getElementById("liqMontoPagado").value)||0;
@@ -1039,7 +1024,6 @@ function confirmarPagoComercial(id,calculado){
   if(monto<=0){msg.innerHTML='<div class="msg err">Monto inválido</div>';return}
   if(monto!==calculado&&!motivo){msg.innerHTML='<div class="msg err">Debes registrar un motivo si el monto difiere del calculado</div>';return}
   msg.innerHTML='<div class="msg info">Guardando...</div>';
-  // Guardar evento para WhatsApp
   var evActual=LIQ_CACHE.pendientes.find(function(e){return e.id===id});
   var qs="action=marcar_comision_pagada&key="+enc(KEY)+"&id="+enc(id)+"&fecha_pago="+enc(fecha)+"&monto_pagado="+monto;
   if(motivo)qs+="&motivo="+enc(motivo);
@@ -1047,13 +1031,11 @@ function confirmarPagoComercial(id,calculado){
   callAPI(qs).then(function(d){
     if(!d.ok){msg.innerHTML='<div class="msg err">'+(d.error||"Error")+'</div>';return}
     msg.innerHTML='<div class="msg ok">✅ Pago registrado</div>';
-    // Agregar botón WhatsApp
     if(evActual){
       var evCopia={comercial:evActual.comercial,nombre:evActual.nombre,tipo:evActual.tipo,montoPagado:monto,montoCalculado:calculado};
       var waHTML=generarBotonWhatsApp([evCopia],fecha,monto);
       var waDiv=document.createElement("div");waDiv.style.marginTop="12px";waDiv.innerHTML=waHTML;
       msg.parentNode.insertBefore(waDiv,msg.nextSibling);
-      // Reemplazar botones
       var btns=document.querySelectorAll("#liqModalBody > div:last-child button");
       if(btns.length){
         btns[btns.length-1].style.display="none";
@@ -1076,7 +1058,6 @@ function confirmarRevertir(id){
   });
 }
 
-// ====================== EDITAR EVENTO ======================
 function abrirModalEditar(id,tipo,idx){
   var ev=LIQ_CACHE[tipo==="pend"?"pendientes":"pagados"][idx];
   if(!ev)return;
@@ -1130,11 +1111,9 @@ function guardarEdicion(id){
   }).catch(function(){msg.innerHTML='<div class="msg err">Error de conexión</div>'});
 }
 
-// ====================== DROPDOWN HELPERS ======================
 function toggleDD(id){
   var m=document.getElementById(id);if(!m)return;
   var isOpen=m.style.display==="block";
-  // Cerrar todos los otros dropdowns primero
   document.querySelectorAll(".dd-menu").forEach(function(d){d.style.display="none"});
   if(!isOpen)m.style.display="block";
 }
@@ -1143,15 +1122,13 @@ document.addEventListener("click",function(e){
   if(!e.target.closest(".dd-menu")&&!e.target.closest("button")||e.target.classList.contains("dd-menu-close"))cerrarDD();
 },true);
 document.addEventListener("click",function(e){
-  // Solo cerrar si el click NO es en un botón que abre dropdown o dentro del menú
   var btn=e.target.closest("button");
   if(btn&&btn.getAttribute("onclick")&&btn.getAttribute("onclick").indexOf("toggleDD")>-1)return;
   if(e.target.closest(".dd-menu"))return;
   cerrarDD();
 });
 
-// ====================== SELECCIÓN LOTE LIQUIDACIONES ======================
-var LIQ_SELECCION={};  // {id: true}
+var LIQ_SELECCION={};
 
 function toggleSeleccion(id,el){
   if(el.checked)LIQ_SELECCION[id]=true;
@@ -1187,7 +1164,6 @@ function deseleccionarTodosLiq(){
   actualizarBarraSeleccion();
 }
 
-// ====================== FILTRO DÍA (al seleccionar mes) ======================
 function onMesChange(){
   var mes=document.getElementById("liqFiltroMes").value;
   var selDia=document.getElementById("liqFiltroDia");
@@ -1197,7 +1173,6 @@ function onMesChange(){
     selDia.value="";
     renderLiquidaciones();return;
   }
-  // Poblar días basados en los eventos del mes
   var dias={};
   if(LIQ_CACHE){
     LIQ_CACHE.pendientes.concat(LIQ_CACHE.pagados).forEach(function(ev){
@@ -1216,7 +1191,6 @@ function onMesChange(){
   renderLiquidaciones();
 }
 
-// ====================== MODAL PAGO LOTE ======================
 function abrirModalPagoLote(){
   var ids=Object.keys(LIQ_SELECCION);
   if(!ids.length)return;
@@ -1230,7 +1204,6 @@ function abrirModalPagoLote(){
     porComercial[e.comercial].eventos.push(e);
   });
   var hoy=new Date().toISOString().slice(0,10);
-
   document.getElementById("liqModalSub").innerHTML=ids.length+' eventos · Total <strong style="color:var(--ac)">'+fm(total)+'</strong>';
   var b='<div style="padding:10px 12px;background:var(--acl);border-radius:8px;margin-bottom:14px;font-size:11px"><div style="font-weight:800;color:var(--nv);margin-bottom:6px">Resumen por comercial:</div>';
   Object.keys(porComercial).forEach(function(nm){
@@ -1245,7 +1218,6 @@ function abrirModalPagoLote(){
   b+='<div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px;flex-wrap:wrap"><button class="btn btn-ghost" onclick="document.getElementById(\'liqModal\').style.display=\'none\'" style="padding:10px 18px">Cancelar</button><button class="liq-btn-pay" onclick="confirmarPagoLote()" style="padding:10px 18px;font-size:12px">✓ Confirmar '+ids.length+' pagos</button></div>';
   document.getElementById("liqModalBody").innerHTML=b;
   document.getElementById("liqModal").style.display="flex";
-  // Guardar eventos para usar en WhatsApp
   window.__LOTE_EVENTOS=eventos;
 }
 
@@ -1265,19 +1237,16 @@ function confirmarPagoLote(){
     var eventos=window.__LOTE_EVENTOS||[];
     var totalPagado=d.totalPagado||0;
     msg.innerHTML='<div class="msg ok">✅ '+d.count+' pagos registrados ('+fm(totalPagado)+')</div>';
-    // Agregar botón WhatsApp
     var waBtn=document.createElement("div");
     waBtn.style.marginTop="12px";
     waBtn.innerHTML=generarBotonWhatsApp(eventos,fecha,totalPagado);
     msg.parentNode.insertBefore(waBtn,msg.nextSibling);
-    // Reemplazar botones por cerrar
     var btns=document.querySelectorAll("#liqModalBody > div:last-child button");
     if(btns.length){
       btns[btns.length-1].style.display="none";
       btns[0].innerText="Cerrar";
     }
     addLog(d.count+" liquidaciones pagadas en lote ($"+fm(totalPagado)+")");
-    // Recargar en background
     setTimeout(function(){
       LIQ_SELECCION={};
       LIQ_CACHE=null;COM_CACHE=null;
@@ -1286,9 +1255,7 @@ function confirmarPagoLote(){
   }).catch(function(){msg.innerHTML='<div class="msg err">Error de conexión</div>'});
 }
 
-// ====================== WHATSAPP ======================
 function generarBotonWhatsApp(eventos,fechaPago,totalPagado){
-  // Agrupar por comercial
   var porCom={};
   eventos.forEach(function(e){
     if(!porCom[e.comercial])porCom[e.comercial]={total:0,eventos:[]};
@@ -1310,7 +1277,6 @@ function generarBotonWhatsApp(eventos,fechaPago,totalPagado){
     txt+='\n_Colombia Abogados — Sistema interno_';
     msgs.push({comercial:nm,texto:txt});
   });
-  // Render: un botón por cada comercial
   var h='<div style="padding:12px;background:#f0fdf4;border:1.5px solid #86efac;border-radius:10px"><div style="font-size:11px;font-weight:800;color:#15803d;margin-bottom:8px;text-transform:uppercase;letter-spacing:1px">📱 Notificar a los comerciales</div>';
   msgs.forEach(function(m,i){
     h+='<div style="display:flex;gap:6px;margin-bottom:6px;align-items:center;flex-wrap:wrap"><span style="font-size:12px;font-weight:700;color:var(--nv);flex:1;min-width:120px">'+m.comercial+'</span>';
@@ -1347,8 +1313,6 @@ function fallbackCopy(txt){
   try{document.execCommand("copy");showMsg("comMsg","✅ Mensaje copiado","ok")}catch(e){showMsg("comMsg","No se pudo copiar","err")}
   document.body.removeChild(ta);
 }
-
-// ====================== PDF LIQUIDACIONES ======================
 function exportarPDFLiquidaciones(){
   if(!LIQ_CACHE){showMsg("comMsg","Carga los datos primero","err");return}
   var fCom=document.getElementById("liqFiltroComercial").value;
@@ -1371,440 +1335,291 @@ function exportarPDFLiquidaciones(){
   var items=LIQ_VISTA==="pend"?LIQ_CACHE.pendientes.filter(function(e){return mf(e,false)}):LIQ_CACHE.pagados.filter(function(e){return mf(e,true)});
   if(!items.length){showMsg("comMsg","Sin datos","err");return}
   showMsg("comMsg","Generando PDF...","info");
-
-  function gen(){
-    var total=0;items.forEach(function(e){total+=(LIQ_VISTA==="pend"?e.montoCalculado:(e.montoPagado||e.montoCalculado))});
-    var subtitulo=LIQ_VISTA==="pend"?"Pendientes":"Historial";
-    if(fCom)subtitulo+=" · "+fCom;
-    var html='<div style="font-family:Outfit,sans-serif;color:#0a1628;padding:25px;width:900px">';
-    html+='<div style="border-bottom:3px solid #c9a449;padding-bottom:12px;margin-bottom:18px"><div style="font-size:9px;font-weight:700;color:#94a3b8;letter-spacing:2px;text-transform:uppercase">Colombia Abogados · Liquidaciones</div>';
-    html+='<div style="font-size:20px;font-weight:800;margin-top:4px">'+subtitulo+'</div>';
-    html+='<div style="font-size:10px;color:#475569;margin-top:4px">Generado: '+new Date().toLocaleDateString('es-CO',{dateStyle:'long'})+' · '+items.length+' eventos · Total '+fm(total)+'</div></div>';
-    html+='<table style="width:100%;border-collapse:collapse;font-size:10px"><thead><tr style="background:#0a1628;color:white">';
-    if(LIQ_VISTA==="pend"){
-      html+='<th style="padding:6px;text-align:left">Fecha</th><th style="padding:6px;text-align:left">Cliente</th><th style="padding:6px;text-align:left">Comercial</th><th style="padding:6px;text-align:center">Tipo</th><th style="padding:6px;text-align:right">Monto</th>';
-    } else {
-      html+='<th style="padding:6px;text-align:left">Fecha pago</th><th style="padding:6px;text-align:left">Cliente</th><th style="padding:6px;text-align:left">Comercial</th><th style="padding:6px;text-align:center">Tipo</th><th style="padding:6px;text-align:right">Pagado</th><th style="padding:6px;text-align:right">Calc.</th><th style="padding:6px;text-align:left">Motivo</th>';
-    }
-    html+='</tr></thead><tbody>';
-    items.forEach(function(ev,i){
-      var bg=i%2===0?"#ffffff":"#f5f7fa";
-      html+='<tr style="background:'+bg+';border-bottom:1px solid #e2e8f0">';
-      if(LIQ_VISTA==="pend"){
-        html+='<td style="padding:5px 6px">'+ev.fecha+'</td><td style="padding:5px 6px;font-weight:700">'+ev.nombre+'<div style="font-size:9px;color:#94a3b8">CC '+ev.cedula+'</div></td><td style="padding:5px 6px">'+ev.comercial+'</td><td style="padding:5px 6px;text-align:center"><strong>'+ev.tipo.toUpperCase()+'</strong></td><td style="padding:5px 6px;text-align:right;font-weight:800;color:#f59e0b">'+fm(ev.montoCalculado)+'</td>';
-      } else {
-        var dif=ev.montoPagado!==ev.montoCalculado;
-        html+='<td style="padding:5px 6px">'+ev.fechaPago+'</td><td style="padding:5px 6px;font-weight:700">'+ev.nombre+'<div style="font-size:9px;color:#94a3b8">CC '+ev.cedula+'</div></td><td style="padding:5px 6px">'+ev.comercial+'</td><td style="padding:5px 6px;text-align:center"><strong>'+ev.tipo.toUpperCase()+'</strong></td><td style="padding:5px 6px;text-align:right;font-weight:800;color:#16a34a">'+fm(ev.montoPagado)+'</td><td style="padding:5px 6px;text-align:right;color:#94a3b8;font-size:9px">'+fm(ev.montoCalculado)+'</td><td style="padding:5px 6px;font-size:9px">'+(dif?(ev.motivo||"Sin motivo"):"—")+'</td>';
-      }
-      html+='</tr>';
-    });
-    // Total
-    var colspan=LIQ_VISTA==="pend"?4:4;
-    html+='<tr style="background:#0a1628;color:white"><td colspan="'+colspan+'" style="padding:8px;text-align:right;font-weight:800">TOTAL:</td><td style="padding:8px;text-align:right;font-weight:800;color:#c9a449">'+fm(total)+'</td>';
-    if(LIQ_VISTA==="hist")html+='<td colspan="2" style="background:#0a1628"></td>';
-    html+='</tr>';
-    html+='</tbody></table>';
-    html+='<div style="margin-top:25px;text-align:center;font-size:8px;color:#94a3b8;letter-spacing:1px">COLOMBIA ABOGADOS · SISTEMA DE GESTIÓN INTERNO</div></div>';
-
-    var hidden=document.createElement("div");
-    hidden.style.position="fixed";hidden.style.left="-99999px";hidden.innerHTML=html;
-    document.body.appendChild(hidden);
-    var suffix=[fCom,fTipo,fMes,fDia,LIQ_VISTA].filter(Boolean).join("_").replace(/\s+/g,"_")||"Todos";
-    html2pdf().set({margin:[6,6,6,6],filename:"Liquidaciones_"+suffix+"_"+new Date().toISOString().slice(0,10)+".pdf",image:{type:'jpeg',quality:0.95},html2canvas:{scale:2,width:900},jsPDF:{unit:'mm',format:'a4',orientation:'landscape'}}).from(hidden.firstChild).save().then(function(){
-      document.body.removeChild(hidden);showMsg("comMsg","✅ PDF generado","ok");
-    }).catch(function(){document.body.removeChild(hidden);showMsg("comMsg","Error generando PDF","err")});
+  var total=0;items.forEach(function(e){total+=(LIQ_VISTA==="pend"?e.montoCalculado:(e.montoPagado||e.montoCalculado))});
+  var subtitulo=LIQ_VISTA==="pend"?"Pendientes":"Historial";
+  if(fCom)subtitulo+=" · "+fCom;
+  var html='<!DOCTYPE html><html><head><meta charset="utf-8"><title>Liquidaciones - '+subtitulo+'</title><style>body{font-family:Arial,sans-serif;color:#0a1628;padding:25px;margin:0}h1{font-size:18px;margin:0 0 4px}table{width:100%;border-collapse:collapse;font-size:10px;margin-top:10px}th{background:#0a1628;color:white;padding:7px;text-align:left;font-size:9px;text-transform:uppercase;letter-spacing:1px}td{padding:6px 7px;border-bottom:1px solid #e2e8f0}.num{text-align:right;font-weight:600}.total{background:#0a1628;color:white;font-weight:800}.header{border-bottom:3px solid #c9a449;padding-bottom:10px;margin-bottom:14px}.meta{font-size:10px;color:#475569;margin-top:4px}</style></head><body>';
+  html+='<div class="header"><div style="font-size:9px;font-weight:700;color:#94a3b8;letter-spacing:2px;text-transform:uppercase">Colombia Abogados · Liquidaciones</div>';
+  html+='<h1>'+subtitulo+'</h1>';
+  html+='<div class="meta">Generado: '+new Date().toLocaleDateString('es-CO',{dateStyle:'long'})+' · '+items.length+' eventos · Total '+fm(total)+'</div></div>';
+  html+='<table><thead><tr>';
+  if(LIQ_VISTA==="pend"){
+    html+='<th>Fecha</th><th>Cliente</th><th>Comercial</th><th>Tipo</th><th class="num">Monto</th>';
+  } else {
+    html+='<th>Fecha pago</th><th>Cliente</th><th>Comercial</th><th>Tipo</th><th class="num">Pagado</th><th class="num">Calc.</th><th>Motivo</th>';
   }
-  if(typeof html2pdf==="undefined"){var s=document.createElement("script");s.src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";s.onload=gen;document.head.appendChild(s)} else gen();
+  html+='</tr></thead><tbody>';
+  items.forEach(function(ev){
+    if(LIQ_VISTA==="pend"){
+      html+='<tr><td>'+ev.fecha+'</td><td><strong>'+ev.nombre+'</strong><br><span style="font-size:9px;color:#94a3b8">CC '+ev.cedula+'</span></td><td>'+ev.comercial+'</td><td><strong>'+ev.tipo.toUpperCase()+'</strong></td><td class="num" style="color:#f59e0b">'+fm(ev.montoCalculado)+'</td></tr>';
+    } else {
+      var dif=ev.montoPagado!==ev.montoCalculado;
+      html+='<tr><td>'+ev.fechaPago+'</td><td><strong>'+ev.nombre+'</strong><br><span style="font-size:9px;color:#94a3b8">CC '+ev.cedula+'</span></td><td>'+ev.comercial+'</td><td><strong>'+ev.tipo.toUpperCase()+'</strong></td><td class="num" style="color:#16a34a">'+fm(ev.montoPagado)+'</td><td class="num" style="color:#94a3b8">'+fm(ev.montoCalculado)+'</td><td style="font-size:9px">'+(dif?(ev.motivo||"Sin motivo"):"—")+'</td></tr>';
+    }
+  });
+  var colspan=LIQ_VISTA==="pend"?4:4;
+  html+='<tr class="total"><td colspan="'+colspan+'" style="text-align:right;padding:10px">TOTAL</td><td class="num" style="padding:10px">'+fm(total)+'</td>'+(LIQ_VISTA==="hist"?'<td colspan="2"></td>':'')+'</tr>';
+  html+='</tbody></table></body></html>';
+  var w=window.open("","_blank");
+  w.document.write(html);w.document.close();
+  setTimeout(function(){w.print();showMsg("comMsg","✅ PDF listo para imprimir/guardar","ok")},500);
 }
+
 function exportarCSVLiquidaciones(){
   if(!LIQ_CACHE){showMsg("comMsg","Carga los datos primero","err");return}
   var fCom=document.getElementById("liqFiltroComercial").value;
   var fTipo=document.getElementById("liqFiltroTipo").value;
   var fMes=document.getElementById("liqFiltroMes").value;
+  var fDia=document.getElementById("liqFiltroDia").value;
   function mf(ev,usar){
     if(fCom&&ev.comercial!==fCom)return false;
     if(fTipo&&ev.tipo!==fTipo)return false;
+    var ref=usar?(ev.fechaPagoRaw||ev.fechaRaw):ev.fechaRaw;
     if(fMes){
-      var ref=usar?(ev.fechaPagoRaw||ev.fechaRaw):ev.fechaRaw;
       if(!ref)return false;
       var dt=new Date(ref);if(isNaN(dt))return false;
       var key=dt.getFullYear()+"-"+String(dt.getMonth()+1).padStart(2,"0");
       if(key!==fMes)return false;
+      if(fDia&&dt.getDate()!==Number(fDia))return false;
     }
     return true;
   }
   var items=LIQ_VISTA==="pend"?LIQ_CACHE.pendientes.filter(function(e){return mf(e,false)}):LIQ_CACHE.pagados.filter(function(e){return mf(e,true)});
-  if(!items.length){showMsg("comMsg","Sin datos para exportar","err");return}
-  var headers=["ID","Fecha Liberación","Cédula","Cliente","Comercial","Tipo","Monto Calculado","Estado","Fecha Pago","Monto Pagado","Motivo","Observaciones"];
-  var rows=[headers];
-  items.forEach(function(e){
-    rows.push([e.id,e.fecha,e.cedula,e.nombre,e.comercial,e.tipo,e.montoCalculado,e.estado,e.fechaPago,e.montoPagado||"",e.motivo||"",e.observaciones||""]);
-  });
-  // Total al final
-  var total=0;
-  items.forEach(function(e){total+=(LIQ_VISTA==="pend"?e.montoCalculado:(e.montoPagado||e.montoCalculado))});
-  rows.push(["","","","","","TOTAL",total,"","","","",""]);
-  var csv=rows.map(function(r){return r.map(function(v){var s=String(v==null?"":v);return s.indexOf(",")>-1||s.indexOf('"')>-1||s.indexOf("\n")>-1?'"'+s.replace(/"/g,'""')+'"':s}).join(",")}).join("\n");
-  var blob=new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8;"});
-  var url=URL.createObjectURL(blob);
-  var a=document.createElement("a");
-  var suffix=[fCom,fTipo,fMes,LIQ_VISTA].filter(Boolean).join("_").replace(/\s+/g,"_")||"Todos";
-  a.href=url;a.download="Liquidaciones_"+suffix+"_"+new Date().toISOString().slice(0,10)+".csv";
-  document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
-  showMsg("comMsg","✅ CSV generado","ok");
-}
-
-// ====================== EXPORT CSV ======================
-function exportarCSVComisiones(){
-  if(!COM_CACHE){showMsg("comMsg","Primero carga los datos","err");return}
-  var fl=filtrarComisiones();
-  if(!fl.clientes.length){showMsg("comMsg","Sin datos para exportar","err");return}
-  var filtro=document.getElementById("comFiltro").value;
-
-  // Encabezados
-  var headers=["Cliente","Cédula","Comercial","Modalidad","Deuda","Fecha caso","Tramo","Esquema","Honorarios Pricing","Honorarios Vendido","Diferencia","Centro Pricing","Centro Vendido","Descuento %","% Hon Pagado","% Cen Pagado","Base Teórico","Base Liquidado","Adicional Teórico","Adicional Liquidado","Centro Teórico","Centro Liquidado","Total Teórico","Total Liquidado","Total Pendiente"];
-  var rows=[headers];
-  fl.clientes.forEach(function(c){
-    var P=c.comision.pricing,V=c.comision.vendido,K=c.comision.componentes,G=c.comision.pagos,T=c.comision.totales;
-    rows.push([
-      c.nombre,c.cedula,c.asesor,c.modalidad,c.deuda,c.fechaCaso||"",P.tramo,P.esquema,
-      P.honorariosPricing,V.honorarios,V.honorarios-P.honorariosPricing,
-      P.centroPricing,V.centro,V.descuentoPct,
-      G.pctHonPagado,G.pctCenPagado,
-      K.base.teorico,K.base.liquidado,
-      K.sobreprecio.teorico,K.sobreprecio.liquidado,
-      K.centro.teorico,K.centro.liquidado,
-      T.teorico,T.liquidado,T.pendiente
-    ]);
-  });
-  var csv=rows.map(function(r){return r.map(function(v){var s=String(v==null?"":v);return s.indexOf(",")>-1||s.indexOf('"')>-1||s.indexOf("\n")>-1?'"'+s.replace(/"/g,'""')+'"':s}).join(",")}).join("\n");
-  var blob=new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8;"});
-  var url=URL.createObjectURL(blob);
-  var a=document.createElement("a");
-  a.href=url;a.download="Comisiones_"+(filtro?filtro.replace(/\s+/g,"_"):"Todos")+"_"+new Date().toISOString().slice(0,10)+".csv";
-  document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
-  showMsg("comMsg","✅ CSV generado","ok");
-}
-
-// ====================== EXPORT PDF ======================
-function exportarPDFComisiones(){
-  if(!COM_CACHE){showMsg("comMsg","Primero carga los datos","err");return}
-  var fl=filtrarComisiones();
-  if(!fl.clientes.length){showMsg("comMsg","Sin datos para exportar","err");return}
-  showMsg("comMsg","Generando PDF...","info");
-  var filtro=document.getElementById("comFiltro").value;
-
-  function gen(){
-    var tot={teorico:0,liquidado:0,pendiente:0};
-    fl.clientes.forEach(function(c){tot.teorico+=c.comision.totales.teorico;tot.liquidado+=c.comision.totales.liquidado;tot.pendiente+=c.comision.totales.pendiente});
-
-    var titulo=filtro?("Comisiones — "+filtro):"Comisiones — Todos los comerciales";
-    var html='<div style="font-family:Outfit,sans-serif;color:#0a1628;padding:25px;width:1050px">';
-    html+='<div style="border-bottom:3px solid #c9a449;padding-bottom:12px;margin-bottom:18px">';
-    html+='<div style="font-size:9px;font-weight:700;color:#94a3b8;letter-spacing:2px;text-transform:uppercase">Colombia Abogados · Reporte de Comisiones</div>';
-    html+='<div style="font-size:20px;font-weight:800;margin-top:4px">'+titulo+'</div>';
-    html+='<div style="font-size:10px;color:#475569;margin-top:4px">Generado: '+new Date().toLocaleDateString('es-CO',{dateStyle:'long'})+' · '+fl.clientes.length+' casos</div>';
-    html+='</div>';
-
-    // KPIs
-    html+='<div style="display:flex;gap:8px;margin-bottom:18px">';
-    html+='<div style="flex:1;padding:10px;background:#f8f1dc;border-radius:6px"><div style="font-size:9px;font-weight:700;color:#94a3b8;text-transform:uppercase">Plan pagos</div><div style="font-size:16px;font-weight:800;color:#c9a449">'+fm(tot.teorico)+'</div></div>';
-    html+='<div style="flex:1;padding:10px;background:#dcfce7;border-radius:6px"><div style="font-size:9px;font-weight:700;color:#94a3b8;text-transform:uppercase">Liquidado</div><div style="font-size:16px;font-weight:800;color:#16a34a">'+fm(tot.liquidado)+'</div></div>';
-    html+='<div style="flex:1;padding:10px;background:#fef3c7;border-radius:6px"><div style="font-size:9px;font-weight:700;color:#94a3b8;text-transform:uppercase">Pendiente</div><div style="font-size:16px;font-weight:800;color:#f59e0b">'+fm(tot.pendiente)+'</div></div>';
-    html+='</div>';
-
-    // Tabla principal
-    html+='<table style="width:100%;border-collapse:collapse;font-size:9px;margin-bottom:20px">';
-    html+='<thead><tr style="background:#0a1628;color:white">'
-      +'<th style="padding:6px;text-align:left">Cliente</th>'
-      +'<th style="padding:6px;text-align:left">Comercial</th>'
-      +'<th style="padding:6px;text-align:center">Mod</th>'
-      +'<th style="padding:6px;text-align:right">Hon Pricing</th>'
-      +'<th style="padding:6px;text-align:right">Hon Vendido</th>'
-      +'<th style="padding:6px;text-align:right">Base</th>'
-      +'<th style="padding:6px;text-align:right">Adicional</th>'
-      +'<th style="padding:6px;text-align:right">Centro</th>'
-      +'<th style="padding:6px;text-align:right;border-left:1px solid rgba(255,255,255,.3)">Plan pagos</th>'
-      +'<th style="padding:6px;text-align:right">Liquidado</th>'
-      +'<th style="padding:6px;text-align:right">Pend.</th>'
-      +'</tr></thead><tbody>';
-    fl.clientes.forEach(function(c,i){
-      var P=c.comision.pricing,V=c.comision.vendido,K=c.comision.componentes,T=c.comision.totales;
-      var bg=i%2===0?"#ffffff":"#f5f7fa";
-      html+='<tr style="background:'+bg+';border-bottom:1px solid #e2e8f0">'
-        +'<td style="padding:5px 6px;font-weight:700">'+c.nombre+'<div style="font-size:8px;color:#94a3b8">CC '+c.cedula+'</div></td>'
-        +'<td style="padding:5px 6px;font-size:9px">'+c.asesor+'</td>'
-        +'<td style="padding:5px 6px;text-align:center;font-size:8px">'+c.modalidad.substring(0,4)+'</td>'
-        +'<td style="padding:5px 6px;text-align:right;color:#2563eb">'+fm(P.honorariosPricing)+'</td>'
-        +'<td style="padding:5px 6px;text-align:right">'+fm(V.honorarios)+'</td>'
-        +'<td style="padding:5px 6px;text-align:right">'+fm(K.base.liquidado)+'<div style="font-size:8px;color:#94a3b8">/'+fm(K.base.teorico)+'</div></td>'
-        +'<td style="padding:5px 6px;text-align:right">'+fm(K.sobreprecio.liquidado)+'<div style="font-size:8px;color:#94a3b8">/'+fm(K.sobreprecio.teorico)+'</div></td>'
-        +'<td style="padding:5px 6px;text-align:right">'+fm(K.centro.liquidado)+'<div style="font-size:8px;color:#94a3b8">/'+fm(K.centro.teorico)+'</div></td>'
-        +'<td style="padding:5px 6px;text-align:right;font-weight:800;color:#c9a449;border-left:2px solid #e2e8f0">'+fm(T.teorico)+'</td>'
-        +'<td style="padding:5px 6px;text-align:right;font-weight:800;color:#16a34a">'+fm(T.liquidado)+'</td>'
-        +'<td style="padding:5px 6px;text-align:right;font-weight:800;color:#f59e0b">'+fm(T.pendiente)+'</td>'
-        +'</tr>';
+  if(!items.length){showMsg("comMsg","Sin datos","err");return}
+  var csv="";
+  if(LIQ_VISTA==="pend"){
+    csv="Fecha liberacion,Cliente,Cedula,Comercial,Tipo,Monto calculado\n";
+    items.forEach(function(ev){
+      csv+='"'+ev.fecha+'","'+ev.nombre.replace(/"/g,'""')+'","'+ev.cedula+'","'+ev.comercial+'","'+ev.tipo+'",'+ev.montoCalculado+'\n';
     });
-    html+='</tbody></table>';
-
-    // Resumen por comercial
-    if(fl.comerciales.length>1){
-      html+='<div style="font-size:11px;font-weight:800;margin-top:20px;margin-bottom:8px;text-transform:uppercase;letter-spacing:1px;color:#94a3b8">Resumen por comercial</div>';
-      html+='<table style="width:100%;border-collapse:collapse;font-size:10px">';
-      html+='<thead><tr style="background:#f0f3f8"><th style="padding:6px;text-align:left">Comercial</th><th style="padding:6px;text-align:right">Casos</th><th style="padding:6px;text-align:right">Plan pagos</th><th style="padding:6px;text-align:right">Liquidado</th><th style="padding:6px;text-align:right">Pendiente</th></tr></thead><tbody>';
-      fl.comerciales.forEach(function(a){
-        html+='<tr style="border-bottom:1px solid #e2e8f0"><td style="padding:5px 6px;font-weight:700">'+a.nombre+'</td><td style="padding:5px 6px;text-align:right">'+a.casos+'</td><td style="padding:5px 6px;text-align:right;color:#c9a449">'+fm(a.teorico)+'</td><td style="padding:5px 6px;text-align:right;color:#16a34a">'+fm(a.liquidado)+'</td><td style="padding:5px 6px;text-align:right;color:#f59e0b">'+fm(a.pendiente)+'</td></tr>';
-      });
-      html+='</tbody></table>';
-    }
-    html+='<div style="margin-top:25px;text-align:center;font-size:8px;color:#94a3b8;letter-spacing:1px">COLOMBIA ABOGADOS · SISTEMA DE GESTIÓN INTERNO</div>';
-    html+='</div>';
-
-    var hidden=document.createElement("div");
-    hidden.style.position="fixed";hidden.style.left="-99999px";hidden.innerHTML=html;
-    document.body.appendChild(hidden);
-
-    var filename="Comisiones_"+(filtro?filtro.replace(/\s+/g,"_"):"Todos")+"_"+new Date().toISOString().slice(0,10)+".pdf";
-    html2pdf().set({margin:[6,6,6,6],filename:filename,image:{type:'jpeg',quality:0.95},html2canvas:{scale:2,width:1050},jsPDF:{unit:'mm',format:'a4',orientation:'landscape'}}).from(hidden.firstChild).save().then(function(){
-      document.body.removeChild(hidden);
-      showMsg("comMsg","✅ PDF generado","ok");
-    }).catch(function(){
-      document.body.removeChild(hidden);
-      showMsg("comMsg","Error generando PDF","err");
+  } else {
+    csv="Fecha pago,Cliente,Cedula,Comercial,Tipo,Monto pagado,Monto calculado,Motivo,Observaciones\n";
+    items.forEach(function(ev){
+      csv+='"'+ev.fechaPago+'","'+ev.nombre.replace(/"/g,'""')+'","'+ev.cedula+'","'+ev.comercial+'","'+ev.tipo+'",'+(ev.montoPagado||0)+','+ev.montoCalculado+',"'+(ev.motivo||"").replace(/"/g,'""')+'","'+(ev.observaciones||"").replace(/"/g,'""')+'"\n';
     });
   }
-  if(typeof html2pdf==="undefined"){
-    var s=document.createElement("script");
-    s.src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";
-    s.onload=gen;
-    s.onerror=function(){showMsg("comMsg","No se pudo cargar html2pdf","err")};
-    document.head.appendChild(s);
-  } else gen();
+  var blob=new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8"});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement("a");
+  a.href=url;a.download="liquidaciones_"+LIQ_VISTA+"_"+new Date().toISOString().slice(0,10)+".csv";
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showMsg("comMsg","✅ CSV descargado","ok");
 }
-// === ANALYTICS ===
-var AN_CACHE={},AN_FILTER="all";
-var AC=["#3b5bdb","#f59f00","#2b8a3e","#c92a2a","#7048e8","#1971c2","#e64980","#495057","#0ca678","#f76707"];
+
+function exportarCSVComisiones(){
+  if(!COM_CACHE){showMsg("comMsg","Carga los datos primero","err");return}
+  var fl=filtrarComisiones();
+  if(!fl.clientes.length){showMsg("comMsg","Sin datos","err");return}
+  var csv="Cedula,Cliente,Comercial,Modalidad,Fecha caso,Deuda,Plan pagos,Liquidado,Pendiente,Porcentaje\n";
+  fl.clientes.forEach(function(c){
+    var T=c.comision.totales;
+    var pct=T.teorico>0?Math.round(T.liquidado/T.teorico*100):0;
+    csv+='"'+c.cedula+'","'+c.nombre.replace(/"/g,'""')+'","'+c.asesor+'","'+(c.modalidad||"")+'","'+(c.fechaCaso||"")+'",'+c.deuda+','+T.teorico+','+T.liquidado+','+T.pendiente+','+pct+'\n';
+  });
+  var blob=new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8"});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement("a");
+  a.href=url;a.download="comisiones_detalle_"+new Date().toISOString().slice(0,10)+".csv";
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showMsg("comMsg","✅ CSV descargado","ok");
+}
+
+function exportarPDFComisiones(){
+  if(!COM_CACHE){showMsg("comMsg","Carga los datos primero","err");return}
+  var fl=filtrarComisiones();
+  if(!fl.clientes.length){showMsg("comMsg","Sin datos","err");return}
+  var tot={teorico:0,liquidado:0,pendiente:0};
+  fl.clientes.forEach(function(c){tot.teorico+=c.comision.totales.teorico;tot.liquidado+=c.comision.totales.liquidado;tot.pendiente+=c.comision.totales.pendiente});
+  var html='<!DOCTYPE html><html><head><meta charset="utf-8"><title>Comisiones</title><style>body{font-family:Arial,sans-serif;color:#0a1628;padding:25px;margin:0}h1{font-size:18px;margin:0 0 4px}table{width:100%;border-collapse:collapse;font-size:10px;margin-top:10px}th{background:#0a1628;color:white;padding:7px;text-align:left;font-size:9px;text-transform:uppercase;letter-spacing:1px}td{padding:6px 7px;border-bottom:1px solid #e2e8f0}.num{text-align:right;font-weight:600}.total{background:#0a1628;color:white;font-weight:800}.header{border-bottom:3px solid #c9a449;padding-bottom:10px;margin-bottom:14px}.kpis{display:flex;gap:10px;margin-bottom:14px}.kpi{flex:1;padding:10px;border:1px solid #e2e8f0;border-radius:6px}.kpi-l{font-size:9px;color:#94a3b8;text-transform:uppercase;font-weight:700}.kpi-v{font-size:14px;font-weight:800;margin-top:2px}</style></head><body>';
+  html+='<div class="header"><div style="font-size:9px;font-weight:700;color:#94a3b8;letter-spacing:2px;text-transform:uppercase">Colombia Abogados · Comisiones</div>';
+  html+='<h1>Detalle de comisiones</h1>';
+  html+='<div style="font-size:10px;color:#475569;margin-top:4px">Generado: '+new Date().toLocaleDateString('es-CO',{dateStyle:'long'})+' · '+fl.clientes.length+' casos</div></div>';
+  html+='<div class="kpis">';
+  html+='<div class="kpi"><div class="kpi-l">Plan pagos</div><div class="kpi-v" style="color:#3b5bdb">'+fm(tot.teorico)+'</div></div>';
+  html+='<div class="kpi"><div class="kpi-l">Liquidado</div><div class="kpi-v" style="color:#16a34a">'+fm(tot.liquidado)+'</div></div>';
+  html+='<div class="kpi"><div class="kpi-l">Pendiente</div><div class="kpi-v" style="color:#f59e0b">'+fm(tot.pendiente)+'</div></div>';
+  html+='</div>';
+  html+='<table><thead><tr><th>Cliente</th><th>Comercial</th><th>Modalidad</th><th>Fecha caso</th><th class="num">Plan pagos</th><th class="num">Liquidado</th><th class="num">Pendiente</th><th class="num">%</th></tr></thead><tbody>';
+  fl.clientes.forEach(function(c){
+    var T=c.comision.totales;
+    var pct=T.teorico>0?Math.round(T.liquidado/T.teorico*100):0;
+    html+='<tr><td><strong>'+c.nombre+'</strong><br><span style="font-size:9px;color:#94a3b8">CC '+c.cedula+'</span></td><td>'+c.asesor+'</td><td>'+(c.modalidad||"")+'</td><td>'+(c.fechaCaso||"—")+'</td><td class="num" style="color:#3b5bdb">'+fm(T.teorico)+'</td><td class="num" style="color:#16a34a">'+fm(T.liquidado)+'</td><td class="num" style="color:#f59e0b">'+fm(T.pendiente)+'</td><td class="num">'+pct+'%</td></tr>';
+  });
+  html+='<tr class="total"><td colspan="4" style="text-align:right;padding:10px">TOTAL</td><td class="num" style="padding:10px">'+fm(tot.teorico)+'</td><td class="num" style="padding:10px">'+fm(tot.liquidado)+'</td><td class="num" style="padding:10px">'+fm(tot.pendiente)+'</td><td class="num" style="padding:10px">'+(tot.teorico>0?Math.round(tot.liquidado/tot.teorico*100):0)+'%</td></tr>';
+  html+='</tbody></table></body></html>';
+  var w=window.open("","_blank");
+  w.document.write(html);w.document.close();
+  setTimeout(function(){w.print();showMsg("comMsg","✅ PDF listo","ok")},500);
+}
+
+// ====================== ANALYTICS ======================
+var AN_CACHE={},AC=["#3b5bdb","#c9a449","#16a34a","#f59e0b","#c92a2a","#7048e8","#1971c2","#e67700","#2b8a3e","#9ba3bf"];
+
 function cargarAnalytics(force){
-  var f=AN_FILTER;
-  if(!force&&AN_CACHE[f]){renderAN(AN_CACHE[f]);return}
-  showMsg("anMsg","Cargando...","info");
-  var params="action=analytics&key="+enc(KEY);
-  if(f!=="all")params+="&mes="+enc(f);
-  callAPI(params).then(function(d){
-    if(!d.ok){showMsg("anMsg",d.error,"err");return}
-    hideMsg("anMsg");AN_CACHE[f]=d;
-    if(f==="all"){
-      var sel=document.getElementById("anMesFilter");sel.innerHTML='<option value="all">Todo el periodo</option>';
-      d.leadsPorMes.forEach(function(m){var p=m.label.split("-");sel.innerHTML+='<option value="'+m.label+'">'+MESES[parseInt(p[1])-1]+" "+p[0]+"</option>";});
+  if(AN_CACHE.data&&!force){renderAN();return}
+  var el=document.getElementById("anKpis");
+  if(el)el.innerHTML='<div class="skel-card" style="grid-column:1/-1;padding:20px"><div class="skel skel-line" style="width:60%"></div><div class="skel skel-line" style="width:40%"></div></div>';
+  callAPI("action=analytics&key="+enc(KEY)).then(function(d){
+    if(!d.ok){showMsg("anMsg",d.error||"Error","err");return}
+    AN_CACHE.data=d;
+    var sel=document.getElementById("anMesFilter");
+    if(sel&&sel.options.length<=1&&d.porMes){
+      d.porMes.forEach(function(m){
+        var o=document.createElement("option");o.value=m.key;o.text=mesNm(m.key);sel.add(o);
+      });
     }
-    renderAN(d);
-  }).catch(function(){showMsg("anMsg","Error","err")});
+    renderAN();
+  }).catch(function(){showMsg("anMsg","Error de conexión","err")});
 }
-function filtrarAnalytics(){AN_FILTER=document.getElementById("anMesFilter").value;cargarAnalytics();}
-function fmm(v){if(v>=1e9)return"$"+(v/1e9).toFixed(1)+"B";if(v>=1e6)return"$"+Math.round(v/1e6)+"mm";if(v>=1e3)return"$"+Math.round(v/1e3)+"k";return fm(v)}
-function lk(arr,k){for(var i=0;i<arr.length;i++){if(arr[i].label===k)return arr[i].value}return 0}
-function mesNm(k){var p=k.split("-");return MESES[parseInt(p[1])-1]||k}
 
-function renderAN(d){
-  var f=AN_FILTER;
-  var fL=f==="all"?d.totalLeads:lk(d.leadsPorMes,f);
-  var fP=f==="all"?d.funnel.propuestas:lk(d.propPorMes||[],f);
-  var fC=f==="all"?d.funnel.clientes:lk(d.clientesPorMes,f);
-  var fD=f==="all"?d.funnel.descartados:lk(d.descPorMes||[],f);
-  var conv=fL>0?Math.round(fC/fL*100):0;
-  var propR=fL>0?(fP/fL*100).toFixed(1):0;
-  var descR=fL>0?(fD/fL*100).toFixed(1):0;
+function filtrarAnalytics(){renderAN()}
 
-  // KPIs
-  var h="";
-  h+=mkK("#3b5bdb","Total leads",fL,f==="all"?"Acumulado":mesNm(f));
-  h+=mkK("#f59f00","Propuestas",fP,"Tasa: "+propR+"%");
-  h+=mkK("#2b8a3e","Clientes",fC,"Conv: "+conv+"%");
-  h+=mkK("#c92a2a","Descartados",fD,descR+"% del total");
-  document.getElementById("anKpis").innerHTML=h;
+function fmm(n){return new Intl.NumberFormat("es-CO").format(n||0)}
+function lk(k){return k.split("-").reverse().join("/")}
+function mesNm(k){var p=k.split("-");var n=["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];return n[Number(p[1])-1]+" "+p[0]}
 
-  // Funnel
-  var stg=[{n:"Leads",v:fL,c:"#3b5bdb"},{n:"Propuestas",v:fP,c:"#f59f00"},{n:"Clientes",v:fC,c:"#2b8a3e"},{n:"Descartados",v:fD,c:"#c92a2a"}];
-  var mxF=stg[0].v||1;var fh="";
-  stg.forEach(function(s){var w=Math.max(Math.round(s.v/mxF*100),6);fh+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><div style="width:76px;font-size:11px;font-weight:700;color:var(--tx3);text-align:right">'+s.n+'</div><div style="flex:1;height:30px;background:var(--sf2);border-radius:6px;overflow:hidden"><div style="width:'+w+'%;height:100%;background:'+s.c+';border-radius:6px;display:flex;align-items:center;padding-left:10px;min-width:36px"><span style="color:#fff;font-size:11px;font-weight:800">'+s.v+'</span></div></div></div>';});
-  document.getElementById("funnelChart").innerHTML=fh;
-
-  // === TREND: area for leads + vertical bars for clients ===
+function renderAN(){
+  var d=AN_CACHE.data;if(!d)return;
+  var mf=document.getElementById("anMesFilter").value;
+  var base=d;
+  if(mf!=="all"&&d.porMes){
+    var mesData=d.porMes.find(function(m){return m.key===mf});
+    if(mesData)base=mesData;
+  }
+  var kh=''
+    +'<div class="kpi"><div class="kpi-stripe" style="background:var(--ac)"></div><div class="kpi-label">Leads totales</div><div class="kpi-val" style="color:var(--ac)">'+fmm(base.totalLeads||0)+'</div></div>'
+    +'<div class="kpi"><div class="kpi-stripe" style="background:var(--purple)"></div><div class="kpi-label">Propuestas</div><div class="kpi-val" style="color:var(--purple)">'+fmm(base.propuestas||0)+'</div></div>'
+    +'<div class="kpi"><div class="kpi-stripe" style="background:var(--ok)"></div><div class="kpi-label">Clientes</div><div class="kpi-val" style="color:var(--ok)">'+fmm(base.clientes||0)+'</div></div>'
+    +'<div class="kpi"><div class="kpi-stripe" style="background:var(--gold)"></div><div class="kpi-label">Conversión</div><div class="kpi-val" style="color:var(--gold)">'+(base.tasaConversion||0)+'%</div></div>';
+  document.getElementById("anKpis").innerHTML=kh;
+  drawFunnel(base);
   drawTrend(d);
-
-  // Donuts
-  drawDonut("anCanal",d.leadsPorCanal);
-  drawDonut("anCiudad",d.leadsPorCiudad);
-
-  // Etapas: horizontal bars (long labels), Descartados: donut
-  drawHBars("anEtapas",d.leadsPorEtapa);
-  drawDonut("anDescartados",d.descartados);
-
-  // Table
+  drawDonut("anCanal",base.porCanal||[]);
+  drawHBars("anCiudad",base.porCiudad||[]);
+  drawHBars("anEtapas",base.porEtapa||[]);
+  drawDonut("anDescartados",base.porDescarte||[]);
   drawTable(d);
 }
 
-function mkK(c,lb,v,sub){return'<div class="kpi"><div class="kpi-stripe" style="background:'+c+'"></div><div class="kpi-label">'+lb+'</div><div class="kpi-val" style="color:'+c+'">'+v+'</div><div style="font-size:10px;color:var(--tx3);margin-top:2px">'+sub+'</div></div>';}
+function drawFunnel(b){
+  var steps=[
+    {l:"Leads",v:b.totalLeads||0,c:"var(--ac)"},
+    {l:"Contactados",v:b.contactados||0,c:"var(--info)"},
+    {l:"Propuestas",v:b.propuestas||0,c:"var(--purple)"},
+    {l:"Clientes",v:b.clientes||0,c:"var(--ok)"}
+  ];
+  var max=Math.max.apply(null,steps.map(function(s){return s.v})) || 1;
+  var h="";
+  steps.forEach(function(s,i){
+    var pct=s.v/max*100;
+    h+='<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:11px;font-weight:600"><span>'+s.l+'</span><span style="font-weight:800">'+fmm(s.v)+'</span></div>';
+    h+='<div style="height:22px;background:var(--sf2);border-radius:4px;overflow:hidden"><div style="height:100%;width:'+pct+'%;background:'+s.c+';border-radius:4px;transition:width 0.6s"></div></div></div>';
+  });
+  document.getElementById("funnelChart").innerHTML=h;
+}
 
-// === SVG TREND: area line + bar overlay ===
 function drawTrend(d){
-  var el=document.getElementById("anTrend");
-  var meses=d.leadsPorMes;
-  if(meses.length<2){el.innerHTML='<p style="font-size:11px;color:var(--tx3)">Necesita 2+ meses</p>';return}
-  var W=Math.max(meses.length*80,300),H=160,P=30,PB=35;
-  var mxL=1;meses.forEach(function(m){mxL=Math.max(mxL,m.value)});
-  var barW=20;
-
-  var svg='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;height:'+H+'px;overflow:visible">';
-  // Grid
-  for(var g=0;g<4;g++){var gy=P+g*((H-P-PB)/3);svg+='<line x1="'+P+'" y1="'+gy+'" x2="'+(W-10)+'" y2="'+gy+'" stroke="var(--bd)" stroke-width="0.5"/>';}
-
-  // Client bars first (behind the line)
-  meses.forEach(function(m,i){
-    var cv=lk(d.clientesPorMes,m.label);
-    if(cv>0){
-      var x=P+i*((W-P-10)/(meses.length-1));
-      var barH=cv/mxL*(H-P-PB);
-      var barY=H-PB-barH;
-      svg+='<rect x="'+(x-barW/2)+'" y="'+barY+'" width="'+barW+'" height="'+barH+'" rx="3" fill="#2b8a3e" opacity="0.25"/>';
-      svg+='<text x="'+x+'" y="'+(barY-4)+'" text-anchor="middle" font-size="9" font-weight="800" fill="#2b8a3e">'+cv+'</text>';
-    }
+  var arr=(d.porMes||[]).slice(-8);
+  if(!arr.length){document.getElementById("anTrend").innerHTML='<p style="color:var(--tx3);font-size:11px;padding:20px;text-align:center">Sin datos</p>';return}
+  var max=Math.max.apply(null,arr.map(function(m){return m.totalLeads||0})) || 1;
+  var h='<div style="display:flex;align-items:flex-end;gap:5px;height:100px;margin-top:6px">';
+  arr.forEach(function(m){
+    var pct=(m.totalLeads||0)/max*100;
+    h+='<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px">';
+    h+='<div style="width:100%;background:var(--ac);border-radius:3px 3px 0 0;height:'+pct+'%;min-height:3px;position:relative;cursor:pointer" title="'+mesNm(m.key)+': '+m.totalLeads+' leads"></div>';
+    h+='</div>';
   });
-
-  // Area polygon
-  var pts=[];
-  meses.forEach(function(m,i){
-    var x=P+i*((W-P-10)/(meses.length-1));
-    var y=H-PB-(m.value/mxL*(H-P-PB));
-    pts.push(x+","+y);
-  });
-  var firstX=P,lastX=P+(meses.length-1)*((W-P-10)/(meses.length-1));
-  svg+='<polygon points="'+firstX+","+(H-PB)+" "+pts.join(" ")+" "+lastX+","+(H-PB)+'" fill="#3b5bdb" fill-opacity="0.1"/>';
-  svg+='<polyline points="'+pts.join(" ")+'" fill="none" stroke="#3b5bdb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>';
-
-  // Dots + values + labels
-  meses.forEach(function(m,i){
-    var x=P+i*((W-P-10)/(meses.length-1));
-    var y=H-PB-(m.value/mxL*(H-P-PB));
-    svg+='<circle cx="'+x+'" cy="'+y+'" r="4" fill="#3b5bdb" stroke="#fff" stroke-width="2"/>';
-    svg+='<text x="'+x+'" y="'+(y-10)+'" text-anchor="middle" font-size="10" font-weight="800" fill="#3b5bdb">'+m.value+'</text>';
-    svg+='<text x="'+x+'" y="'+(H-8)+'" text-anchor="middle" font-size="9" font-weight="600" fill="var(--tx3)">'+mesNm(m.label)+'</text>';
-  });
-
-  svg+='</svg>';
-  svg+='<div class="an-legend" style="margin-top:4px"><span class="an-leg-dot" style="background:#3b5bdb"></span> Leads (tendencia) <span class="an-leg-dot" style="background:#2b8a3e;margin-left:10px;opacity:0.4"></span> Clientes (barras)</div>';
-  el.innerHTML=svg;
+  h+='</div>';
+  h+='<div class="an-trend-val">';
+  arr.forEach(function(m){h+='<span>'+m.key.split("-")[1]+'</span>';});
+  h+='</div>';
+  document.getElementById("anTrend").innerHTML=h;
 }
 
-// === SVG DONUT ===
-function drawDonut(id,data){
-  var el=document.getElementById(id);
-  if(!data||!data.length){el.innerHTML='<p style="font-size:11px;color:var(--tx3)">Sin datos</p>';return}
-  var total=0;data.forEach(function(d2){total+=d2.value});
-  var top=data.slice(0,6);
-  var r=46,cx=56,cy=56,circ=2*Math.PI*r;
-  var svg='<svg viewBox="0 0 112 112" style="width:100px;height:100px;flex-shrink:0">';
-  var off=0;
-  top.forEach(function(d2,i){var pct=d2.value/total;var dash=pct*circ;var c=AC[i%AC.length];svg+='<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="'+c+'" stroke-width="14" stroke-dasharray="'+dash+" "+(circ-dash)+'" stroke-dashoffset="'+(-off)+'" transform="rotate(-90 '+cx+" "+cy+')"/>';off+=dash;});
-  svg+='<circle cx="'+cx+'" cy="'+cy+'" r="35" fill="var(--sf)"/>';
-  svg+='<text x="'+cx+'" y="'+(cy-2)+'" text-anchor="middle" font-size="15" font-weight="900" fill="var(--nv)">'+total+'</text>';
-  svg+='<text x="'+cx+'" y="'+(cy+10)+'" text-anchor="middle" font-size="7" font-weight="600" fill="var(--tx3)">total</text></svg>';
-  var leg="";
-  top.forEach(function(d2,i){var c=AC[i%AC.length];var pct=total>0?Math.round(d2.value/total*100):0;leg+='<div class="an-donut-item"><div class="an-donut-dot" style="background:'+c+'"></div>'+d2.label+'<span class="an-donut-val">'+d2.value+' <span style="color:var(--tx3);font-size:10px">('+pct+'%)</span></span></div>';});
-  el.innerHTML='<div class="an-donut-wrap">'+svg+'<div class="an-donut-legend">'+leg+'</div></div>';
-}
-
-// === SVG VERTICAL BARS ===
-function drawVBars(id,data){
-  var el=document.getElementById(id);
-  if(!data||!data.length){el.innerHTML='<p style="font-size:11px;color:var(--tx3)">Sin datos</p>';return}
-  var top=data.slice(0,7);
-  var mx=top[0].value||1;
-  var W=Math.max(top.length*60,200),H=150,P=24,PB=40;
-  var barW=Math.min(36,Math.floor((W-P*2)/top.length*0.7));
-  var gap=(W-P*2)/top.length;
-
-  var svg='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;height:'+H+'px;overflow:visible">';
-  // Base line
-  svg+='<line x1="'+P+'" y1="'+(H-PB)+'" x2="'+(W-10)+'" y2="'+(H-PB)+'" stroke="var(--bd)" stroke-width="1"/>';
-
-  top.forEach(function(d2,i){
-    var c=AC[i%AC.length];
-    var x=P+gap*i+gap/2;
-    var barH=Math.max(d2.value/mx*(H-P-PB-10),4);
-    var barY=H-PB-barH;
-    svg+='<rect x="'+(x-barW/2)+'" y="'+barY+'" width="'+barW+'" height="'+barH+'" rx="4" fill="'+c+'"/>';
-    svg+='<text x="'+x+'" y="'+(barY-5)+'" text-anchor="middle" font-size="10" font-weight="800" fill="'+c+'">'+d2.value+'</text>';
-    // Label (truncate)
-    var lb=d2.label.length>10?d2.label.substring(0,9)+"..":d2.label;
-    svg+='<text x="'+x+'" y="'+(H-PB+14)+'" text-anchor="middle" font-size="8" font-weight="600" fill="var(--tx3)">'+lb+'</text>';
+function drawDonut(id,arr){
+  var el=document.getElementById(id);if(!el)return;
+  if(!arr.length){el.innerHTML='<p style="color:var(--tx3);font-size:11px;padding:14px">Sin datos</p>';return}
+  var total=arr.reduce(function(a,b){return a+(b.count||0)},0);
+  if(!total){el.innerHTML='<p style="color:var(--tx3);font-size:11px;padding:14px">Sin datos</p>';return}
+  var h='<div class="an-donut-legend">';
+  arr.slice(0,6).forEach(function(item,i){
+    var pct=Math.round((item.count||0)/total*100);
+    h+='<div class="an-donut-item"><span class="an-donut-dot" style="background:'+AC[i%AC.length]+'"></span><span style="flex:1">'+(item.name||"—")+'</span><span class="an-donut-val">'+fmm(item.count)+' ('+pct+'%)</span></div>';
   });
-  svg+='</svg>';
-  el.innerHTML=svg;
+  h+='</div>';
+  el.innerHTML=h;
 }
 
-// === HORIZONTAL BARS (full labels) ===
-function drawHBars(id,data){
-  var el=document.getElementById(id);
-  if(!data||!data.length){el.innerHTML='<p style="font-size:11px;color:var(--tx3)">Sin datos</p>';return}
-  var mx=data[0].value||1;var h="";
-  data.slice(0,7).forEach(function(d2,i){
-    var w=Math.max(Math.round(d2.value/mx*100),5);var c=AC[i%AC.length];
-    h+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><div style="min-width:120px;max-width:120px;font-size:10px;font-weight:600;color:var(--tx2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="'+d2.label+'">'+d2.label+'</div><div style="flex:1;height:22px;background:var(--sf2);border-radius:5px;overflow:hidden"><div style="width:'+w+'%;height:100%;background:'+c+';border-radius:5px;display:flex;align-items:center;padding-left:8px;min-width:30px"><span style="color:#fff;font-size:10px;font-weight:800">'+d2.value+'</span></div></div></div>';
+function drawHBars(id,arr){
+  var el=document.getElementById(id);if(!el)return;
+  if(!arr.length){el.innerHTML='<p style="color:var(--tx3);font-size:11px;padding:14px">Sin datos</p>';return}
+  var max=Math.max.apply(null,arr.map(function(m){return m.count||0})) || 1;
+  var h="";
+  arr.slice(0,8).forEach(function(item,i){
+    var pct=(item.count||0)/max*100;
+    h+='<div style="margin-bottom:8px"><div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px"><span style="font-weight:600">'+(item.name||"—")+'</span><span style="font-weight:800">'+fmm(item.count)+'</span></div>';
+    h+='<div style="height:8px;background:var(--sf2);border-radius:3px;overflow:hidden"><div style="height:100%;width:'+pct+'%;background:'+AC[i%AC.length]+';border-radius:3px"></div></div></div>';
   });
   el.innerHTML=h;
 }
 
-// === DETAIL TABLE with mini bar labels ===
 function drawTable(d){
-  var allM={};
-  d.leadsPorMes.forEach(function(m){allM[m.label]={l:m.value,p:0,d:0,c:0,v:0}});
-  if(d.propPorMes)d.propPorMes.forEach(function(m){if(allM[m.label])allM[m.label].p=m.value});
-  if(d.descPorMes)d.descPorMes.forEach(function(m){if(allM[m.label])allM[m.label].d=m.value});
-  d.clientesPorMes.forEach(function(m){if(allM[m.label])allM[m.label].c=m.value});
-  if(d.ventasPorMes)d.ventasPorMes.forEach(function(m){if(allM[m.label])allM[m.label].v=m.value});
-  var sM=Object.keys(allM).sort();
-
-  var h='<table class="an-tbl"><thead><tr><th>Mes</th><th>Leads</th><th>Prop.</th><th>Desc.</th><th>Clientes</th><th>Ventas</th><th>Conv.</th><th>Composición</th></tr></thead><tbody>';
-  sM.forEach(function(k){
-    var r=allM[k];var leads=r.l,prop=r.p,desc=r.d,cli=r.c,vent=r.v;
-    var conv=leads>0?Math.round(cli/leads*100):0;
-    var convC=conv>=5?"#2b8a3e":conv>0?"#f59f00":"#c92a2a";
-    var enProc=leads-prop-desc-cli;if(enProc<0)enProc=0;
-    // Mini labeled segments
-    var seg='<div style="display:flex;flex-direction:column;gap:2px;min-width:120px">';
-    if(enProc>0){var wp=leads>0?Math.round(enProc/leads*100):0;seg+='<div style="display:flex;align-items:center;gap:4px"><div style="width:'+wp+'%;min-width:4px;height:6px;background:#3b5bdb;border-radius:3px"></div><span style="font-size:8px;color:var(--tx3);white-space:nowrap">En proceso '+enProc+'</span></div>';}
-    if(prop>0){var wp2=leads>0?Math.round(prop/leads*100):0;seg+='<div style="display:flex;align-items:center;gap:4px"><div style="width:'+wp2+'%;min-width:4px;height:6px;background:#f59f00;border-radius:3px"></div><span style="font-size:8px;color:var(--tx3);white-space:nowrap">Prop. '+prop+'</span></div>';}
-    if(cli>0){var wp3=leads>0?Math.round(cli/leads*100):0;seg+='<div style="display:flex;align-items:center;gap:4px"><div style="width:'+Math.max(wp3,3)+'%;min-width:4px;height:6px;background:#2b8a3e;border-radius:3px"></div><span style="font-size:8px;color:var(--tx3);white-space:nowrap">Clientes '+cli+'</span></div>';}
-    if(desc>0){var wp4=leads>0?Math.round(desc/leads*100):0;seg+='<div style="display:flex;align-items:center;gap:4px"><div style="width:'+wp4+'%;min-width:4px;height:6px;background:#c92a2a;border-radius:3px"></div><span style="font-size:8px;color:var(--tx3);white-space:nowrap">Desc. '+desc+'</span></div>';}
-    seg+='</div>';
-
-    h+='<tr><td style="font-weight:700;color:var(--nv)">'+mesNm(k)+" "+(k.split("-")[0])+'</td>';
-    h+='<td class="num">'+leads+'</td>';
-    h+='<td style="color:#f59f00;font-weight:700">'+prop+'</td>';
-    h+='<td style="color:#c92a2a;font-weight:700">'+desc+'</td>';
-    h+='<td style="color:#2b8a3e;font-weight:800">'+cli+'</td>';
-    h+='<td style="color:var(--tx2);font-weight:600">'+(vent>0?fmm(vent):"—")+'</td>';
-    h+='<td><span class="an-badge" style="background:'+convC+'18;color:'+convC+'">'+conv+'%</span></td>';
-    h+='<td>'+seg+'</td></tr>';
+  var arr=d.porMes||[];
+  if(!arr.length){document.getElementById("anTabla").innerHTML='<p style="color:var(--tx3);font-size:11px;padding:10px">Sin datos</p>';return}
+  var h='<table class="an-tbl"><thead><tr><th>Mes</th><th class="num">Leads</th><th class="num">Contactados</th><th class="num">Propuestas</th><th class="num">Clientes</th><th class="num">Conv. %</th></tr></thead><tbody>';
+  arr.slice().reverse().forEach(function(m){
+    h+='<tr><td style="font-weight:700">'+mesNm(m.key)+'</td><td class="num">'+fmm(m.totalLeads)+'</td><td class="num">'+fmm(m.contactados||0)+'</td><td class="num">'+fmm(m.propuestas||0)+'</td><td class="num">'+fmm(m.clientes||0)+'</td><td class="num">'+(m.tasaConversion||0)+'%</td></tr>';
   });
   h+='</tbody></table>';
   document.getElementById("anTabla").innerHTML=h;
 }
 
+// ====================== WHATSAPP PIN ======================
 function enviarPINwa(){
   var btn=document.getElementById("btnWaPIN");
-  var cel=btn.dataset.cel.replace(/[^0-9]/g,"");if(cel.length===10)cel="57"+cel;
-  var msg="Hola *"+btn.dataset.nombre+"*, le saluda *Colombia Abogados*.%0A%0ASu proceso ha sido registrado. Para consultar el estado de su caso 24/7:%0A%0A🔗 https://abogadodecolombia.com/abogados/%0A%0A📋 Cédula: *"+btn.dataset.cedula+"*%0A🔐 PIN: *"+btn.dataset.pin+"*%0A%0AGuarde este mensaje.";
+  var cel=btn.dataset.cel,pin=btn.dataset.pin,nombre=btn.dataset.nombre,cedula=btn.dataset.cedula;
+  if(!cel||!pin)return;
+  cel=cel.replace(/[^0-9]/g,"");if(cel.length===10)cel="57"+cel;
+  var msg="Hola *"+nombre+"*, le saluda el equipo de *Colombia Abogados*.%0A%0APara consultar el estado de su proceso en cualquier momento, ingrese a:%0A🔗 https://abogadodecolombia.com/abogados/%0A%0ASus datos de acceso:%0A📋 Cédula: *"+cedula+"*%0A🔐 PIN: *"+pin+"*%0A%0AGuarde este mensaje. ¡Estamos para servirle!";
   window.open("https://wa.me/"+cel+"?text="+msg,"_blank");
 }
 
-function triggerWH(payload){fetch(MAKE_WH,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)}).catch(function(){})}function showMsg(id,m,t){var e=document.getElementById(id);e.textContent=m;e.className="msg show "+t}function hideMsg(id){document.getElementById(id).className="msg"}function addLog(m){var c=document.getElementById("logList");var t=new Date().toLocaleTimeString("es-CO",{hour:"2-digit",minute:"2-digit"});var r=document.createElement("div");r.className="log-row";r.innerHTML='<span class="log-time">'+t+'</span><span class="log-text">'+m+"</span>";if(c.querySelector("[style]"))c.innerHTML="";c.insertBefore(r,c.firstChild)}
+// ====================== UTILIDADES ======================
+function triggerWH(payload){
+  if(!MAKE_WH)return;
+  try{
+    fetch(MAKE_WH,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)}).catch(function(){});
+  }catch(e){}
+}
 
-// Init: año dinámico en footer
-(function(){
-  var yr=document.getElementById("footerYear");if(yr)yr.textContent=new Date().getFullYear();
-})();
+function showMsg(id,m,t){
+  var el=document.getElementById(id);if(!el)return;
+  el.textContent=m;el.className="msg show "+(t||"info");
+}
+
+function hideMsg(id){
+  var el=document.getElementById(id);if(!el)return;
+  el.className="msg";el.textContent="";
+}
+
+function addLog(m){
+  var list=document.getElementById("logList");if(!list)return;
+  var placeholder=list.querySelector("[style*='italic']");
+  if(placeholder&&placeholder.parentNode)placeholder.parentNode.remove();
+  var now=new Date();
+  var hh=String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0");
+  var row=document.createElement("div");
+  row.className="log-row";
+  row.innerHTML='<span class="log-time">'+hh+'</span><span class="log-text">'+m+'</span>';
+  list.insertBefore(row,list.firstChild);
+  var all=list.querySelectorAll(".log-row");
+  if(all.length>50)all[all.length-1].remove();
+}
+
+// Footer year
+(function(){var yr=document.getElementById("footerYear");if(yr)yr.textContent=new Date().getFullYear();})();
 </script>
 </body>
 </html>
