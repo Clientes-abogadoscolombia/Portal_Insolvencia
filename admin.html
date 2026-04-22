@@ -6,9 +6,10 @@
 <title>Colombia Abogados — Ops</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Belleza&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f7f8fb;--sf:#fff;--sf2:#f1f3f8;--bd:#e4e8f1;--nv:#0a1628;--nvl:#162240;--ac:#3b5bdb;--acl:#edf2ff;--gold:#f59f00;--goldl:#fff9db;--ok:#2b8a3e;--okb:#ebfbee;--warn:#e67700;--warnb:#fff4e6;--err:#c92a2a;--errb:#fff5f5;--info:#1971c2;--infob:#e7f5ff;--purple:#7048e8;--purpleb:#f3f0ff;--tx:#1a1f36;--tx2:#5e6687;--tx3:#9ba3bf;--r:16px;--rs:10px;--sh:0 1px 3px rgba(10,22,40,0.04),0 4px 12px rgba(10,22,40,0.03);--shl:0 8px 32px rgba(10,22,40,0.08);--tr:0.2s cubic-bezier(0.4,0,0.2,1)}
+:root{--bg:#f5f6f9;--sf:#fff;--sf2:#f1f3f8;--bd:#e4e8f1;--nv:#0a1628;--nvl:#162240;--nv2:#14244a;--ac:#3b5bdb;--acl:#edf2ff;--gold:#c9a449;--goldl:#e6d49a;--goldh:#d4b563;--ok:#2b8a3e;--okb:#ebfbee;--warn:#e67700;--warnb:#fff4e6;--err:#c92a2a;--errb:#fff5f5;--info:#1971c2;--infob:#e7f5ff;--purple:#7048e8;--purpleb:#f3f0ff;--tx:#1a1f36;--tx2:#5e6687;--tx3:#9ba3bf;--r:16px;--rs:10px;--sh:0 1px 3px rgba(10,22,40,0.04),0 4px 12px rgba(10,22,40,0.03);--shl:0 8px 32px rgba(10,22,40,0.08);--tr:0.2s cubic-bezier(0.4,0,0.2,1)}
 *{margin:0;padding:0;box-sizing:border-box}body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;-webkit-font-smoothing:antialiased}
-.top{height:56px;background:var(--nv);display:flex;align-items:center;padding:0 16px;position:sticky;top:0;z-index:50}.ham{background:none;border:none;color:#fff;font-size:22px;cursor:pointer;padding:4px 8px;display:none;margin-right:8px}.top-brand{font-family:'Belleza',serif;font-size:18px;font-weight:400;color:#fff;letter-spacing:2px;text-transform:uppercase}.top-brand i{color:var(--gold);font-style:normal;font-weight:600;font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-left:10px;opacity:0.7;font-family:'Outfit',sans-serif}.top-nav{margin-left:auto;display:flex;gap:2px}.tn{color:rgba(255,255,255,0.4);font-size:12px;font-weight:600;padding:7px 14px;border-radius:8px;cursor:pointer;transition:var(--tr);user-select:none}.tn:hover{color:rgba(255,255,255,0.8);background:rgba(255,255,255,0.06)}.tn.on{color:var(--gold);background:rgba(245,159,0,0.1)}
+.top{height:56px;background:var(--nv);display:flex;align-items:center;padding:0 16px;position:sticky;top:0;z-index:50}.ham{background:none;border:none;color:#fff;font-size:22px;cursor:pointer;padding:4px 8px;display:none;margin-right:8px}.top-brand{display:flex;align-items:center}
+.top-crumb{font-family:'Outfit',sans-serif;font-size:11px;font-weight:600;color:rgba(255,255,255,0.5);letter-spacing:1px;text-transform:uppercase;padding-left:6px;border-left:2px solid var(--gold)}.top-nav{margin-left:auto;display:flex;gap:2px}.tn{color:rgba(255,255,255,0.4);font-size:12px;font-weight:600;padding:7px 14px;border-radius:8px;cursor:pointer;transition:var(--tr);user-select:none}.tn:hover{color:rgba(255,255,255,0.8);background:rgba(255,255,255,0.06)}.tn.on{color:var(--gold);background:rgba(245,159,0,0.1)}
 .top-web-btn{color:rgba(255,255,255,0.75);font-size:11px;font-weight:600;padding:6px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.2);text-decoration:none;margin-left:8px;transition:all 0.2s;display:inline-flex;align-items:center;gap:5px}
 .top-web-btn:hover{background:var(--gold);color:var(--nv);border-color:var(--gold)}
 .web-back-link{display:inline-block;color:rgba(255,255,255,0.45);font-size:11px;font-weight:600;letter-spacing:0.5px;text-decoration:none;margin-bottom:20px;padding:6px 14px;border:1px solid rgba(255,255,255,0.15);border-radius:20px;transition:all 0.2s}
@@ -48,7 +49,7 @@
 .pill{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700}.pill-ok{background:var(--okb);color:var(--ok)}.pill-warn{background:var(--warnb);color:var(--warn)}.pill-info{background:var(--infob);color:var(--info)}.pill-hot{background:var(--errb);color:var(--err)}.pill-purple{background:var(--purpleb);color:var(--purple)}
 .btn{padding:7px 14px;border:none;border-radius:var(--rs);font-size:11px;font-weight:700;cursor:pointer;font-family:'Outfit';transition:var(--tr)}.btn:active{transform:scale(0.97)}.btn-ok{background:var(--ok);color:#fff}.btn-nv{background:var(--nv);color:#fff}.btn-ghost{background:none;border:1.5px solid var(--bd);color:var(--tx2)}.btn-gold{background:var(--gold);color:var(--nv)}.btn-lg{padding:12px;font-size:13px;border-radius:var(--rs);width:100%}
 .prog{margin-bottom:14px}.prog-row{display:flex;justify-content:space-between;font-size:11px;color:var(--tx2);margin-bottom:4px;font-weight:500}.prog-bar{height:7px;background:var(--sf2);border-radius:4px;overflow:hidden}.prog-fill{height:100%;border-radius:4px;transition:width 0.5s ease}
-.card{background:var(--sf);border-radius:var(--r);border:1px solid var(--bd);padding:20px;margin-bottom:14px}.card h3{font-size:14px;font-weight:700;color:var(--nv);margin-bottom:14px}
+.card{background:var(--sf);border-radius:var(--r);border:1px solid var(--bd);padding:20px;margin-bottom:14px}.card h3{font-family:'Belleza',serif;font-size:16px;font-weight:400;color:var(--nv);margin-bottom:14px;letter-spacing:1.5px;text-transform:uppercase}
 .msg{padding:12px 16px;border-radius:var(--rs);font-size:12px;font-weight:600;margin-top:12px;display:none}.msg.show{display:block}.msg.ok{background:var(--okb);color:var(--ok)}.msg.err{background:var(--errb);color:var(--err)}.msg.info{background:var(--infob);color:var(--info)}
 .tl-item{display:flex;gap:12px;padding-bottom:14px}.tl-left{display:flex;flex-direction:column;align-items:center;width:22px;flex-shrink:0}.tl-dot{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;color:#fff;flex-shrink:0}.tl-line{width:2px;flex:1;min-height:12px}.tl-right{flex:1}.tl-head{display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap}.tl-name{font-size:13px;font-weight:600}.tl-date{font-size:10px;color:var(--tx3)}.tl-desc{font-size:11px;color:var(--tx2);margin-top:2px;line-height:1.5}.tl-form{margin-top:6px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}.tl-form select,.tl-form input[type=date]{padding:7px 10px;border:1.5px solid var(--bd);border-radius:8px;font-size:12px;font-family:'Outfit';outline:none}
 .skel{background:linear-gradient(90deg,var(--sf2) 25%,#e8ecf4 50%,var(--sf2) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:6px}@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}.skel-card{background:var(--sf);border-radius:var(--r);padding:16px;border:1px solid var(--bd)}.skel-line{height:12px;margin-bottom:8px;border-radius:4px}
@@ -202,7 +203,7 @@
 <div id="loginPage">
 <div class="login-wrap">
 <div class="login-card">
-<a href="https://abogadodecolombia.com" class="web-back-link" title="Volver al sitio web">← abogadodecolombia.com</a>
+<a href="https://abogadodecolombia.com/abogados/" class="web-back-link" title="Volver al sitio web">← abogadodecolombia.com</a>
 <h2>Operaciones</h2>
 <p class="login-sub">Panel administrativo</p>
 <input type="password" id="keyInput" placeholder="API Key" onkeydown="if(event.key==='Enter')doLogin()">
@@ -213,16 +214,16 @@
 </div></div></div>
 <div id="appPage" class="hidden">
 <div class="web-strip" id="webStrip">
-  <a href="https://abogadodecolombia.com" class="web-strip-brand">Colombia Abogados<i>ley 2445</i></a>
+  <a href="https://abogadodecolombia.com/abogados/" class="web-strip-brand">Colombia Abogados<i>ley 2445</i></a>
   <nav class="web-strip-nav">
-    <a href="https://abogadodecolombia.com">Inicio</a>
-    <a href="https://abogadodecolombia.com/#servicios">Servicios</a>
-    <a href="https://abogadodecolombia.com/#nosotros">Nosotros</a>
-    <a href="https://abogadodecolombia.com/#contacto">Contacto</a>
+    <a href="https://abogadodecolombia.com/abogados/">Inicio</a>
+    <a href="https://abogadodecolombia.com/abogados/">Servicios</a>
+    <a href="https://abogadodecolombia.com/abogados/">Nosotros</a>
+    <a href="https://abogadodecolombia.com/abogados/">Contacto</a>
     <a href="#" class="current">Portal Ops</a>
   </nav>
 </div>
-<div class="top"><button class="ham" onclick="toggleSidebar()">☰</button><div class="top-brand">Colombia Abogados <i>ops</i></div><div class="top-nav" id="navTabs"></div><a href="https://abogadodecolombia.com" class="top-web-btn" title="Volver al sitio web">🏠 Sitio web</a><button onclick="cerrarSesion()" style="background:none;border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.5);padding:6px 12px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:Outfit;margin-left:8px">Salir</button></div>
+<div class="top"><button class="ham" onclick="toggleSidebar()">☰</button><div class="top-brand"><span class="top-crumb">Portal de operaciones</span></div><div class="top-nav" id="navTabs"></div><a href="https://abogadodecolombia.com/abogados/" class="top-web-btn" title="Volver al sitio web">🏠 Sitio web</a><button onclick="cerrarSesion()" style="background:none;border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.5);padding:6px 12px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:Outfit;margin-left:8px">Salir</button></div>
 <div class="wrap">
 <div class="sidebar-overlay" id="sideOverlay" onclick="toggleSidebar()"></div>
 <div class="sidebar" id="sidebar"><button class="sidebar-close" onclick="toggleSidebar()">✕</button><h3>Navegación</h3><div id="sideNav"></div><button onclick="cerrarSesion()" style="margin-top:auto;width:100%;padding:12px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:Outfit">Cerrar sesión</button></div>
@@ -351,15 +352,15 @@
     </div>
     <div class="web-footer-col">
       <h4>Servicios</h4>
-      <a href="https://abogadodecolombia.com/#servicios">Acuerdo de pago</a>
-      <a href="https://abogadodecolombia.com/#servicios">Liquidación patrimonial</a>
-      <a href="https://abogadodecolombia.com/#servicios">Asesoría legal</a>
+      <a href="https://abogadodecolombia.com/abogados/">Acuerdo de pago</a>
+      <a href="https://abogadodecolombia.com/abogados/">Liquidación patrimonial</a>
+      <a href="https://abogadodecolombia.com/abogados/">Asesoría legal</a>
     </div>
     <div class="web-footer-col">
       <h4>Enlaces</h4>
-      <a href="https://abogadodecolombia.com">Inicio</a>
-      <a href="https://abogadodecolombia.com/#nosotros">Nosotros</a>
-      <a href="https://abogadodecolombia.com/#contacto">Contacto</a>
+      <a href="https://abogadodecolombia.com/abogados/">Inicio</a>
+      <a href="https://abogadodecolombia.com/abogados/">Nosotros</a>
+      <a href="https://abogadodecolombia.com/abogados/">Contacto</a>
     </div>
     <div class="web-footer-col">
       <h4>Contacto</h4>
