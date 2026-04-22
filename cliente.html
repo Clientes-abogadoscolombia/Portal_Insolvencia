@@ -11,20 +11,45 @@
 body{font-family:'Outfit',sans-serif;background:linear-gradient(180deg,var(--bg) 0%,#eef1f6 100%);color:#1a1a2e;min-height:100vh;-webkit-font-smoothing:antialiased}
  
 .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--navy);padding:24px}
-.login-wrap{min-height:100vh;background:radial-gradient(ellipse at top,var(--navy-l) 0%,var(--navy) 45%,var(--navy-d) 100%);display:flex;align-items:center;justify-content:center;padding:20px;position:relative;overflow:hidden}
-/* Patrón de fondo con balanzas sutiles */
-.login-wrap::after{content:"";position:absolute;inset:0;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'><g fill='none' stroke='%23c9a449' stroke-width='0.6' opacity='0.07'><path d='M70 25 L70 95 M50 95 L90 95 M45 45 L60 45 M80 45 L95 45 M52 45 L52 60 M58 45 L58 60 M52 60 Q55 65 58 60 M82 45 L82 60 M88 45 L88 60 M82 60 Q85 65 88 60'/><circle cx='70' cy='20' r='3'/></g></svg>");background-size:200px 200px;opacity:0.6;pointer-events:none;animation:patternDrift 80s linear infinite}
-/* Luces doradas que se mueven */
-.login-wrap::before{content:"";position:absolute;top:-20%;left:-10%;width:70%;height:80%;background:radial-gradient(circle,rgba(201,164,73,0.08) 0%,transparent 60%);pointer-events:none;animation:glow1 14s ease-in-out infinite alternate}
-.login-glow-2{position:absolute;bottom:-15%;right:-5%;width:60%;height:70%;background:radial-gradient(circle,rgba(201,164,73,0.06) 0%,transparent 65%);pointer-events:none;animation:glow2 18s ease-in-out infinite alternate;z-index:1}
+.login-wrap{min-height:100vh;background:var(--navy-d);display:flex;align-items:center;justify-content:center;padding:20px;position:relative;overflow:hidden}
+/* Slideshow de fondo */
+.login-bg-slideshow{position:absolute;inset:0;z-index:0;pointer-events:none}
+.login-bg-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 2.5s ease;filter:saturate(0.7) contrast(0.9)}
+.login-bg-slide.active{opacity:1}
+/* Overlay navy gradient para legibilidad */
+.login-bg-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,22,40,0.75) 0%,rgba(10,22,40,0.85) 50%,rgba(5,10,20,0.95) 100%);z-index:1;pointer-events:none}
+/* Patrón sutil de balanzas encima del overlay */
+.login-bg-pattern{position:absolute;inset:0;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'><g fill='none' stroke='%23c9a449' stroke-width='0.6' opacity='0.07'><path d='M70 25 L70 95 M50 95 L90 95 M45 45 L60 45 M80 45 L95 45 M52 45 L52 60 M58 45 L58 60 M52 60 Q55 65 58 60 M82 45 L82 60 M88 45 L88 60 M82 60 Q85 65 88 60'/><circle cx='70' cy='20' r='3'/></g></svg>");background-size:200px 200px;opacity:0.5;z-index:2;pointer-events:none;animation:patternDrift 90s linear infinite}
 @keyframes patternDrift{from{transform:translate(0,0)}to{transform:translate(-200px,-200px)}}
-@keyframes glow1{from{transform:translate(0,0) scale(1)}to{transform:translate(20%,10%) scale(1.2)}}
+/* Luces doradas animadas */
+.login-glow-1{position:absolute;top:-15%;left:-10%;width:60%;height:70%;background:radial-gradient(circle,rgba(201,164,73,0.15) 0%,transparent 60%);pointer-events:none;animation:glow1 14s ease-in-out infinite alternate;z-index:2}
+.login-glow-2{position:absolute;bottom:-10%;right:-5%;width:55%;height:65%;background:radial-gradient(circle,rgba(201,164,73,0.1) 0%,transparent 65%);pointer-events:none;animation:glow2 18s ease-in-out infinite alternate;z-index:2}
+@keyframes glow1{from{transform:translate(0,0) scale(1)}to{transform:translate(25%,10%) scale(1.2)}}
 @keyframes glow2{from{transform:translate(0,0) scale(1)}to{transform:translate(-15%,-10%) scale(1.15)}}
 .login-box{text-align:center;max-width:420px;width:100%;position:relative;z-index:3}
 .login-logo{width:78px;height:78px;border-radius:18px;background:linear-gradient(135deg,var(--gold),var(--gold-h));display:flex;align-items:center;justify-content:center;margin:0 auto 26px;font-size:34px;box-shadow:0 20px 50px rgba(201,164,73,0.25),0 0 0 1px rgba(201,164,73,0.15)}
 .login-box h1{font-family:'Belleza',serif;font-size:34px;font-weight:400;color:#fff;margin-bottom:6px;letter-spacing:3px;text-transform:uppercase}
 .login-box .sub{color:var(--gold);font-size:10px;letter-spacing:4px;font-weight:600;text-transform:uppercase;margin-bottom:14px;font-family:'Belleza',serif}
 .login-tagline{color:rgba(255,255,255,0.55);font-size:12px;line-height:1.7;margin-bottom:28px;max-width:320px;margin-left:auto;margin-right:auto;font-weight:500}
+/* ——— Carrusel de mini-noticias ——— */
+.news-ticker{position:relative;margin:0 auto 28px;width:100%;max-width:420px;height:88px;background:rgba(255,255,255,0.03);border:1px solid rgba(201,164,73,0.18);border-left:2px solid var(--gold);border-radius:10px;overflow:hidden;backdrop-filter:blur(6px)}
+.news-slide{position:absolute;inset:0;display:flex;align-items:center;gap:14px;padding:16px 18px 22px;opacity:0;transform:translateY(12px);transition:opacity 0.5s ease,transform 0.5s ease;pointer-events:none}
+.news-slide.active{opacity:1;transform:translateY(0)}
+.news-icon{width:32px;height:32px;flex-shrink:0;color:var(--gold);padding:6px;border:1px solid rgba(201,164,73,0.3);border-radius:8px;background:rgba(201,164,73,0.06);display:flex;align-items:center;justify-content:center}
+.news-icon svg{width:100%;height:100%}
+.news-body{flex:1;min-width:0;text-align:left}
+.news-title{font-family:'Belleza',serif;font-size:13px;color:#fff;letter-spacing:1.2px;text-transform:uppercase;font-weight:400;line-height:1.2;margin-bottom:3px}
+.news-desc{font-size:11px;color:rgba(255,255,255,0.55);line-height:1.5;font-weight:500}
+.news-dots{position:absolute;bottom:7px;left:50%;transform:translateX(-50%);display:flex;gap:5px;z-index:2}
+.news-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.2);cursor:pointer;transition:all 0.3s}
+.news-dot.active{background:var(--gold);width:16px;border-radius:3px}
+@media(max-width:480px){
+  .news-ticker{max-width:100%;height:96px}
+  .news-slide{padding:14px 14px 22px;gap:10px}
+  .news-icon{width:28px;height:28px;padding:5px}
+  .news-title{font-size:12px;letter-spacing:1px}
+  .news-desc{font-size:10.5px}
+}
 .login-fields{display:flex;flex-direction:column;gap:12px}
 .login-box input{width:100%;padding:17px 20px;border-radius:12px;border:1.5px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);font-size:17px;outline:none;text-align:center;font-family:'Outfit';font-weight:600;letter-spacing:2px;color:#fff;transition:all 0.25s}
 .login-box input:focus{border-color:var(--gold);background:rgba(255,255,255,0.06);box-shadow:0 0 0 4px rgba(201,164,73,0.1)}
@@ -73,6 +98,11 @@ body{font-family:'Outfit',sans-serif;background:linear-gradient(180deg,var(--bg)
 .web-footer-brand{font-family:'Belleza',serif;font-size:19px;letter-spacing:4px;text-transform:uppercase;color:#fff;margin-bottom:10px;font-weight:400}
 .web-footer-tag{font-size:12px;color:rgba(255,255,255,0.4);line-height:1.7;max-width:320px}
 .web-footer-bottom{max-width:1200px;margin:0 auto;padding-top:20px;border-top:1px solid rgba(255,255,255,0.08);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:11px;color:rgba(255,255,255,0.3)}
+.web-footer-alia{max-width:1200px;margin:16px auto 0;padding-top:14px;border-top:1px solid rgba(201,164,73,0.1);display:flex;justify-content:center;align-items:center;gap:10px;font-size:10px;letter-spacing:3px;text-transform:uppercase;font-weight:500}
+.alia-label{color:rgba(255,255,255,0.3);font-family:'Belleza',serif}
+.alia-sep{color:rgba(201,164,73,0.5);font-size:8px}
+.alia-name{font-family:'Belleza',serif;color:var(--gold);font-size:12px;letter-spacing:4px;font-weight:700;background:linear-gradient(135deg,#c9a449,#e6d49a,#c9a449);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.alia-tag{color:rgba(255,255,255,0.4);font-family:'Belleza',serif;font-style:italic;letter-spacing:2px}
 .intranet-link{color:rgba(255,255,255,0.25);text-decoration:none;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border:1px solid rgba(255,255,255,0.08);border-radius:12px;transition:all 0.2s}
 .intranet-link:hover{color:var(--gold);border-color:rgba(201,164,73,0.3);background:rgba(201,164,73,0.05)}
 @media(max-width:768px){.web-footer-grid{grid-template-columns:1fr 1fr;gap:24px}.web-footer{padding:28px 16px 20px;margin-top:28px}}
@@ -218,12 +248,52 @@ body{font-family:'Outfit',sans-serif;background:linear-gradient(180deg,var(--bg)
 </div>
 
 <div class="login-wrap" id="loginView">
-  <span class="login-glow-2"></span>
+  <!-- SLIDESHOW DE FONDO — Puedes cambiar estas URLs por fotos reales de tu firma.
+       Recomendación: imágenes 1920x1080 optimizadas (máx 500KB cada una). -->
+  <div class="login-bg-slideshow" aria-hidden="true">
+    <div class="login-bg-slide active" style="background-image:url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1920&q=70')"></div>
+    <div class="login-bg-slide" style="background-image:url('https://images.unsplash.com/photo-1568667256549-094345857637?auto=format&fit=crop&w=1920&q=70')"></div>
+    <div class="login-bg-slide" style="background-image:url('https://images.unsplash.com/photo-1505664194779-8beaceb93744?auto=format&fit=crop&w=1920&q=70')"></div>
+    <div class="login-bg-slide" style="background-image:url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1920&q=70')"></div>
+  </div>
+  <div class="login-bg-overlay" aria-hidden="true"></div>
+  <div class="login-bg-pattern" aria-hidden="true"></div>
+  <span class="login-glow-1" aria-hidden="true"></span>
+  <span class="login-glow-2" aria-hidden="true"></span>
   <div class="login-box">
     <div class="login-logo">⚖️</div>
     <h1>Consulte su Proceso</h1>
     <p class="sub">Colombia Abogados</p>
     <p class="login-tagline">Consulte el estado de su proceso de insolvencia, documentos, audiencias y pagos · 24/7</p>
+
+    <!-- Mini-noticias rotativas -->
+    <div class="news-ticker" id="newsTicker">
+      <div class="news-slide active">
+        <div class="news-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+        <div class="news-body"><div class="news-title">Consulta en tiempo real</div><div class="news-desc">Cada avance de tu proceso se refleja aquí al instante</div></div>
+      </div>
+      <div class="news-slide">
+        <div class="news-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div>
+        <div class="news-body"><div class="news-title">Audiencias al día</div><div class="news-desc">Fechas, horarios y notificaciones oportunas de cada etapa</div></div>
+      </div>
+      <div class="news-slide">
+        <div class="news-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <div class="news-body"><div class="news-title">Protección legal activa</div><div class="news-desc">Desde el auto de admisión: sin embargos ni ejecuciones</div></div>
+      </div>
+      <div class="news-slide">
+        <div class="news-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h8M8 15h5"/></svg></div>
+        <div class="news-body"><div class="news-title">Documentos seguros</div><div class="news-desc">Contratos, poderes y actas siempre disponibles</div></div>
+      </div>
+      <div class="news-slide">
+        <div class="news-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20M6 15h2M11 15h3"/></svg></div>
+        <div class="news-body"><div class="news-title">Estado de pagos</div><div class="news-desc">Honorarios pagados y próximas cuotas a la vista</div></div>
+      </div>
+      <div class="news-slide">
+        <div class="news-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></div>
+        <div class="news-body"><div class="news-title">Contacto directo</div><div class="news-desc">WhatsApp con tu abogado a un solo clic</div></div>
+      </div>
+      <div class="news-dots" id="newsDots"></div>
+    </div>
     <div class="login-fields">
       <input type="text" id="cedInput" placeholder="Número de cédula" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
       <input type="text" id="pinInput" placeholder="PIN de seguridad" inputmode="numeric" maxlength="6" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
@@ -820,9 +890,59 @@ function abrirAyuda(){
   window.open(waUrl, "_blank");
 }
 
-// Init: año dinámico del footer
+// Init: año dinámico del footer + carrusel de mini-noticias + slideshow de fondo
 (function(){
   var yr=document.getElementById("footerYear");if(yr)yr.textContent=new Date().getFullYear();
+
+  // Slideshow de fondo — rota cada 6s con fade
+  var bgSlides=document.querySelectorAll(".login-bg-slide");
+  if(bgSlides.length>1){
+    var bgCurrent=0;
+    setInterval(function(){
+      bgSlides[bgCurrent].classList.remove("active");
+      bgCurrent=(bgCurrent+1)%bgSlides.length;
+      bgSlides[bgCurrent].classList.add("active");
+    },6000);
+  }
+
+  // Carrusel de mini-noticias
+  var ticker=document.getElementById("newsTicker");
+  var dotsWrap=document.getElementById("newsDots");
+  if(!ticker||!dotsWrap)return;
+  var slides=ticker.querySelectorAll(".news-slide");
+  if(!slides.length)return;
+  var current=0;
+  // Crear dots
+  var dotsHTML="";
+  for(var i=0;i<slides.length;i++)dotsHTML+='<span class="news-dot'+(i===0?' active':'')+'" data-i="'+i+'"></span>';
+  dotsWrap.innerHTML=dotsHTML;
+  var dots=dotsWrap.querySelectorAll(".news-dot");
+
+  function go(idx){
+    slides[current].classList.remove("active");
+    dots[current].classList.remove("active");
+    current=idx;
+    slides[current].classList.add("active");
+    dots[current].classList.add("active");
+  }
+  // Click en dots
+  dots.forEach(function(d){
+    d.addEventListener("click",function(){
+      var i=Number(this.getAttribute("data-i"));
+      go(i);resetAuto();
+    });
+  });
+  // Rotación automática
+  var auto=null;
+  function startAuto(){auto=setInterval(function(){go((current+1)%slides.length)},4500)}
+  function resetAuto(){if(auto)clearInterval(auto);startAuto()}
+  startAuto();
+  // Pausa si el usuario está escribiendo en el login (no distraerlo)
+  var inputs=document.querySelectorAll("#loginView input");
+  inputs.forEach(function(inp){
+    inp.addEventListener("focus",function(){if(auto){clearInterval(auto);auto=null}});
+    inp.addEventListener("blur",function(){if(!auto)startAuto()});
+  });
 })();
 </script>
 <footer class="web-footer">
@@ -847,6 +967,13 @@ function abrirAyuda(){
   <div class="web-footer-bottom">
     <div>© <span id="footerYear"></span> Colombia Abogados · Todos los derechos reservados</div>
     <div><a href="admin.html" class="intranet-link">Intranet</a></div>
+  </div>
+  <div class="web-footer-alia">
+    <span class="alia-label">Powered by</span>
+    <span class="alia-sep">·</span>
+    <span class="alia-name">ALIA</span>
+    <span class="alia-sep">·</span>
+    <span class="alia-tag">Tu aliado artificial</span>
   </div>
 </footer>
 </body>
