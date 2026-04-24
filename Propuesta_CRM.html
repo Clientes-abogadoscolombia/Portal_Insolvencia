@@ -28,12 +28,13 @@
             box-sizing: border-box; 
             position: relative;
             overflow: hidden;
-            transform-origin: top center;
+            transform-origin: top left;
         }
 
         /* Wrapper que reserva el espacio correcto cuando se escala el preview */
         #preview-wrapper {
             position: relative;
+            margin: 0 auto;
         }
 
         .brand-navy { color: #002855; }
@@ -63,9 +64,10 @@
             #config-toggle { display: flex !important; }
 
             #preview-panel { 
-                padding: 1rem 0.5rem; 
+                padding: 1rem; 
                 overflow-x: hidden;
                 overflow-y: visible;
+                display: block;
             }
         }
 
@@ -360,8 +362,12 @@
             const wrapper = document.getElementById('preview-wrapper');
             if (!panel || !content || !wrapper) return;
 
-            // Ancho disponible del panel menos un pequeño padding
-            const available = panel.clientWidth - 24;
+            // Obtener ancho interno real del panel (descontando padding)
+            const panelStyle = window.getComputedStyle(panel);
+            const paddingLeft = parseFloat(panelStyle.paddingLeft) || 0;
+            const paddingRight = parseFloat(panelStyle.paddingRight) || 0;
+            const available = panel.clientWidth - paddingLeft - paddingRight;
+            
             const naturalWidth = 794;
             const naturalHeight = 1123;
 
@@ -371,7 +377,7 @@
             }
 
             content.style.transform = `scale(${scale})`;
-            // Reservar el alto correcto en el wrapper para que el scroll funcione
+            // Reservar el tamaño correcto en el wrapper para que el scroll y el centrado funcionen
             wrapper.style.width = (naturalWidth * scale) + 'px';
             wrapper.style.height = (naturalHeight * scale) + 'px';
         }
