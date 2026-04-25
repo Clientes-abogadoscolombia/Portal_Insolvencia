@@ -62,7 +62,7 @@
 .an-filters{display:flex;gap:8px;align-items:center}
 .an-select{padding:8px 14px;background:var(--sf);border:1.5px solid var(--bd);border-radius:8px;color:var(--nv);font-family:Outfit;font-size:12px;font-weight:600;outline:none;cursor:pointer}
 .an-grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
-.kpis-an{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:16px}
+.kpis-an{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px} .kpi-pro{background:var(--sf);border-radius:var(--r);padding:18px 20px;border:1px solid var(--bd);position:relative;overflow:hidden;box-shadow:var(--sh);transition:transform 0.2s,box-shadow 0.2s} .kpi-pro:hover{transform:translateY(-2px);box-shadow:var(--shl)} .kpi-pro .kpi-stripe{position:absolute;top:0;left:0;right:0;height:4px} .kpi-pro .kpi-label{font-size:10px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:1.5px;margin-top:2px} .kpi-pro .kpi-val{font-size:26px;font-weight:800;margin-top:8px;letter-spacing:-0.7px;line-height:1.1} .kpi-pro .kpi-sub{font-size:11px;font-weight:600;color:var(--tx3);margin-top:6px;letter-spacing:0.2px}
 .fnl-h{display:flex;align-items:stretch;gap:0;flex-wrap:nowrap}
 .fnl-step{flex:1;background:linear-gradient(135deg,var(--sf2),var(--sf));padding:16px 12px;border-radius:10px;text-align:center;border:1px solid var(--bd);position:relative;min-width:0}
 .fnl-step .fnl-val{font-size:24px;font-weight:800;letter-spacing:-0.5px;line-height:1}
@@ -72,8 +72,8 @@
 .fnl-arrow-icon{color:var(--tx3);font-size:14px;margin-top:3px}
 .an-tbl tr:hover td{background:var(--sf2)}
 .an-tbl tr td:first-child{padding-left:14px}
-@media(max-width:900px){.kpis-an{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:600px){.kpis-an{grid-template-columns:repeat(2,1fr)}.fnl-h{flex-direction:column}.fnl-arrow{flex-direction:row;padding:6px 0;min-width:auto}.fnl-arrow-icon{transform:rotate(90deg);margin:0 0 0 6px}}
+@media(max-width:900px){.kpis-an{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.kpis-an{grid-template-columns:1fr}.fnl-h{flex-direction:column}.fnl-arrow{flex-direction:row;padding:6px 0;min-width:auto}.fnl-arrow-icon{transform:rotate(90deg);margin:0 0 0 6px}}
 .an-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:18px;box-shadow:var(--sh);display:flex;flex-direction:column} .an-card > div:not(.an-card-h){flex:1;min-height:0;display:flex;flex-direction:column}
 .an-full{grid-column:1/-1}
 .an-card-h{font-size:11px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px}
@@ -1549,13 +1549,10 @@ function mesCorto(k){var p=k.split("-");var n=["Ene","Feb","Mar","Abr","May","Ju
 function renderAN(){
   var d=AN_CACHE.actual;if(!d)return;
   var global=AN_CACHE.global||d;
-  var kh=''
-    +'<div class="kpi"><div class="kpi-stripe" style="background:var(--ac)"></div><div class="kpi-label">Leads</div><div class="kpi-val" style="color:var(--ac)">'+fmm(d.totalLeads||0)+'</div></div>'
-    +'<div class="kpi"><div class="kpi-stripe" style="background:var(--purple)"></div><div class="kpi-label">Propuestas</div><div class="kpi-val" style="color:var(--purple)">'+fmm(d.propuestas||0)+'</div></div>'
-    +'<div class="kpi"><div class="kpi-stripe" style="background:var(--ok)"></div><div class="kpi-label">Ventas</div><div class="kpi-val" style="color:var(--ok)">'+fmm(d.clientes||0)+'</div></div>'
-    +'<div class="kpi"><div class="kpi-stripe" style="background:var(--gold)"></div><div class="kpi-label">Tasa cierre</div><div class="kpi-val" style="color:var(--gold)">'+(d.tasaCierre||0)+'%</div></div>'
-    +'<div class="kpi"><div class="kpi-stripe" style="background:var(--info)"></div><div class="kpi-label">Ingresos</div><div class="kpi-val" style="color:var(--info)">'+fmCop(d.totalVentas||0)+'</div></div>'
-    +'<div class="kpi"><div class="kpi-stripe" style="background:var(--warn)"></div><div class="kpi-label">Ticket prom.</div><div class="kpi-val" style="color:var(--warn)">'+fmCop(d.ticketPromedio||0)+'</div></div>';
+var kh=''
+    +'<div class="kpi-pro"><div class="kpi-stripe" style="background:var(--ok)"></div><div class="kpi-label">Ingresos facturados</div><div class="kpi-val" style="color:var(--ok)">'+fmCop(d.totalVentas||0)+'</div><div class="kpi-sub">'+fmm(d.clientes||0)+(d.clientes===1?' venta cerrada':' ventas cerradas')+'</div></div>'
+    +'<div class="kpi-pro"><div class="kpi-stripe" style="background:var(--warn)"></div><div class="kpi-label">Ticket promedio</div><div class="kpi-val" style="color:var(--warn)">'+fmCop(d.ticketPromedio||0)+'</div><div class="kpi-sub">honorarios por venta cerrada</div></div>'
+    +'<div class="kpi-pro"><div class="kpi-stripe" style="background:var(--gold)"></div><div class="kpi-label">Tasa de cierre</div><div class="kpi-val" style="color:var(--gold)">'+(d.tasaCierre||0)+'%</div><div class="kpi-sub">'+fmm(d.clientes||0)+' de '+fmm(d.propuestas||0)+' propuestas</div></div>';
   document.getElementById("anKpis").innerHTML=kh;
   drawFunnel(d);
   drawTrend(global);
