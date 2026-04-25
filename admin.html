@@ -74,7 +74,7 @@
 .an-tbl tr td:first-child{padding-left:14px}
 @media(max-width:900px){.kpis-an{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:600px){.kpis-an{grid-template-columns:repeat(2,1fr)}.fnl-h{flex-direction:column}.fnl-arrow{flex-direction:row;padding:6px 0;min-width:auto}.fnl-arrow-icon{transform:rotate(90deg);margin:0 0 0 6px}}
-.an-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:18px;box-shadow:var(--sh)}
+.an-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:18px;box-shadow:var(--sh);display:flex;flex-direction:column} .an-card > div:not(.an-card-h){flex:1;min-height:0;display:flex;flex-direction:column}
 .an-full{grid-column:1/-1}
 .an-card-h{font-size:11px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px}
 .an-legend{margin-top:10px;font-size:10px;color:var(--tx3);font-weight:600;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
@@ -1638,11 +1638,11 @@ function drawTrend(d){
 
 function drawModalidad(arr){
   var el=document.getElementById("anModalidad");
-  if(!arr.length){el.innerHTML='<p style="color:var(--tx3);font-size:11px;padding:14px;text-align:center">Sin ventas aún</p>';return}
+  if(!arr.length){el.innerHTML='<div style="display:flex;align-items:center;justify-content:center;flex:1;color:var(--tx3);font-size:11px">Sin ventas aún</div>';return}
   var total=arr.reduce(function(a,b){return a+(b.count||0)},0);
-  if(!total){el.innerHTML='<p style="color:var(--tx3);font-size:11px;padding:14px;text-align:center">Sin ventas aún</p>';return}
+  if(!total){el.innerHTML='<div style="display:flex;align-items:center;justify-content:center;flex:1;color:var(--tx3);font-size:11px">Sin ventas aún</div>';return}
   var COLORS={"ACUERDO DE PAGO":"var(--ok)","LIQUIDACIÓN":"var(--gold)","SIN DEFINIR":"var(--tx3)"};
-  var R=22,r=14,cx=26,cy=26;
+  var R=22,r=13,cx=26,cy=26;
   var circ=2*Math.PI*R,acc=0;
   var segs=arr.map(function(item,i){
     var pct=(item.count||0)/total;
@@ -1653,29 +1653,29 @@ function drawModalidad(arr){
     acc+=len;
     return '<circle cx="'+cx+'" cy="'+cy+'" r="'+R+'" fill="none" stroke="'+color+'" stroke-width="'+(R-r)+'" stroke-dasharray="'+dasharray+'" stroke-dashoffset="'+dashoffset+'" transform="rotate(-90 '+cx+' '+cy+')"><title>'+item.name+': '+item.count+'</title></circle>';
   }).join("");
-  var svg='<svg viewBox="0 0 52 52" style="width:120px;height:120px;flex-shrink:0">'
+  var svg='<svg viewBox="0 0 52 52" style="width:140px;height:140px;flex-shrink:0">'
     +'<circle cx="'+cx+'" cy="'+cy+'" r="'+R+'" fill="none" stroke="var(--sf2)" stroke-width="'+(R-r)+'"/>'
     +segs
     +'<text x="'+cx+'" y="'+(cy-1)+'" text-anchor="middle" font-size="11" font-weight="800" fill="var(--nv)">'+total+'</text>'
     +'<text x="'+cx+'" y="'+(cy+5)+'" text-anchor="middle" font-size="3.2" fill="var(--tx3)" letter-spacing="0.4">CASOS</text>'
     +'</svg>';
-  var legend='<div style="flex:1;display:flex;flex-direction:column;gap:10px;font-size:12px;min-width:0">';
+  var legend='<div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:14px;font-size:12px;min-width:0">';
   arr.forEach(function(item,i){
     var pct=Math.round((item.count||0)/total*100);
     var color=COLORS[item.name]||AC[i%AC.length];
-    legend+='<div><div style="display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:4px"><span style="display:inline-flex;align-items:center;gap:7px;flex:1;min-width:0"><span style="width:10px;height:10px;border-radius:50%;background:'+color+';flex-shrink:0"></span><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600" title="'+item.name+'">'+item.name+'</span></span><span style="font-weight:800;color:'+color+'">'+item.count+'</span></div><div style="height:6px;background:var(--sf2);border-radius:3px;overflow:hidden"><div style="height:100%;width:'+pct+'%;background:'+color+';border-radius:3px;transition:width 0.6s"></div></div></div>';
+    legend+='<div><div style="display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:5px"><span style="display:inline-flex;align-items:center;gap:7px;flex:1;min-width:0"><span style="width:11px;height:11px;border-radius:50%;background:'+color+';flex-shrink:0"></span><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600" title="'+item.name+'">'+item.name+'</span></span><span style="font-weight:800;color:'+color+';white-space:nowrap">'+item.count+' · '+pct+'%</span></div><div style="height:7px;background:var(--sf2);border-radius:4px;overflow:hidden"><div style="height:100%;width:'+pct+'%;background:'+color+';border-radius:4px;transition:width 0.6s"></div></div></div>';
   });
   legend+='</div>';
-  el.innerHTML='<div style="display:flex;align-items:center;gap:18px;padding:8px 4px">'+svg+legend+'</div>';
+  el.innerHTML='<div style="display:flex;align-items:center;justify-content:center;gap:20px;padding:6px 4px;flex:1;min-height:0">'+svg+legend+'</div>';
 }
 
 function drawDonut(id,arr){
   var el=document.getElementById(id);if(!el)return;
-  if(!arr.length){el.innerHTML='<p style="color:var(--tx3);font-size:11px;padding:14px;text-align:center">Sin datos</p>';return}
+  if(!arr.length){el.innerHTML='<div style="display:flex;align-items:center;justify-content:center;flex:1;color:var(--tx3);font-size:11px">Sin datos</div>';return}
   var total=arr.reduce(function(a,b){return a+(b.count||0)},0);
-  if(!total){el.innerHTML='<p style="color:var(--tx3);font-size:11px;padding:14px;text-align:center">Sin datos</p>';return}
+  if(!total){el.innerHTML='<div style="display:flex;align-items:center;justify-content:center;flex:1;color:var(--tx3);font-size:11px">Sin datos</div>';return}
   var top=arr.slice(0,6);
-  var R=22,r=14,cx=26,cy=26;
+  var R=22,r=13,cx=26,cy=26;
   var circ=2*Math.PI*R,acc=0;
   var segs=top.map(function(item,i){
     var pct=(item.count||0)/total;
@@ -1686,41 +1686,43 @@ function drawDonut(id,arr){
     return '<circle cx="'+cx+'" cy="'+cy+'" r="'+R+'" fill="none" stroke="'+AC[i%AC.length]+'" stroke-width="'+(R-r)+'" stroke-dasharray="'+dasharray+'" stroke-dashoffset="'+dashoffset+'" transform="rotate(-90 '+cx+' '+cy+')"><title>'+item.name+': '+item.count+' ('+Math.round(pct*100)+'%)</title></circle>';
   }).join("");
   var bigPct=top[0]?Math.round((top[0].count||0)/total*100):0;
-  var svg='<svg viewBox="0 0 52 52" style="width:120px;height:120px;flex-shrink:0">'
+  var svg='<svg viewBox="0 0 52 52" style="width:140px;height:140px;flex-shrink:0">'
     +'<circle cx="'+cx+'" cy="'+cy+'" r="'+R+'" fill="none" stroke="var(--sf2)" stroke-width="'+(R-r)+'"/>'
     +segs
     +'<text x="'+cx+'" y="'+(cy)+'" text-anchor="middle" font-size="9" font-weight="800" fill="var(--nv)">'+bigPct+'%</text>'
     +'<text x="'+cx+'" y="'+(cy+5)+'" text-anchor="middle" font-size="3" fill="var(--tx3)" letter-spacing="0.3">TOP 1</text>'
     +'</svg>';
-  var legend='<div style="flex:1;display:flex;flex-direction:column;gap:7px;font-size:11px;min-width:0">';
+  var gap=top.length<=3?14:top.length<=5?9:7;
+  var legend='<div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:'+gap+'px;font-size:12px;min-width:0">';
   top.forEach(function(item,i){
     var pct=Math.round((item.count||0)/total*100);
-    legend+='<div style="display:flex;align-items:center;gap:7px"><span style="width:10px;height:10px;border-radius:50%;background:'+AC[i%AC.length]+';flex-shrink:0"></span><span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600" title="'+item.name+'">'+(item.name||"—")+'</span><span style="font-weight:800">'+fmm(item.count)+'</span><span style="color:var(--tx3);min-width:34px;text-align:right;font-weight:700">'+pct+'%</span></div>';
+    legend+='<div style="display:flex;align-items:center;gap:8px"><span style="width:11px;height:11px;border-radius:50%;background:'+AC[i%AC.length]+';flex-shrink:0"></span><span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600" title="'+item.name+'">'+(item.name||"—")+'</span><span style="font-weight:800">'+fmm(item.count)+'</span><span style="color:var(--tx3);min-width:36px;text-align:right;font-weight:700">'+pct+'%</span></div>';
   });
   legend+='</div>';
-  el.innerHTML='<div style="display:flex;align-items:center;gap:14px;padding:6px 4px">'+svg+legend+'</div>';
+  el.innerHTML='<div style="display:flex;align-items:center;justify-content:center;gap:18px;padding:6px 4px;flex:1;min-height:0">'+svg+legend+'</div>';
 }
 
 function drawHBars(id,arr,showPct){
   var el=document.getElementById(id);if(!el)return;
-  if(!arr.length){el.innerHTML='<p style="color:var(--tx3);font-size:11px;padding:14px;text-align:center">Sin datos</p>';return}
+  if(!arr.length){el.innerHTML='<div style="display:flex;align-items:center;justify-content:center;flex:1;color:var(--tx3);font-size:11px">Sin datos</div>';return}
   var top=arr.slice(0,8);
   var max=Math.max.apply(null,top.map(function(m){return m.count||0})) || 1;
   var total=showPct?arr.reduce(function(a,b){return a+(b.count||0)},0):0;
-  var h="";
+  var h='<div style="display:flex;flex-direction:column;justify-content:space-around;flex:1;min-height:0;padding:8px 0;gap:4px">';
   top.forEach(function(item,i){
     var pct=(item.count||0)/max*100;
     var pctTotal=total?Math.round((item.count||0)/total*100):0;
-    var pctTxt=showPct?'<span style="color:var(--tx3);min-width:34px;text-align:right">'+pctTotal+'%</span>':'';
-    h+='<div style="margin-bottom:9px"><div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;margin-bottom:4px;gap:8px"><span style="font-weight:600;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="'+(item.name||"")+'">'+(item.name||"—")+'</span><span style="font-weight:800">'+fmm(item.count)+'</span>'+pctTxt+'</div>';
-    h+='<div style="height:8px;background:var(--sf2);border-radius:4px;overflow:hidden"><div style="height:100%;width:'+pct+'%;background:'+AC[i%AC.length]+';border-radius:4px;transition:width 0.6s"></div></div></div>';
+    var pctTxt=showPct?'<span style="color:var(--tx3);min-width:36px;text-align:right;font-weight:700">'+pctTotal+'%</span>':'';
+    h+='<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;margin-bottom:4px;gap:8px"><span style="font-weight:600;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="'+(item.name||"")+'">'+(item.name||"—")+'</span><span style="font-weight:800">'+fmm(item.count)+'</span>'+pctTxt+'</div>';
+    h+='<div style="height:9px;background:var(--sf2);border-radius:5px;overflow:hidden"><div style="height:100%;width:'+pct+'%;background:'+AC[i%AC.length]+';border-radius:5px;transition:width 0.6s"></div></div></div>';
   });
+  h+='</div>';
   el.innerHTML=h;
 }
 
 function drawEtapas(arr){
   var el=document.getElementById("anEtapas");
-  if(!arr.length){el.innerHTML='<p style="color:var(--tx3);font-size:11px;padding:14px;text-align:center">Sin datos</p>';return}
+  if(!arr.length){el.innerHTML='<div style="display:flex;align-items:center;justify-content:center;flex:1;color:var(--tx3);font-size:11px">Sin datos</div>';return}
   function colorForEtapa(name){
     var n=(name||"").toUpperCase();
     if(n.indexOf("CIERRE GANADO")!==-1||n.indexOf("CLIENTE")!==-1)return "var(--ok)";
@@ -1734,39 +1736,83 @@ function drawEtapas(arr){
   var top=arr.slice(0,8);
   var max=Math.max.apply(null,top.map(function(m){return m.count||0})) || 1;
   var total=arr.reduce(function(a,b){return a+(b.count||0)},0);
-  var h="";
+  var h='<div style="display:flex;flex-direction:column;justify-content:space-around;flex:1;min-height:0;padding:8px 0;gap:4px">';
   top.forEach(function(item){
     var pct=(item.count||0)/max*100;
     var pctTotal=total?Math.round((item.count||0)/total*100):0;
     var color=colorForEtapa(item.name);
-    h+='<div style="margin-bottom:9px"><div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;margin-bottom:4px;gap:8px"><span style="font-weight:600;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="'+(item.name||"")+'">'+(item.name||"—")+'</span><span style="font-weight:800">'+fmm(item.count)+'</span><span style="color:var(--tx3);min-width:34px;text-align:right">'+pctTotal+'%</span></div>';
-    h+='<div style="height:8px;background:var(--sf2);border-radius:4px;overflow:hidden"><div style="height:100%;width:'+pct+'%;background:'+color+';border-radius:4px;transition:width 0.6s"></div></div></div>';
+    h+='<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;margin-bottom:4px;gap:8px"><span style="font-weight:600;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="'+(item.name||"")+'">'+(item.name||"—")+'</span><span style="font-weight:800">'+fmm(item.count)+'</span><span style="color:var(--tx3);min-width:36px;text-align:right;font-weight:700">'+pctTotal+'%</span></div>';
+    h+='<div style="height:9px;background:var(--sf2);border-radius:5px;overflow:hidden"><div style="height:100%;width:'+pct+'%;background:'+color+';border-radius:5px;transition:width 0.6s"></div></div></div>';
   });
+  h+='</div>';
   el.innerHTML=h;
 }
 
 function drawIngresosBars(d){
   var arr=(d.porMes||[]).slice(-12);
   var el=document.getElementById("anIngresos");
-  if(!arr.length||!arr.some(function(m){return (m.ingresos||0)>0})){el.innerHTML='<p style="color:var(--tx3);font-size:11px;padding:20px;text-align:center">Sin ingresos registrados</p>';return}
-  var max=Math.max.apply(null,arr.map(function(m){return m.ingresos||0})) || 1;
+  if(!arr.length||!arr.some(function(m){return (m.ingresos||0)>0})){
+    el.innerHTML='<div style="display:flex;align-items:center;justify-content:center;flex:1;color:var(--tx3);font-size:11px">Sin ingresos registrados</div>';return
+  }
+  var max=Math.max.apply(null,arr.map(function(m){return m.ingresos||0}))||1;
   var total=arr.reduce(function(a,b){return a+(b.ingresos||0)},0);
-  var prom=Math.round(total/arr.filter(function(m){return m.ingresos>0}).length||0);
-  var h='<div style="display:flex;gap:18px;margin-bottom:12px;font-size:11px;color:var(--tx2);font-weight:600"><span>Total: <strong style="color:var(--ok);font-size:13px">'+fmCop(total)+'</strong></span><span>Promedio mensual: <strong style="color:var(--info);font-size:13px">'+fmCop(prom)+'</strong></span></div>';
-  h+='<div style="display:flex;align-items:flex-end;gap:6px;height:140px">';
-  arr.forEach(function(m){
-    var pct=(m.ingresos||0)/max*100;
-    var label=fmCop(m.ingresos||0);
-    h+='<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0">';
-    h+='<span style="font-size:9px;font-weight:800;color:var(--ok);white-space:nowrap;opacity:'+(m.ingresos>0?1:0.3)+'">'+label+'</span>';
-    h+='<div style="width:100%;background:linear-gradient(180deg,var(--ok),#54b76d);border-radius:4px 4px 0 0;height:'+Math.max(pct,2)+'%;min-height:2px;cursor:pointer;transition:opacity 0.2s" title="'+mesNm(m.key)+': '+fmCop(m.ingresos||0)+'" onmouseover="this.style.opacity=0.75" onmouseout="this.style.opacity=1"></div>';
-    h+='</div>';
+  var mesesConIng=arr.filter(function(m){return (m.ingresos||0)>0}).length;
+  var prom=mesesConIng?Math.round(total/mesesConIng):0;
+  var bestMonth=arr.reduce(function(a,b){return (a.ingresos||0)>(b.ingresos||0)?a:b},arr[0]);
+
+  var W=720,H=240,padL=66,padR=20,padT=28,padB=46;
+  var plotW=W-padL-padR,plotH=H-padT-padB;
+  var n=arr.length;
+  var stepX=plotW/n;
+  var barW=Math.min(48,stepX*0.62);
+
+  var grid="",ticks="";
+  for(var g=0;g<=4;g++){
+    var gy=padT+plotH*(1-g/4);
+    var gv=max*g/4;
+    grid+='<line x1="'+padL+'" y1="'+gy.toFixed(2)+'" x2="'+(W-padR)+'" y2="'+gy.toFixed(2)+'" stroke="var(--bd)" stroke-width="0.5" stroke-dasharray="2 3"/>';
+    if(g>0)ticks+='<text x="'+(padL-8)+'" y="'+(gy+4).toFixed(2)+'" text-anchor="end" font-size="10" fill="var(--tx3)" font-weight="600">'+fmCop(gv)+'</text>';
+  }
+
+  var promY=padT+plotH-(prom/max)*plotH;
+
+  var bars="";
+  arr.forEach(function(m,i){
+    var bx=padL+stepX*i+(stepX-barW)/2;
+    if(m.ingresos>0){
+      var bh=(m.ingresos/max)*plotH;
+      var by=padT+plotH-bh;
+      bars+='<rect x="'+bx.toFixed(2)+'" y="'+by.toFixed(2)+'" width="'+barW.toFixed(2)+'" height="'+bh.toFixed(2)+'" fill="url(#gradIng)" rx="3" style="cursor:pointer"><title>'+mesNm(m.key)+': '+fmCop(m.ingresos)+'</title></rect>';
+      bars+='<text x="'+(bx+barW/2).toFixed(2)+'" y="'+(by-7).toFixed(2)+'" text-anchor="middle" font-size="11" font-weight="800" fill="var(--ok)">'+fmCop(m.ingresos)+'</text>';
+    } else {
+      bars+='<text x="'+(bx+barW/2).toFixed(2)+'" y="'+(padT+plotH-4).toFixed(2)+'" text-anchor="middle" font-size="13" fill="var(--tx3)" opacity="0.4">—</text>';
+    }
   });
-  h+='</div>';
-  h+='<div style="display:flex;gap:6px;margin-top:6px">';
-  arr.forEach(function(m){h+='<span style="flex:1;text-align:center;font-size:10px;color:var(--tx3);font-weight:600">'+mesCorto(m.key)+'</span>';});
-  h+='</div>';
-  el.innerHTML=h;
+
+  var xLabels="";
+  arr.forEach(function(m,i){
+    var lx=padL+stepX*i+stepX/2;
+    xLabels+='<text x="'+lx.toFixed(2)+'" y="'+(H-22)+'" text-anchor="middle" font-size="11" font-weight="700" fill="var(--tx2)">'+mesCorto(m.key)+'</text>';
+    xLabels+='<text x="'+lx.toFixed(2)+'" y="'+(H-9)+'" text-anchor="middle" font-size="9" fill="var(--tx3)">'+m.key.split("-")[0]+'</text>';
+  });
+
+  var promLineHTML="";
+  if(prom>0){
+    promLineHTML='<line x1="'+padL+'" y1="'+promY.toFixed(2)+'" x2="'+(W-padR)+'" y2="'+promY.toFixed(2)+'" stroke="var(--info)" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.7"/>';
+  }
+
+  var svg='<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="xMidYMid meet" style="width:100%;height:240px;display:block;font-family:Outfit,sans-serif">'
+    +'<defs><linearGradient id="gradIng" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4dbe6d"/><stop offset="100%" stop-color="var(--ok)"/></linearGradient></defs>'
+    +grid+ticks+promLineHTML+bars+xLabels
+    +'</svg>';
+
+  var summary='<div style="display:flex;gap:20px;margin-bottom:14px;flex-wrap:wrap;align-items:center">'
+    +'<div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:9px;color:var(--tx3);font-weight:700;text-transform:uppercase;letter-spacing:1px">Total facturado</span><span style="color:var(--ok);font-size:18px;font-weight:800">'+fmCop(total)+'</span></div>'
+    +'<div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:9px;color:var(--tx3);font-weight:700;text-transform:uppercase;letter-spacing:1px">Promedio mensual</span><span style="color:var(--info);font-size:18px;font-weight:800">'+fmCop(prom)+'</span></div>'
+    +'<div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:9px;color:var(--tx3);font-weight:700;text-transform:uppercase;letter-spacing:1px">Mejor mes</span><span style="color:var(--gold);font-size:16px;font-weight:800">'+mesNm(bestMonth.key)+' · '+fmCop(bestMonth.ingresos||0)+'</span></div>'
+    +'</div>';
+
+  el.innerHTML='<div style="display:flex;flex-direction:column;flex:1;min-height:0">'+summary+svg+'</div>';
 }
 
 function drawTable(d){
