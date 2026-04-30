@@ -356,6 +356,185 @@
   (desde la línea ~342 hasta justo antes de <div class="pg" id="pg-log">)
 -->
 
+<!--
+  ARVID — Bloque HTML del módulo Finanzas v3.2 (PREMIUM RESPONSIVE)
+  
+  REEMPLAZA: TODA la sección <div class="pg" id="pg-finanzas">...</div>
+  (desde <div class="pg" id="pg-finanzas"> hasta justo antes de <div class="pg" id="pg-log">)
+-->
+
+<style>
+/* ============ FINANZAS · DESIGN SYSTEM ============ */
+.fin-meta{font-size:10px;color:var(--tx3);margin-bottom:12px}
+.fin-meta strong{color:var(--tx2);font-weight:600}
+
+/* Iconos */
+.fin-ic{flex-shrink:0;display:inline-block;vertical-align:middle}
+
+/* INSIGHTS */
+.fin-insights{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.fin-insight{display:flex;gap:14px;align-items:flex-start;padding:14px 16px;background:var(--sf);border:1px solid var(--bd);border-radius:10px;transition:all 0.2s}
+.fin-insight:hover{border-color:var(--ac);box-shadow:0 4px 12px rgba(10,22,40,0.06);transform:translateY(-1px)}
+.fin-insight-ico{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.fin-insight-body{flex:1;min-width:0}
+.fin-insight-label{font-size:9px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:1.2px;line-height:1.3}
+.fin-insight-value{font-size:18px;font-weight:800;color:var(--nv);margin-top:4px;line-height:1.1;letter-spacing:-0.2px}
+.fin-insight-detail{font-size:11px;color:var(--tx2);margin-top:3px;line-height:1.4}
+
+/* Variantes de color */
+.fin-insight-success .fin-insight-ico{background:var(--okb);color:var(--ok)}
+.fin-insight-warning .fin-insight-ico{background:var(--warnb);color:var(--warn)}
+.fin-insight-danger .fin-insight-ico{background:var(--errb);color:var(--err)}
+.fin-insight-info .fin-insight-ico{background:var(--infob);color:var(--info)}
+.fin-insight-gold .fin-insight-ico{background:#fdf6e3;color:var(--gold)}
+.fin-insight-purple .fin-insight-ico{background:var(--purpleb);color:var(--purple)}
+
+/* ALERTAS */
+.fin-alerts{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.fin-alert{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:9px;border:1px solid var(--bd);background:var(--sf);font-size:12.5px;font-weight:600;line-height:1.4}
+.fin-alert-ico{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.fin-alert-msg{flex:1;color:var(--tx)}
+.fin-alert-success{border-left:3px solid var(--ok)}
+.fin-alert-success .fin-alert-ico{background:var(--okb);color:var(--ok)}
+.fin-alert-warning{border-left:3px solid var(--warn)}
+.fin-alert-warning .fin-alert-ico{background:var(--warnb);color:var(--warn)}
+.fin-alert-danger{border-left:3px solid var(--err)}
+.fin-alert-danger .fin-alert-ico{background:var(--errb);color:var(--err)}
+.fin-alert-info{border-left:3px solid var(--info)}
+.fin-alert-info .fin-alert-ico{background:var(--infob);color:var(--info)}
+
+/* Header Cards */
+.an-card-h{display:flex;align-items:center;gap:8px}
+.an-card-h .fin-ic{color:var(--tx3)}
+
+/* SALDO DE CAJA */
+.fin-saldo-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:12px}
+.fin-saldo-main{padding:18px 20px;background:linear-gradient(135deg,var(--nv),var(--nvl));border-radius:12px;color:white;cursor:pointer;position:relative;transition:transform 0.2s}
+.fin-saldo-main:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(10,22,40,0.15)}
+.fin-saldo-card{padding:16px;background:var(--sf2);border-radius:10px;display:flex;flex-direction:column;justify-content:center}
+.fin-saldo-label{font-size:9px;color:var(--tx3);font-weight:800;text-transform:uppercase;letter-spacing:1.2px}
+.fin-saldo-val{font-size:22px;font-weight:800;margin-top:6px;font-variant-numeric:tabular-nums;letter-spacing:-0.3px}
+.fin-saldo-sub{font-size:9.5px;color:var(--tx3);margin-top:2px}
+.fin-saldo-main .fin-saldo-label{color:rgba(255,255,255,0.6)}
+.fin-saldo-main .fin-saldo-val{color:white;font-size:30px;letter-spacing:-0.5px}
+.fin-saldo-main .fin-saldo-sub{color:rgba(255,255,255,0.5);font-size:11px}
+.fin-saldo-arrow{position:absolute;top:18px;right:18px;color:rgba(255,255,255,0.4);transition:transform 0.2s}
+.fin-saldo-detalle{max-height:0;overflow:hidden;transition:max-height 0.35s ease}
+.fin-saldo-detalle-inner{padding:18px 20px;background:var(--sf2);border-radius:10px;margin-top:12px}
+.fin-saldo-line{display:flex;justify-content:space-between;padding:7px 0;font-size:13px}
+.fin-saldo-line-total{padding:11px 0 4px;border-top:2px solid var(--nv);margin-top:6px;font-size:14px;font-weight:800}
+
+/* RECAUDO TERCEROS */
+.fin-rec-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fin-rec-card{background:var(--sf);border:1px solid var(--bd);border-radius:11px;padding:18px}
+.fin-rec-h{font-size:9px;color:var(--tx3);font-weight:800;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px}
+.fin-rec-pill{display:flex;justify-content:space-between;align-items:center;padding:13px 14px;border-radius:9px;margin-bottom:8px}
+.fin-rec-pill-a{background:linear-gradient(135deg,#fef3c7,#fde68a)}
+.fin-rec-pill-b{background:linear-gradient(135deg,#ede9fe,#ddd6fe)}
+.fin-rec-pill-label{font-size:10px;font-weight:800;letter-spacing:.5px;text-transform:uppercase}
+.fin-rec-pill-sub{font-size:11px;margin-top:2px}
+.fin-rec-pill-val{font-size:18px;font-weight:800;font-variant-numeric:tabular-nums}
+.fin-rec-bars{display:flex;align-items:flex-end;gap:3px;height:80px;padding:8px 0;margin-top:10px}
+.fin-rec-bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0}
+.fin-rec-bar-stack{width:100%;max-width:22px;display:flex;flex-direction:column;justify-content:flex-end;gap:1px;height:60px}
+.fin-rec-bar-lbl{font-size:9px;color:var(--tx3);font-weight:600}
+.fin-rec-legend{display:flex;gap:14px;font-size:11px;color:var(--tx3);margin-top:8px;flex-wrap:wrap}
+.fin-rec-detalle{max-height:0;overflow:hidden;transition:max-height 0.3s ease}
+
+/* TENDENCIA */
+.fin-tend-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.fin-tend-summary-card{padding:11px 14px;border-radius:8px;border-left:3px solid var(--bd)}
+.fin-tend-summary-l{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px}
+.fin-tend-summary-v{font-size:16px;font-weight:800;margin-top:3px;font-variant-numeric:tabular-nums;letter-spacing:-0.2px}
+
+/* PROYECCIÓN */
+.fin-proy-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:18px}
+
+/* TABLAS RESPONSIVE */
+.fin-tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -2px;padding:0 2px}
+
+/* PYG TABLE */
+.fin-pyg-table{width:100%;border-collapse:collapse;font-size:12px}
+.fin-pyg-section-h{padding:8px 4px;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;border-bottom:1px solid var(--bd)}
+.fin-pyg-row{cursor:pointer;border-bottom:1px solid var(--sf2)}
+.fin-pyg-row td{padding:8px 4px}
+.fin-pyg-arr{display:inline-block;width:12px;color:var(--tx3);transition:transform 0.2s;font-size:10px}
+.fin-pyg-sub{display:none;background:var(--sf2)}
+.fin-pyg-sub td{padding:5px 4px 5px 24px;font-size:11px;color:var(--tx2)}
+.fin-pyg-sub-deep td{padding-left:36px;font-size:10.5px;color:var(--tx3)}
+
+/* GASTOS COMP TABLE */
+.fin-gc-table{width:100%;border-collapse:collapse;font-size:12px;min-width:600px}
+.fin-gc-table th{padding:9px 8px;font-size:9px;color:var(--tx3);text-transform:uppercase;letter-spacing:1px;text-align:left;font-weight:700;background:var(--sf2);border-bottom:2px solid var(--bd)}
+.fin-gc-table th.num{text-align:right}
+.fin-gc-row{cursor:pointer;border-bottom:1px solid var(--sf2)}
+.fin-gc-row td{padding:10px 8px}
+.fin-gc-row td.num{text-align:right;font-variant-numeric:tabular-nums}
+.fin-gc-arr{display:inline-block;width:12px;color:var(--tx3);transition:transform 0.2s;font-size:10px}
+.fin-gc-sub{display:none;background:var(--sf2)}
+
+/* FLUJO TABLE */
+.fin-fl-table{width:100%;border-collapse:collapse;font-size:13px}
+.fin-fl-table td{padding:12px 16px}
+.fin-fl-row{cursor:pointer;border-bottom:1px solid var(--sf2)}
+.fin-fl-row.no-cursor{cursor:default}
+.fin-fl-arr{display:inline-block;transition:transform 0.2s;color:var(--tx3);font-size:10px;width:12px}
+.fin-fl-sub{display:none;background:var(--sf2)}
+.fin-fl-sub td{padding:6px 16px;font-size:11px}
+.fin-fl-sub-fecha{color:var(--tx3);font-size:10.5px}
+.fin-fl-sub-desc{color:var(--tx2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:300px}
+.fin-fl-sub-amt{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+
+/* PROYECCIÓN */
+.fin-proy-line{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid var(--sf2);gap:12px}
+.fin-proy-line-l{font-size:13px;color:var(--tx2);flex:1}
+.fin-proy-line-l-sub{font-size:10px;color:var(--tx3);margin-top:2px;line-height:1.3}
+.fin-proy-line-v{font-weight:700;font-variant-numeric:tabular-nums;flex-shrink:0;text-align:right}
+.fin-proy-total{padding:18px 0 8px;border-top:2px solid var(--nv);margin-top:8px}
+.fin-proy-fijo{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--sf2);font-size:12px;gap:10px}
+.fin-proy-fijo-nm{flex:1;min-width:0}
+.fin-proy-fijo-cat{font-size:10px;color:var(--tx3);margin-top:1px}
+.fin-proy-fijo-val{font-weight:700;font-variant-numeric:tabular-nums;flex-shrink:0}
+
+/* RESPONSIVE BREAKPOINTS */
+@media(max-width:900px){
+  .fin-saldo-grid{grid-template-columns:1.4fr 1fr;grid-template-areas:"main main" "var mov"}
+  .fin-saldo-main{grid-area:main}
+  .fin-saldo-grid > div:nth-child(2){grid-area:var}
+  .fin-saldo-grid > div:nth-child(3){grid-area:mov}
+}
+
+@media(max-width:768px){
+  .fin-insights{grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px}
+  .fin-insight{padding:12px 14px;gap:10px}
+  .fin-insight-ico{width:32px;height:32px}
+  .fin-insight-value{font-size:16px}
+  .fin-rec-grid{grid-template-columns:1fr}
+  .fin-proy-grid{grid-template-columns:1fr}
+  .fin-tend-summary{grid-template-columns:1fr;gap:7px}
+  .fin-tend-summary-card{padding:9px 12px}
+  .fin-tend-summary-v{font-size:14px}
+  .fin-saldo-val{font-size:18px}
+  .fin-saldo-main .fin-saldo-val{font-size:24px}
+  .fin-rec-pill{padding:11px 13px}
+  .fin-rec-pill-val{font-size:16px}
+  .fin-fl-table td{padding:10px 12px}
+  .fin-fl-sub-desc{max-width:140px;font-size:11px}
+  .fin-pyg-table{font-size:11.5px}
+  .fin-pyg-row td{padding:7px 4px}
+}
+
+@media(max-width:560px){
+  .fin-saldo-grid{grid-template-columns:1fr;grid-template-areas:"main" "var" "mov"}
+  .fin-tend-summary{grid-template-columns:1fr 1fr}
+  .fin-tend-summary-card:last-child{grid-column:1/-1}
+  .fin-insights{grid-template-columns:1fr}
+  .fin-insight{padding:14px;gap:12px}
+  .an-header{flex-direction:column;align-items:stretch !important;gap:8px}
+  .an-filters{justify-content:flex-end;flex-wrap:wrap}
+}
+</style>
+
 <div class="pg" id="pg-finanzas">
 <div class="an-wrap">
 
@@ -364,7 +543,7 @@
 <div class="an-filters">
 <select id="finMes" class="an-select" onchange="cargarFinanzas()"></select>
 <select id="finAno" class="an-select" onchange="cargarFinanzas()"></select>
-<button class="btn btn-ghost" onclick="exportarPDFFinanzas()" style="font-size:11px" title="Descargar PDF">📄 PDF</button>
+<button class="btn btn-ghost" onclick="exportarPDFFinanzas()" style="font-size:11px" title="Descargar PDF">PDF</button>
 <button class="btn btn-nv" onclick="FIN_CACHE=null;cargarFinanzas(true)" style="font-size:11px">↻</button>
 </div>
 </div>
@@ -372,14 +551,17 @@
 <div id="finMeta"></div>
 <div id="finAlertas"></div>
 
-<!-- KPIs HERO -->
 <div class="kpis-an" id="finKpis"></div>
 
-<!-- Insights automáticos (NUEVO) -->
-<div class="an-card" style="margin-bottom:12px"><div class="an-card-h">💡 Análisis automáticos</div><div id="finInsights"></div></div>
+<div class="an-card" style="margin-bottom:12px">
+<div class="an-card-h">Análisis automáticos</div>
+<div id="finInsights"></div>
+</div>
 
-<!-- Tendencia 12M (NUEVO) -->
-<div class="an-card" style="margin-bottom:12px"><div class="an-card-h">Tendencia 12 meses</div><div id="finTendencia"></div></div>
+<div class="an-card" style="margin-bottom:12px">
+<div class="an-card-h">Tendencia 12 meses</div>
+<div id="finTendencia"></div>
+</div>
 
 <div class="an-card" style="margin-bottom:12px"><div class="an-card-h">Saldo de caja</div><div id="finSaldoCaja"></div></div>
 
@@ -1992,26 +2174,80 @@ function addLog(m){
   if(all.length>50)all[all.length-1].remove();
 }
 
-// ====================== FINANZAS v3 ======================
-// REEMPLAZA: desde "// ====================== FINANZAS ======================"
-// hasta justo ANTES de "// Footer year" (la última función IIFE del admin)
-//
-// Backend correspondiente: Finanzas.gs v3 (PyG devengado desde CASOS,
-// centros excluidos del PyG, recaudo terceros 20%/10%)
-
-// ====================== FINANZAS v3.1 ======================
+// ====================== FINANZAS v3.2 ======================
+// Premium · responsive · SVG icons (no emojis)
 // REEMPLAZA: desde "// ====================== FINANZAS ======================"
 // hasta justo ANTES de "// Footer year"
 
 var FIN_CACHE=null,FIN_MES=null,FIN_ANO=null;
 
+// ---------- ICONOS SVG (Lucide-style line icons) ----------
+var FIN_ICONS={
+  trophy:'<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>',
+  chart:'<rect x="3" y="12" width="4" height="8" rx="1"/><rect x="10" y="6" width="4" height="14" rx="1"/><rect x="17" y="3" width="4" height="17" rx="1"/>',
+  trendUp:'<polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>',
+  trendDown:'<polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/>',
+  trendFlat:'<line x1="3" y1="12" x2="21" y2="12"/><polyline points="16 7 21 12 16 17"/>',
+  diamond:'<path d="M2.7 10.3a2.41 2.41 0 0 0 0 3.41l7.59 7.59a2.41 2.41 0 0 0 3.41 0l7.59-7.59a2.41 2.41 0 0 0 0-3.41L13.7 2.71a2.41 2.41 0 0 0-3.41 0Z"/>',
+  alertTri:'<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>',
+  users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  target:'<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
+  sparkles:'<path d="M12 3v18M3 12h18"/><path d="m18.4 5.6-12.8 12.8M5.6 5.6l12.8 12.8" stroke-opacity="0.5"/>',
+  bell:'<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>',
+  checkCircle:'<circle cx="12" cy="12" r="10"/><polyline points="9 12 12 15 17 10"/>',
+  infoCircle:'<circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>',
+  alertCircle:'<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>',
+  download:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>',
+  refresh:'<path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/>',
+  cash:'<rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/>',
+  pieChart:'<path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/>',
+  building:'<rect x="4" y="2" width="16" height="20" rx="2"/><line x1="9" y1="22" x2="9" y2="18"/><line x1="15" y1="22" x2="15" y2="18"/><line x1="8" y1="6" x2="10" y2="6"/><line x1="14" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="10" y2="10"/><line x1="14" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="10" y2="14"/><line x1="14" y1="14" x2="16" y2="14"/>',
+  arrowRight:'<line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>',
+  receipt:'<path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1-2-1Z"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="11" x2="15" y2="11"/><line x1="9" y1="15" x2="13" y2="15"/>'
+};
+
+function finIcon(name,opts){
+  opts=opts||{};
+  var size=opts.size||18;
+  var stroke=opts.stroke||1.75;
+  var path=FIN_ICONS[name]||FIN_ICONS.diamond;
+  return '<svg class="fin-ic" width="'+size+'" height="'+size+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="'+stroke+'" stroke-linecap="round" stroke-linejoin="round">'+path+'</svg>';
+}
+
+// ---------- HELPERS ----------
+function finFmtPct(n,decimals){
+  if(n===null||n===undefined||isNaN(n))return "—";
+  var d=decimals===undefined?0:decimals;
+  return (n*100).toFixed(d)+"%";
+}
+function finPctVar(n,label){
+  if(n===null||n===undefined||isNaN(n))return '<span style="color:var(--tx3)">'+(label||"")+' n/a</span>';
+  var pct=Math.round(n*100);
+  if(Math.abs(pct)<1)return '<span style="color:var(--tx3)">≈ '+(label||"")+'</span>';
+  var color=pct>0?"var(--ok)":"var(--err)";
+  var arrow=pct>0?"▲":"▼";
+  return '<span style="color:'+color+';font-weight:700">'+arrow+Math.abs(pct)+'%</span> <span style="color:var(--tx3)">'+(label||"")+'</span>';
+}
+function finFmtFecha(iso,fmt){
+  if(!iso)return "—";
+  try{
+    var d=new Date(iso);
+    var dd=String(d.getDate()).padStart(2,"0");
+    var mm=String(d.getMonth()+1).padStart(2,"0");
+    if(fmt==="short")return dd+"/"+mm;
+    return dd+"/"+mm+"/"+String(d.getFullYear()).slice(-2);
+  }catch(e){return "—"}
+}
+function finIsMobile(){return window.innerWidth<768}
+
+// ---------- CARGA / RENDER ROOT ----------
 function cargarFinanzas(force){
   var mesEl=document.getElementById("finMes");
   var anoEl=document.getElementById("finAno");
   if(!mesEl)return;
   if(!mesEl.options.length){
     var hoy=new Date();
-    var mh='<option value="all">📅 Todos los meses</option>';
+    var mh='<option value="all">Todos los meses</option>';
     for(var i=1;i<=12;i++){
       mh+='<option value="'+i+'"'+(i===hoy.getMonth()+1?" selected":"")+'>'+MESES[i-1]+'</option>';
     }
@@ -2047,10 +2283,10 @@ function renderFinanzas(){
   if(infoEl){
     var t='';
     if(meta.sin_categorizar>0){
-      t='<div style="padding:10px 14px;background:var(--warnb);border-radius:8px;font-size:11px;color:var(--warn);font-weight:700;margin-bottom:12px">⚠ '+meta.sin_categorizar+' movimientos sin categorizar — afecta exactitud del PyG</div>';
+      t='<div class="fin-alerts" style="margin-bottom:10px"><div class="fin-alert fin-alert-warning"><div class="fin-alert-ico">'+finIcon("alertTri",{size:16})+'</div><div class="fin-alert-msg">'+meta.sin_categorizar+' movimientos sin categorizar — afecta exactitud del PyG</div></div></div>';
     }
     var periodoTxt=esAno?("Año "+meta.ano+" completo"):(MESES[meta.mes-1]+" "+meta.ano);
-    t+='<div style="font-size:10px;color:var(--tx3);margin-bottom:10px"><strong>'+periodoTxt+'</strong> · '+meta.total_movimientos_mes+' movimientos · '+meta.casos_creados_mes+' casos creados'+(meta.from_cache?' · caché':'')+'</div>';
+    t+='<div class="fin-meta"><strong>'+periodoTxt+'</strong> · '+meta.total_movimientos_mes+' movimientos · '+meta.casos_creados_mes+' casos creados'+(meta.from_cache?' · caché':'')+'</div>';
     infoEl.innerHTML=t;
   }
   finRenderAlertas(d.alertas||[]);
@@ -2065,41 +2301,19 @@ function renderFinanzas(){
   finRenderProyeccion(d.proyeccion_cierre,esAno);
 }
 
-// ---------- HELPERS ----------
-function finFmtPct(n,decimals){
-  if(n===null||n===undefined||isNaN(n))return "—";
-  var d=decimals===undefined?0:decimals;
-  return (n*100).toFixed(d)+"%";
-}
-function finPctVar(n,label){
-  if(n===null||n===undefined||isNaN(n))return '<span style="color:var(--tx3)">'+(label||"")+' n/a</span>';
-  var pct=Math.round(n*100);
-  if(Math.abs(pct)<1)return '<span style="color:var(--tx3)">≈ '+(label||"")+'</span>';
-  var color=pct>0?"var(--ok)":"var(--err)";
-  var arrow=pct>0?"▲":"▼";
-  return '<span style="color:'+color+';font-weight:700">'+arrow+Math.abs(pct)+'%</span> <span style="color:var(--tx3)">'+(label||"")+'</span>';
-}
-function finFmtFecha(iso,fmt){
-  if(!iso)return "—";
-  try{
-    var d=new Date(iso);
-    var dd=String(d.getDate()).padStart(2,"0");
-    var mm=String(d.getMonth()+1).padStart(2,"0");
-    if(fmt==="short")return dd+"/"+mm;
-    return dd+"/"+mm+"/"+String(d.getFullYear()).slice(-2);
-  }catch(e){return "—"}
-}
-
 // ---------- ALERTAS ----------
 function finRenderAlertas(arr){
   var el=document.getElementById("finAlertas");
   if(!arr.length){el.innerHTML="";return}
-  var h='<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px">';
+  var iconMap={danger:"alertTri",warning:"alertCircle",success:"checkCircle",info:"infoCircle"};
+  var h='<div class="fin-alerts">';
   arr.forEach(function(a){
-    var bg=a.severidad==="danger"?"var(--errb)":a.severidad==="warning"?"var(--warnb)":a.severidad==="success"?"var(--okb)":"var(--infob)";
-    var fg=a.severidad==="danger"?"var(--err)":a.severidad==="warning"?"var(--warn)":a.severidad==="success"?"var(--ok)":"var(--info)";
-    var icon=a.severidad==="danger"?"🚨":a.severidad==="warning"?"⚠":a.severidad==="success"?"✓":"ℹ";
-    h+='<div style="padding:10px 14px;background:'+bg+';border-left:3px solid '+fg+';border-radius:8px;font-size:12px;color:'+fg+';font-weight:600;display:flex;align-items:center;gap:10px"><span style="font-size:14px;flex-shrink:0">'+icon+'</span><span style="flex:1">'+a.mensaje+'</span></div>';
+    var sev=a.severidad||"info";
+    var ico=iconMap[sev]||"infoCircle";
+    h+='<div class="fin-alert fin-alert-'+sev+'">';
+    h+='<div class="fin-alert-ico">'+finIcon(ico,{size:16})+'</div>';
+    h+='<div class="fin-alert-msg">'+a.mensaje+'</div>';
+    h+='</div>';
   });
   h+='</div>';
   el.innerHTML=h;
@@ -2146,25 +2360,43 @@ function finRenderKpis(k,esAno){
   document.getElementById("finKpis").innerHTML=h;
 }
 
-// ---------- INSIGHTS AUTOMÁTICOS ----------
+// ---------- INSIGHTS PREMIUM ----------
 function finRenderInsights(arr){
   var el=document.getElementById("finInsights");
-  if(!arr||!arr.length){el.innerHTML='<p style="color:var(--tx3);font-size:11px;padding:6px 0">Análisis automáticos aparecerán cuando haya suficientes datos históricos</p>';return}
-  var h='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px">';
+  if(!arr||!arr.length){el.innerHTML='<p style="color:var(--tx3);font-size:11px;padding:8px 0">Análisis automáticos aparecerán cuando haya suficientes datos históricos</p>';return}
+  // Mapeo: tipo backend → icono SVG + variante de color
+  var styleMap={
+    mejor_mes:{ico:"trophy",variant:"gold"},
+    promedio:{ico:"chart",variant:"info"},
+    tendencia:{ico:"trendUp",variant:"success"},
+    margen_avg:{ico:"diamond",variant:"info"},
+    gasto_subiendo:{ico:"alertTri",variant:"warning"},
+    casos_avg:{ico:"users",variant:"purple"},
+    acumulado:{ico:"target",variant:"info"}
+  };
+  var h='<div class="fin-insights">';
   arr.forEach(function(it){
-    var bg=it.tono==="success"?"var(--okb)":it.tono==="warning"?"var(--warnb)":it.tono==="danger"?"var(--errb)":"var(--infob)";
-    var fg=it.tono==="success"?"var(--ok)":it.tono==="warning"?"var(--warn)":it.tono==="danger"?"var(--err)":"var(--info)";
-    h+='<div style="padding:14px 16px;background:'+bg+';border-left:3px solid '+fg+';border-radius:8px">';
-    h+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:18px">'+it.icono+'</span><span style="font-size:9px;font-weight:800;color:'+fg+';text-transform:uppercase;letter-spacing:1px">'+it.titulo+'</span></div>';
-    h+='<div style="font-size:16px;font-weight:800;color:var(--nv);line-height:1.2">'+it.valor+'</div>';
-    h+='<div style="font-size:10.5px;color:var(--tx3);margin-top:3px">'+it.detalle+'</div>';
-    h+='</div>';
+    var sm=styleMap[it.tipo]||{ico:"diamond",variant:"info"};
+    // override icon for tendencia
+    if(it.tipo==="tendencia"){
+      if(it.tono==="success")sm.ico="trendUp";
+      else if(it.tono==="danger")sm.ico="trendDown";
+      else sm.ico="trendFlat";
+      sm.variant=it.tono==="success"?"success":it.tono==="danger"?"danger":"info";
+    }
+    h+='<div class="fin-insight fin-insight-'+sm.variant+'">';
+    h+='<div class="fin-insight-ico">'+finIcon(sm.ico,{size:18})+'</div>';
+    h+='<div class="fin-insight-body">';
+    h+='<div class="fin-insight-label">'+it.titulo+'</div>';
+    h+='<div class="fin-insight-value">'+it.valor+'</div>';
+    h+='<div class="fin-insight-detail">'+it.detalle+'</div>';
+    h+='</div></div>';
   });
   h+='</div>';
   el.innerHTML=h;
 }
 
-// ---------- TENDENCIA 12M ----------
+// ---------- TENDENCIA 12M (responsive) ----------
 function finRenderTendencia(serie,esAno){
   var el=document.getElementById("finTendencia");
   if(!serie||!serie.length){el.innerHTML='<p style="color:var(--tx3);font-size:11px;padding:10px">Sin datos suficientes</p>';return}
@@ -2172,31 +2404,31 @@ function finRenderTendencia(serie,esAno){
     el.innerHTML='<p style="color:var(--tx3);font-size:11px;padding:10px">Sin datos en el rango</p>';return;
   }
 
-  var W=720,H=240,padL=68,padR=18,padT=22,padB=46;
+  var mobile=finIsMobile();
+  var W=720,H=mobile?200:240;
+  var padL=mobile?52:68,padR=mobile?12:18,padT=22,padB=mobile?38:46;
   var plotW=W-padL-padR,plotH=H-padT-padB;
   var max=Math.max.apply(null,serie.map(function(m){return Math.max(m.ingresos,Math.abs(m.utilidad_operacional))}))||1;
   var n=serie.length,stepX=plotW/n;
-  var barW=Math.min(34,stepX*0.4);
+  var barW=Math.min(mobile?22:34,stepX*0.4);
 
   var grid='',ticks='';
-  for(var g=0;g<=4;g++){
-    var gy=padT+plotH*(1-g/4);
-    var gv=max*g/4;
+  var nTicks=mobile?3:4;
+  for(var g=0;g<=nTicks;g++){
+    var gy=padT+plotH*(1-g/nTicks);
+    var gv=max*g/nTicks;
     grid+='<line x1="'+padL+'" y1="'+gy.toFixed(1)+'" x2="'+(W-padR)+'" y2="'+gy.toFixed(1)+'" stroke="var(--bd)" stroke-width="0.5" stroke-dasharray="2 3"/>';
-    if(g>0)ticks+='<text x="'+(padL-6)+'" y="'+(gy+4).toFixed(1)+'" text-anchor="end" font-size="9" fill="var(--tx3)" font-weight="600">'+fmCop(gv)+'</text>';
+    if(g>0)ticks+='<text x="'+(padL-6)+'" y="'+(gy+4).toFixed(1)+'" text-anchor="end" font-size="'+(mobile?9:10)+'" fill="var(--tx3)" font-weight="600">'+fmCop(gv)+'</text>';
   }
 
-  var bars='',labels='',lineDots='',linePath='';
-  var marginPts=[];
+  var bars='',labels='';
   serie.forEach(function(m,i){
     var bx=padL+stepX*i+(stepX/2);
-    // Bar Ingresos
     var bh1=(m.ingresos/max)*plotH;
     var by1=padT+plotH-bh1;
     if(m.ingresos>0){
       bars+='<rect x="'+(bx-barW-1).toFixed(1)+'" y="'+by1.toFixed(1)+'" width="'+barW+'" height="'+bh1.toFixed(1)+'" fill="var(--ok)" rx="2" opacity="0.85"><title>'+m.etiqueta+' Ing: '+fmCop(m.ingresos)+'</title></rect>';
     }
-    // Bar Utilidad operacional
     if(m.utilidad_operacional!==0){
       var bh2=Math.abs(m.utilidad_operacional)/max*plotH;
       var ebPos=m.utilidad_operacional>=0;
@@ -2204,28 +2436,31 @@ function finRenderTendencia(serie,esAno){
       var col=ebPos?"var(--gold)":"var(--err)";
       bars+='<rect x="'+(bx+1).toFixed(1)+'" y="'+by2.toFixed(1)+'" width="'+barW+'" height="'+bh2.toFixed(1)+'" fill="'+col+'" rx="2" opacity="0.85"><title>'+m.etiqueta+' UO: '+fmCop(m.utilidad_operacional)+'</title></rect>';
     }
-    labels+='<text x="'+bx.toFixed(1)+'" y="'+(H-26)+'" text-anchor="middle" font-size="10" font-weight="700" fill="var(--tx2)">'+m.etiqueta+'</text>';
+    // En mobile: mostrar solo cada 2 etiquetas si hay más de 6
+    var showLabel=mobile&&serie.length>6?(i%2===0||i===serie.length-1):true;
+    if(showLabel){
+      labels+='<text x="'+bx.toFixed(1)+'" y="'+(H-22)+'" text-anchor="middle" font-size="'+(mobile?9:10)+'" font-weight="700" fill="var(--tx2)">'+m.etiqueta+'</text>';
+    }
   });
 
-  var legend='<div style="display:flex;gap:18px;justify-content:center;margin-top:8px;font-size:11px;color:var(--tx2);font-weight:600">';
+  var legend='<div style="display:flex;gap:18px;justify-content:center;margin-top:8px;font-size:11px;color:var(--tx2);font-weight:600;flex-wrap:wrap">';
   legend+='<span style="display:inline-flex;align-items:center;gap:6px"><span style="display:inline-block;width:11px;height:11px;background:var(--ok);border-radius:2px"></span>Ingresos</span>';
   legend+='<span style="display:inline-flex;align-items:center;gap:6px"><span style="display:inline-block;width:11px;height:11px;background:var(--gold);border-radius:2px"></span>Utilidad operacional</span>';
   legend+='</div>';
 
-  // Resumen
   var totalIng=0,totalUO=0,mejorMes=null;
   serie.forEach(function(m){
     totalIng+=m.ingresos;
     totalUO+=m.utilidad_operacional;
     if(!mejorMes||m.ingresos>mejorMes.ingresos)mejorMes=m;
   });
-  var summary='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px">';
-  summary+='<div style="padding:10px 14px;background:var(--okb);border-left:3px solid var(--ok);border-radius:7px"><div style="font-size:9px;color:var(--ok);font-weight:800;text-transform:uppercase;letter-spacing:1px">Total ingresos</div><div style="font-size:16px;font-weight:800;color:var(--ok);margin-top:2px">'+fmCop(totalIng)+'</div></div>';
-  summary+='<div style="padding:10px 14px;background:#fdf6e3;border-left:3px solid var(--gold);border-radius:7px"><div style="font-size:9px;color:var(--gold);font-weight:800;text-transform:uppercase;letter-spacing:1px">Total UO</div><div style="font-size:16px;font-weight:800;color:'+(totalUO>=0?"var(--gold)":"var(--err)")+';margin-top:2px">'+fmCop(totalUO)+'</div></div>';
-  summary+='<div style="padding:10px 14px;background:var(--infob);border-left:3px solid var(--info);border-radius:7px"><div style="font-size:9px;color:var(--info);font-weight:800;text-transform:uppercase;letter-spacing:1px">Mejor mes</div><div style="font-size:14px;font-weight:800;color:var(--info);margin-top:2px">'+(mejorMes?mejorMes.etiqueta:"—")+'</div><div style="font-size:11px;color:var(--tx2);font-weight:700">'+(mejorMes?fmCop(mejorMes.ingresos):"—")+'</div></div>';
+  var summary='<div class="fin-tend-summary">';
+  summary+='<div class="fin-tend-summary-card" style="background:var(--okb);border-left-color:var(--ok)"><div class="fin-tend-summary-l" style="color:var(--ok)">Total ingresos</div><div class="fin-tend-summary-v" style="color:var(--ok)">'+fmCop(totalIng)+'</div></div>';
+  summary+='<div class="fin-tend-summary-card" style="background:#fdf6e3;border-left-color:var(--gold)"><div class="fin-tend-summary-l" style="color:var(--gold)">Total utilidad op.</div><div class="fin-tend-summary-v" style="color:'+(totalUO>=0?"var(--gold)":"var(--err)")+'">'+fmCop(totalUO)+'</div></div>';
+  summary+='<div class="fin-tend-summary-card" style="background:var(--infob);border-left-color:var(--info)"><div class="fin-tend-summary-l" style="color:var(--info)">Mejor mes</div><div class="fin-tend-summary-v" style="color:var(--info)">'+(mejorMes?mejorMes.etiqueta:"—")+'</div><div style="font-size:11px;color:var(--tx2);font-weight:700;margin-top:2px">'+(mejorMes?fmCop(mejorMes.ingresos):"—")+'</div></div>';
   summary+='</div>';
 
-  var svg='<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="xMidYMid meet" style="width:100%;height:auto;display:block;font-family:Outfit,sans-serif">'+grid+ticks+bars+labels+'</svg>';
+  var svg='<div class="fin-tbl-wrap"><svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="xMidYMid meet" style="width:100%;height:auto;display:block;font-family:Outfit,sans-serif;min-width:'+(mobile?420:560)+'px">'+grid+ticks+bars+labels+'</svg></div>';
 
   el.innerHTML=summary+svg+legend;
 }
@@ -2240,35 +2475,45 @@ function finRenderSaldoCaja(s,fc,esAno){
 
   var varColor=(s.variacion_mes||0)>=0?"var(--ok)":"var(--err)";
   var varSign=(s.variacion_mes||0)>=0?"+":"";
-  var h='<div style="display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:12px">';
-  h+='<div id="finSaldoToggle" style="padding:18px 20px;background:linear-gradient(135deg,var(--nv),var(--nvl));border-radius:12px;color:white;cursor:pointer;position:relative;transition:transform 0.2s">';
-  h+='<div style="font-size:10px;color:rgba(255,255,255,0.6);font-weight:800;text-transform:uppercase;letter-spacing:1.5px">Saldo en caja</div>';
-  h+='<div style="font-size:30px;font-weight:800;margin-top:6px;color:white;letter-spacing:-0.5px">'+fm(s.saldo_actual)+'</div>';
-  h+='<div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:6px">click para ver desglose</div>';
-  h+='<div style="position:absolute;top:18px;right:18px;color:rgba(255,255,255,0.4);font-size:18px;transition:transform 0.2s" id="finSaldoArrow">⌄</div>';
-  h+='</div>';
-  h+='<div style="text-align:center;padding:14px 16px;background:var(--sf2);border-radius:10px"><div style="font-size:9px;color:var(--tx3);font-weight:800;text-transform:uppercase;letter-spacing:1px">'+labelVar+'</div>';
-  h+='<div style="font-size:20px;font-weight:800;margin-top:4px;color:'+varColor+'">'+varSign+fmCop(s.variacion_mes)+'</div>';
-  h+='<div style="font-size:9px;color:var(--tx3);margin-top:2px">vs apertura</div></div>';
-  h+='<div style="padding:14px 16px;background:var(--sf2);border-radius:10px;display:flex;flex-direction:column;justify-content:center">';
-  h+='<div style="font-size:9px;color:var(--tx3);font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">'+labelMov+'</div>';
-  h+='<div style="font-size:13px;color:var(--ok);font-weight:700">+'+fmCop(s.entradas_mes)+' <span style="color:var(--tx3);font-size:10px;font-weight:600">entradas</span></div>';
-  h+='<div style="font-size:13px;color:var(--err);font-weight:700;margin-top:2px">−'+fmCop(s.salidas_mes)+' <span style="color:var(--tx3);font-size:10px;font-weight:600">salidas</span></div>';
-  h+='</div>';
+  var h='<div class="fin-saldo-grid">';
+
+  // Saldo principal (clickeable)
+  h+='<div id="finSaldoToggle" class="fin-saldo-main">';
+  h+='<div class="fin-saldo-label">Saldo en caja</div>';
+  h+='<div class="fin-saldo-val">'+fm(s.saldo_actual)+'</div>';
+  h+='<div class="fin-saldo-sub">click para ver desglose</div>';
+  h+='<div class="fin-saldo-arrow" id="finSaldoArrow">'+finIcon("arrowRight",{size:18})+'</div>';
   h+='</div>';
 
-  h+='<div id="finSaldoDetalle" style="max-height:0;overflow:hidden;transition:max-height 0.35s ease;margin-top:0">';
-  h+='<div style="padding:18px 20px;background:var(--sf2);border-radius:10px;margin-top:12px">';
-  h+='<div style="font-size:10px;color:var(--tx3);font-weight:800;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px">Composición</div>';
-  h+='<div style="display:flex;justify-content:space-between;padding:7px 0;font-size:13px"><span>'+labelInicial+'</span><span style="font-weight:700;font-variant-numeric:tabular-nums">'+fm(s.saldo_inicial_mes)+'</span></div>';
-  if(fc.entradas_operativas&&fc.entradas_operativas.total>0)h+='<div style="display:flex;justify-content:space-between;padding:7px 0;font-size:13px;color:var(--ok)"><span>+ Entradas operativas</span><span style="font-weight:700;font-variant-numeric:tabular-nums">+'+fm(fc.entradas_operativas.total)+'</span></div>';
-  if(fc.centros&&fc.centros.cobrados&&fc.centros.cobrados.total>0)h+='<div style="display:flex;justify-content:space-between;padding:7px 0;font-size:13px;color:var(--ok)"><span>+ Centros cobrados</span><span style="font-weight:700;font-variant-numeric:tabular-nums">+'+fm(fc.centros.cobrados.total)+'</span></div>';
-  if(fc.no_operativos&&fc.no_operativos.total>0)h+='<div style="display:flex;justify-content:space-between;padding:7px 0;font-size:13px;color:var(--ok)"><span>+ No operativos</span><span style="font-weight:700;font-variant-numeric:tabular-nums">+'+fm(fc.no_operativos.total)+'</span></div>';
-  if(fc.salidas_operativas&&fc.salidas_operativas.total<0)h+='<div style="display:flex;justify-content:space-between;padding:7px 0;font-size:13px;color:var(--err)"><span>− Salidas operativas</span><span style="font-weight:700;font-variant-numeric:tabular-nums">'+fm(fc.salidas_operativas.total)+'</span></div>';
-  if(fc.centros&&fc.centros.pagados&&fc.centros.pagados.total<0)h+='<div style="display:flex;justify-content:space-between;padding:7px 0;font-size:13px;color:var(--err)"><span>− Centros pagados</span><span style="font-weight:700;font-variant-numeric:tabular-nums">'+fm(fc.centros.pagados.total)+'</span></div>';
-  if(fc.inversiones&&fc.inversiones.total<0)h+='<div style="display:flex;justify-content:space-between;padding:7px 0;font-size:13px;color:var(--err)"><span>− Inversiones</span><span style="font-weight:700;font-variant-numeric:tabular-nums">'+fm(fc.inversiones.total)+'</span></div>';
-  if(fc.no_operativos&&fc.no_operativos.total<0)h+='<div style="display:flex;justify-content:space-between;padding:7px 0;font-size:13px;color:var(--err)"><span>− No operativos</span><span style="font-weight:700;font-variant-numeric:tabular-nums">'+fm(fc.no_operativos.total)+'</span></div>';
-  h+='<div style="display:flex;justify-content:space-between;padding:11px 0 4px;border-top:2px solid var(--nv);margin-top:6px;font-size:14px;font-weight:800"><span>'+labelFinal+'</span><span style="font-variant-numeric:tabular-nums">'+fm(fc.saldo_final||s.saldo_final_mes)+'</span></div>';
+  // Variación
+  h+='<div class="fin-saldo-card">';
+  h+='<div class="fin-saldo-label">'+labelVar+'</div>';
+  h+='<div class="fin-saldo-val" style="color:'+varColor+'">'+varSign+fmCop(s.variacion_mes)+'</div>';
+  h+='<div class="fin-saldo-sub">vs apertura</div>';
+  h+='</div>';
+
+  // Movimiento
+  h+='<div class="fin-saldo-card">';
+  h+='<div class="fin-saldo-label">'+labelMov+'</div>';
+  h+='<div style="font-size:13px;color:var(--ok);font-weight:700;margin-top:6px">+'+fmCop(s.entradas_mes)+' <span style="color:var(--tx3);font-size:10px;font-weight:600">entradas</span></div>';
+  h+='<div style="font-size:13px;color:var(--err);font-weight:700;margin-top:2px">−'+fmCop(s.salidas_mes)+' <span style="color:var(--tx3);font-size:10px;font-weight:600">salidas</span></div>';
+  h+='</div>';
+
+  h+='</div>';
+
+  // Desglose
+  h+='<div id="finSaldoDetalle" class="fin-saldo-detalle">';
+  h+='<div class="fin-saldo-detalle-inner">';
+  h+='<div style="font-size:9px;color:var(--tx3);font-weight:800;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px">Composición</div>';
+  h+='<div class="fin-saldo-line"><span>'+labelInicial+'</span><span style="font-weight:700;font-variant-numeric:tabular-nums">'+fm(s.saldo_inicial_mes)+'</span></div>';
+  if(fc.entradas_operativas&&fc.entradas_operativas.total>0)h+='<div class="fin-saldo-line" style="color:var(--ok)"><span>+ Entradas operativas</span><span style="font-weight:700;font-variant-numeric:tabular-nums">+'+fm(fc.entradas_operativas.total)+'</span></div>';
+  if(fc.centros&&fc.centros.cobrados&&fc.centros.cobrados.total>0)h+='<div class="fin-saldo-line" style="color:var(--ok)"><span>+ Centros cobrados</span><span style="font-weight:700;font-variant-numeric:tabular-nums">+'+fm(fc.centros.cobrados.total)+'</span></div>';
+  if(fc.no_operativos&&fc.no_operativos.total>0)h+='<div class="fin-saldo-line" style="color:var(--ok)"><span>+ No operativos</span><span style="font-weight:700;font-variant-numeric:tabular-nums">+'+fm(fc.no_operativos.total)+'</span></div>';
+  if(fc.salidas_operativas&&fc.salidas_operativas.total<0)h+='<div class="fin-saldo-line" style="color:var(--err)"><span>− Salidas operativas</span><span style="font-weight:700;font-variant-numeric:tabular-nums">'+fm(fc.salidas_operativas.total)+'</span></div>';
+  if(fc.centros&&fc.centros.pagados&&fc.centros.pagados.total<0)h+='<div class="fin-saldo-line" style="color:var(--err)"><span>− Centros pagados</span><span style="font-weight:700;font-variant-numeric:tabular-nums">'+fm(fc.centros.pagados.total)+'</span></div>';
+  if(fc.inversiones&&fc.inversiones.total<0)h+='<div class="fin-saldo-line" style="color:var(--err)"><span>− Inversiones</span><span style="font-weight:700;font-variant-numeric:tabular-nums">'+fm(fc.inversiones.total)+'</span></div>';
+  if(fc.no_operativos&&fc.no_operativos.total<0)h+='<div class="fin-saldo-line" style="color:var(--err)"><span>− No operativos</span><span style="font-weight:700;font-variant-numeric:tabular-nums">'+fm(fc.no_operativos.total)+'</span></div>';
+  h+='<div class="fin-saldo-line fin-saldo-line-total"><span>'+labelFinal+'</span><span style="font-variant-numeric:tabular-nums">'+fm(fc.saldo_final||s.saldo_final_mes)+'</span></div>';
   h+='</div></div>';
 
   el.innerHTML=h;
@@ -2279,7 +2524,7 @@ function finRenderSaldoCaja(s,fc,esAno){
     tog.addEventListener("click",function(){
       var open=det.style.maxHeight&&det.style.maxHeight!=="0px";
       if(open){det.style.maxHeight="0";if(arr)arr.style.transform="rotate(0deg)"}
-      else {det.style.maxHeight="600px";if(arr)arr.style.transform="rotate(180deg)"}
+      else {det.style.maxHeight="700px";if(arr)arr.style.transform="rotate(90deg)"}
     });
   }
 }
@@ -2290,46 +2535,47 @@ function finRenderPyG(p){
   if(!p||!p.ingresos){el.innerHTML='<p style="color:var(--tx3);font-size:11px;padding:10px">Sin datos</p>';return}
 
   var h='<div style="font-size:10px;color:var(--tx3);margin-bottom:10px;font-style:italic">Click en cada categoría para ver desglose · centros excluidos (flujo pasante)</div>';
-  h+='<table style="width:100%;border-collapse:collapse;font-size:12px" id="finPygTbl">';
+  h+='<div class="fin-tbl-wrap">';
+  h+='<table class="fin-pyg-table" id="finPygTbl">';
 
-  h+='<tr><td colspan="3" style="padding:8px 4px;font-size:9px;font-weight:800;color:var(--ok);text-transform:uppercase;letter-spacing:1.5px;border-bottom:1px solid var(--bd)">Ingresos</td></tr>';
+  h+='<tr><td colspan="3" class="fin-pyg-section-h" style="color:var(--ok)">Ingresos</td></tr>';
   if(!p.ingresos.desglose||!p.ingresos.desglose.length){
     h+='<tr><td colspan="3" style="padding:8px 4px;color:var(--tx3);font-style:italic">Sin ingresos en el periodo</td></tr>';
   } else {
     p.ingresos.desglose.forEach(function(d,idx){
       var key="i"+idx;
-      h+='<tr class="finPygRow" data-key="'+key+'" style="cursor:pointer;border-bottom:1px solid var(--sf2)"><td style="padding:8px 4px;color:var(--tx2)"><span class="finPygArr" style="display:inline-block;width:12px;color:var(--tx3);transition:transform 0.2s">▸</span> '+d.categoria+' <span style="font-size:10px;color:var(--tx3)">· '+d.casos_count+(d.casos_count===1?' caso':' casos')+'</span></td>';
+      h+='<tr class="fin-pyg-row" data-key="'+key+'"><td style="color:var(--tx2)"><span class="fin-pyg-arr">▸</span> '+d.categoria+' <span style="font-size:10px;color:var(--tx3)">· '+d.casos_count+(d.casos_count===1?' caso':' casos')+'</span></td>';
       h+='<td style="text-align:right;font-weight:700;color:var(--ok);font-variant-numeric:tabular-nums">'+fm(d.valor)+'</td>';
       h+='<td style="text-align:right;font-size:10px;color:var(--tx3);min-width:50px">'+(p.ingresos.total>0?finFmtPct(d.valor/p.ingresos.total):"—")+'</td></tr>';
       var casos=(p.ingresos.detalle_casos||[]).filter(function(c){return c.modalidad===d.categoria});
       casos.slice(0,30).forEach(function(c){
-        h+='<tr class="finPygSub '+key+'" style="display:none;background:var(--sf2)"><td style="padding:5px 4px 5px 24px;font-size:11px;color:var(--tx2)">'+c.nombre+' <span style="color:var(--tx3)">· '+(c.asesor||"—")+' · '+finFmtFecha(c.fecha)+'</span></td>';
+        h+='<tr class="fin-pyg-sub '+key+'"><td>'+c.nombre+' <span style="color:var(--tx3)">· '+(c.asesor||"—")+' · '+finFmtFecha(c.fecha)+'</span></td>';
         h+='<td style="text-align:right;font-size:11px;color:var(--tx2);font-variant-numeric:tabular-nums">'+fm(c.valor)+'</td><td></td></tr>';
       });
       if(casos.length>30){
-        h+='<tr class="finPygSub '+key+'" style="display:none;background:var(--sf2)"><td colspan="3" style="padding:4px 24px;font-size:10px;color:var(--tx3);font-style:italic">+ '+(casos.length-30)+' casos más</td></tr>';
+        h+='<tr class="fin-pyg-sub '+key+'"><td colspan="3" style="padding:4px 24px;font-size:10px;color:var(--tx3);font-style:italic">+ '+(casos.length-30)+' casos más</td></tr>';
       }
     });
   }
   h+='<tr style="background:var(--okb)"><td style="padding:7px 4px;font-weight:800;color:var(--ok)">Total ingresos</td><td style="text-align:right;font-weight:800;color:var(--ok);font-variant-numeric:tabular-nums">'+fm(p.ingresos.total)+'</td><td></td></tr>';
 
-  h+='<tr><td colspan="3" style="padding:8px 4px;padding-top:14px;font-size:9px;font-weight:800;color:var(--warn);text-transform:uppercase;letter-spacing:1.5px;border-bottom:1px solid var(--bd)">Costos directos</td></tr>';
+  h+='<tr><td colspan="3" class="fin-pyg-section-h" style="color:var(--warn);padding-top:14px">Costos directos</td></tr>';
   if(!p.costos_directos.desglose||!p.costos_directos.desglose.length){
     h+='<tr><td colspan="3" style="padding:8px 4px;color:var(--tx3);font-style:italic">Sin costos directos</td></tr>';
   } else {
     p.costos_directos.desglose.forEach(function(d,idx){
       var key="c"+idx;
-      h+='<tr class="finPygRow" data-key="'+key+'" style="cursor:pointer;border-bottom:1px solid var(--sf2)"><td style="padding:8px 4px;color:var(--tx2)"><span class="finPygArr" style="display:inline-block;width:12px;color:var(--tx3);transition:transform 0.2s">▸</span> '+d.categoria+'</td>';
+      h+='<tr class="fin-pyg-row" data-key="'+key+'"><td style="color:var(--tx2)"><span class="fin-pyg-arr">▸</span> '+d.categoria+'</td>';
       h+='<td style="text-align:right;font-weight:700;color:var(--warn);font-variant-numeric:tabular-nums">'+fm(d.valor)+'</td>';
       h+='<td style="text-align:right;font-size:10px;color:var(--tx3)">'+(p.ingresos.total>0?finFmtPct(d.valor/p.ingresos.total):"—")+'</td></tr>';
       if(d.tipo_detalle==="comerciales"){
         d.detalle.forEach(function(det){
-          h+='<tr class="finPygSub '+key+'" style="display:none;background:var(--sf2)"><td style="padding:5px 4px 5px 24px;font-size:11px;color:var(--tx2)">'+det.asesor+' <span style="color:var(--tx3)">· '+det.casos+(det.casos===1?' caso':' casos')+'</span></td>';
+          h+='<tr class="fin-pyg-sub '+key+'"><td>'+det.asesor+' <span style="color:var(--tx3)">· '+det.casos+(det.casos===1?' caso':' casos')+'</span></td>';
           h+='<td style="text-align:right;font-size:11px;color:var(--tx2);font-variant-numeric:tabular-nums">'+fm(det.total)+'</td><td></td></tr>';
         });
       } else {
         (d.detalle||[]).slice(0,15).forEach(function(det){
-          h+='<tr class="finPygSub '+key+'" style="display:none;background:var(--sf2)"><td style="padding:5px 4px 5px 24px;font-size:11px;color:var(--tx2)">'+(det.descripcion||det.subcategoria||"—")+' <span style="color:var(--tx3)">· '+finFmtFecha(det.fecha)+'</span></td>';
+          h+='<tr class="fin-pyg-sub '+key+'"><td>'+(det.descripcion||det.subcategoria||"—")+' <span style="color:var(--tx3)">· '+finFmtFecha(det.fecha)+'</span></td>';
           h+='<td style="text-align:right;font-size:11px;color:var(--tx2);font-variant-numeric:tabular-nums">'+fm(det.valor)+'</td><td></td></tr>';
         });
       }
@@ -2339,7 +2585,7 @@ function finRenderPyG(p){
 
   h+='<tr style="background:var(--infob);border-top:2px solid var(--info)"><td style="padding:9px 4px;font-weight:800;color:var(--info)">= MARGEN BRUTO</td><td style="text-align:right;font-weight:800;color:var(--info);font-variant-numeric:tabular-nums;font-size:13px">'+fm(p.margen_bruto.valor)+'</td><td style="text-align:right;font-weight:800;color:var(--info)">'+finFmtPct(p.margen_bruto.pct,1)+'</td></tr>';
 
-  h+='<tr><td colspan="3" style="padding:8px 4px;padding-top:14px;font-size:9px;font-weight:800;color:var(--err);text-transform:uppercase;letter-spacing:1.5px;border-bottom:1px solid var(--bd)">Gastos operativos</td></tr>';
+  h+='<tr><td colspan="3" class="fin-pyg-section-h" style="color:var(--err);padding-top:14px">Gastos operativos</td></tr>';
   if(!p.gastos_operativos.desglose||!p.gastos_operativos.desglose.length){
     h+='<tr><td colspan="3" style="padding:8px 4px;color:var(--tx3);font-style:italic">Sin gastos operativos</td></tr>';
   } else {
@@ -2350,15 +2596,15 @@ function finRenderPyG(p){
         var consColor=d.consumo_pct>=1?"var(--err)":d.consumo_pct>=0.8?"var(--warn)":"var(--tx3)";
         presBadge=' <span style="font-size:10px;color:'+consColor+';font-weight:700">· presup '+finFmtPct(d.consumo_pct)+'</span>';
       }
-      h+='<tr class="finPygRow" data-key="'+key+'" style="cursor:pointer;border-bottom:1px solid var(--sf2)"><td style="padding:8px 4px;color:var(--tx2)"><span class="finPygArr" style="display:inline-block;width:12px;color:var(--tx3);transition:transform 0.2s">▸</span> '+d.categoria+presBadge+'</td>';
+      h+='<tr class="fin-pyg-row" data-key="'+key+'"><td style="color:var(--tx2)"><span class="fin-pyg-arr">▸</span> '+d.categoria+presBadge+'</td>';
       h+='<td style="text-align:right;font-weight:700;color:var(--err);font-variant-numeric:tabular-nums">'+fm(d.valor)+'</td>';
       h+='<td style="text-align:right;font-size:10px;color:var(--tx3)">'+(p.ingresos.total>0?finFmtPct(d.valor/p.ingresos.total):"—")+'</td></tr>';
       (d.subcategorias||[]).forEach(function(s){
-        h+='<tr class="finPygSub '+key+'" style="display:none;background:var(--sf2)"><td style="padding:5px 4px 5px 24px;font-size:11px;color:var(--tx2);font-weight:600">'+s.nombre+'</td>';
+        h+='<tr class="fin-pyg-sub '+key+'"><td style="font-weight:600">'+s.nombre+'</td>';
         h+='<td style="text-align:right;font-size:11px;color:var(--tx2);font-variant-numeric:tabular-nums">'+fm(s.valor)+'</td><td></td></tr>';
       });
       (d.movimientos||[]).slice(0,15).forEach(function(m){
-        h+='<tr class="finPygSub '+key+'" style="display:none;background:var(--sf2)"><td style="padding:5px 4px 5px 36px;font-size:11px;color:var(--tx3)">· '+(m.descripcion||m.subcategoria||"—")+' <span style="color:var(--tx3)">'+finFmtFecha(m.fecha)+'</span></td>';
+        h+='<tr class="fin-pyg-sub fin-pyg-sub-deep '+key+'"><td>· '+(m.descripcion||m.subcategoria||"—")+' <span style="color:var(--tx3)">'+finFmtFecha(m.fecha)+'</span></td>';
         h+='<td style="text-align:right;font-size:10.5px;color:var(--tx3);font-variant-numeric:tabular-nums">'+fm(m.valor)+'</td><td></td></tr>';
       });
     });
@@ -2368,16 +2614,16 @@ function finRenderPyG(p){
   var uoColor=p.utilidad_operacional.valor>=0?"var(--gold)":"var(--err)";
   var uoBg=p.utilidad_operacional.valor>=0?"#fdf6e3":"var(--errb)";
   h+='<tr style="background:'+uoBg+';border-top:3px solid '+uoColor+'"><td style="padding:11px 4px;font-weight:800;color:'+uoColor+';font-size:13px">= UTILIDAD OPERACIONAL</td><td style="text-align:right;font-weight:800;color:'+uoColor+';font-variant-numeric:tabular-nums;font-size:15px">'+fm(p.utilidad_operacional.valor)+'</td><td style="text-align:right;font-weight:800;color:'+uoColor+'">'+finFmtPct(p.utilidad_operacional.pct,1)+'</td></tr>';
-  h+='</table>';
+  h+='</table></div>';
   el.innerHTML=h;
 
-  el.querySelectorAll(".finPygRow").forEach(function(tr){
+  el.querySelectorAll(".fin-pyg-row").forEach(function(tr){
     tr.addEventListener("click",function(){
       var key=tr.getAttribute("data-key");
-      var arr=tr.querySelector(".finPygArr");
+      var arr=tr.querySelector(".fin-pyg-arr");
       var isOpen=arr&&arr.textContent==="▾";
       if(arr)arr.textContent=isOpen?"▸":"▾";
-      el.querySelectorAll(".finPygSub."+key).forEach(function(sub){
+      el.querySelectorAll(".fin-pyg-sub."+key).forEach(function(sub){
         sub.style.display=isOpen?"none":"table-row";
       });
     });
@@ -2393,10 +2639,10 @@ function finRenderRecaudo(r,esAno){
   var labelPeriodo=esAno?"Año actual":"Mes actual";
 
   var h='<div style="font-size:10px;color:var(--tx3);margin-bottom:14px;font-style:italic">Casos del periodo sin descuento · 20% y 10% sobre centro vendido · NO afecta PyG</div>';
-  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">';
+  h+='<div class="fin-rec-grid">';
 
-  h+='<div style="background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:18px">';
-  h+='<div style="font-size:10px;color:var(--tx3);font-weight:800;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px">'+labelPeriodo+'</div>';
+  h+='<div class="fin-rec-card">';
+  h+='<div class="fin-rec-h">'+labelPeriodo+'</div>';
 
   if(!ma.casos_sin_descuento.length){
     h+='<div style="text-align:center;padding:30px 0;color:var(--tx3);font-size:12px">No hay casos sin descuento</div>';
@@ -2404,14 +2650,12 @@ function finRenderRecaudo(r,esAno){
       h+='<div style="text-align:center;color:var(--tx3);font-size:11px;margin-top:-15px">'+ma.casos_con_descuento.length+' caso(s) con descuento aplicado</div>';
     }
   } else {
-    h+='<div style="display:flex;justify-content:space-between;align-items:center;padding:13px 14px;background:linear-gradient(135deg,#fef3c7,#fde68a);border-radius:9px;margin-bottom:8px">';
-    h+='<div><div style="font-size:10px;color:#92400e;font-weight:800;letter-spacing:.5px;text-transform:uppercase">Tercero A · 20%</div>';
-    h+='<div style="font-size:11px;color:#78350f;margin-top:2px">comprometido</div></div>';
-    h+='<div style="font-size:18px;font-weight:800;color:#78350f;font-variant-numeric:tabular-nums">'+fm(ma.tercero_a.valor)+'</div></div>';
-    h+='<div style="display:flex;justify-content:space-between;align-items:center;padding:13px 14px;background:linear-gradient(135deg,#ede9fe,#ddd6fe);border-radius:9px;margin-bottom:8px">';
-    h+='<div><div style="font-size:10px;color:#5b21b6;font-weight:800;letter-spacing:.5px;text-transform:uppercase">Tercero B · 10%</div>';
-    h+='<div style="font-size:11px;color:#5b21b6;margin-top:2px">comprometido</div></div>';
-    h+='<div style="font-size:18px;font-weight:800;color:#5b21b6;font-variant-numeric:tabular-nums">'+fm(ma.tercero_b.valor)+'</div></div>';
+    h+='<div class="fin-rec-pill fin-rec-pill-a">';
+    h+='<div><div class="fin-rec-pill-label" style="color:#92400e">Tercero A · 20%</div><div class="fin-rec-pill-sub" style="color:#78350f">comprometido</div></div>';
+    h+='<div class="fin-rec-pill-val" style="color:#78350f">'+fm(ma.tercero_a.valor)+'</div></div>';
+    h+='<div class="fin-rec-pill fin-rec-pill-b">';
+    h+='<div><div class="fin-rec-pill-label" style="color:#5b21b6">Tercero B · 10%</div><div class="fin-rec-pill-sub" style="color:#5b21b6">comprometido</div></div>';
+    h+='<div class="fin-rec-pill-val" style="color:#5b21b6">'+fm(ma.tercero_b.valor)+'</div></div>';
     h+='<div style="display:flex;justify-content:space-between;align-items:center;padding:11px 14px;border-top:2px solid var(--nv);margin-top:6px;font-weight:800;color:var(--nv)"><span>Total comprometido</span><span style="font-variant-numeric:tabular-nums">'+fm(totalMes)+'</span></div>';
     h+='<div style="margin-top:12px;padding:10px 12px;background:var(--sf2);border-radius:7px;font-size:11px;color:var(--tx2);line-height:1.5">';
     h+='<strong style="color:var(--nv)">'+ma.casos_sin_descuento.length+(ma.casos_sin_descuento.length===1?' caso':' casos')+'</strong> sin descuento · centro vendido: <strong style="color:var(--nv)">'+fm(ma.total_centro_base)+'</strong>';
@@ -2419,8 +2663,8 @@ function finRenderRecaudo(r,esAno){
       h+='<br><span style="color:var(--tx3);font-size:10px">+ '+ma.casos_con_descuento.length+' con descuento (no aplica reparto)</span>';
     }
     h+='</div>';
-    h+='<div id="finRecDetTog" style="margin-top:12px;cursor:pointer;font-size:11px;color:var(--ac);font-weight:700">▸ Ver detalle por caso</div>';
-    h+='<div id="finRecDet" style="max-height:0;overflow:hidden;transition:max-height 0.3s ease"><div style="margin-top:10px;max-height:300px;overflow-y:auto">';
+    h+='<div id="finRecDetTog" style="margin-top:12px;cursor:pointer;font-size:11px;color:var(--ac);font-weight:700;display:flex;align-items:center;gap:6px"><span class="fin-rec-det-arr">▸</span> Ver detalle por caso</div>';
+    h+='<div id="finRecDet" class="fin-rec-detalle"><div style="margin-top:10px;max-height:300px;overflow-y:auto">';
     ma.casos_sin_descuento.forEach(function(c){
       h+='<div style="display:grid;grid-template-columns:1.4fr .8fr .8fr;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd);font-size:11px">';
       h+='<div><strong>'+(c.nombre||c.cedula).substring(0,24)+'</strong><div style="color:var(--tx3);font-size:10px">'+(c.asesor||"—")+'</div></div>';
@@ -2432,25 +2676,26 @@ function finRenderRecaudo(r,esAno){
   }
   h+='</div>';
 
-  h+='<div style="background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:18px">';
-  h+='<div style="font-size:10px;color:var(--tx3);font-weight:800;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px">Tendencia 12 meses</div>';
+  // Card 2: Tendencia
+  h+='<div class="fin-rec-card">';
+  h+='<div class="fin-rec-h">Tendencia 12 meses</div>';
   var maxVal=0;
   (r.tendencia_12m||[]).forEach(function(t){if(t.total>maxVal)maxVal=t.total});
-  h+='<div style="display:flex;align-items:flex-end;gap:3px;height:80px;padding:8px 0;margin-top:10px">';
+  h+='<div class="fin-rec-bars">';
   (r.tendencia_12m||[]).forEach(function(t){
     var hA=maxVal>0?(t.tercero_a/maxVal)*60:0;
     var hB=maxVal>0?(t.tercero_b/maxVal)*60:0;
     var titleTxt=t.etiqueta+" · A: "+fm(t.tercero_a)+" · B: "+fm(t.tercero_b);
-    h+='<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0" title="'+titleTxt+'">';
-    h+='<div style="width:100%;max-width:22px;display:flex;flex-direction:column;justify-content:flex-end;gap:1px;height:60px">';
+    h+='<div class="fin-rec-bar-col" title="'+titleTxt+'">';
+    h+='<div class="fin-rec-bar-stack">';
     if(hA>0)h+='<div style="width:100%;background:#f59e0b;border-radius:2px;height:'+hA+'px"></div>';
     if(hB>0)h+='<div style="width:100%;background:#8b5cf6;border-radius:2px;height:'+hB+'px"></div>';
     h+='</div>';
-    h+='<div style="font-size:9px;color:var(--tx3);font-weight:600">'+t.etiqueta.substring(0,3)+'</div>';
+    h+='<div class="fin-rec-bar-lbl">'+t.etiqueta.substring(0,3)+'</div>';
     h+='</div>';
   });
   h+='</div>';
-  h+='<div style="display:flex;gap:14px;font-size:11px;color:var(--tx3);margin-top:8px">';
+  h+='<div class="fin-rec-legend">';
   h+='<span><span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:#f59e0b;margin-right:5px;vertical-align:middle"></span>Tercero A · 20%</span>';
   h+='<span><span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:#8b5cf6;margin-right:5px;vertical-align:middle"></span>Tercero B · 10%</span>';
   h+='</div>';
@@ -2471,8 +2716,9 @@ function finRenderRecaudo(r,esAno){
   if(togDet&&detEl){
     togDet.addEventListener("click",function(){
       var open=detEl.style.maxHeight&&detEl.style.maxHeight!=="0px";
-      if(open){detEl.style.maxHeight="0";togDet.innerHTML="▸ Ver detalle por caso"}
-      else {detEl.style.maxHeight="380px";togDet.innerHTML="▾ Ocultar detalle"}
+      var arr=togDet.querySelector(".fin-rec-det-arr");
+      if(open){detEl.style.maxHeight="0";if(arr)arr.textContent="▸";togDet.innerHTML='<span class="fin-rec-det-arr">▸</span> Ver detalle por caso'}
+      else {detEl.style.maxHeight="380px";togDet.innerHTML='<span class="fin-rec-det-arr">▾</span> Ocultar detalle'}
     });
   }
 }
@@ -2485,14 +2731,15 @@ function finRenderGastosComp(gastos,esAno){
   var labelAnt=esAno?"Año anterior":"Mes anterior";
 
   var h='<div style="font-size:10px;color:var(--tx3);margin-bottom:10px;font-style:italic">Click en cada fila para ver detalle</div>';
-  h+='<table style="width:100%;border-collapse:collapse;font-size:12px" id="finGcTbl">';
-  h+='<thead><tr style="border-bottom:2px solid var(--bd);background:var(--sf2)">';
-  h+='<th style="text-align:left;padding:9px 8px;font-size:9px;color:var(--tx3);text-transform:uppercase;letter-spacing:1px">Categoría</th>';
-  h+='<th style="text-align:right;padding:9px 8px;font-size:9px;color:var(--tx3);text-transform:uppercase;letter-spacing:1px">'+labelAct+'</th>';
-  h+='<th style="text-align:right;padding:9px 8px;font-size:9px;color:var(--tx3);text-transform:uppercase;letter-spacing:1px">'+labelAnt+'</th>';
-  h+='<th style="text-align:right;padding:9px 8px;font-size:9px;color:var(--tx3);text-transform:uppercase;letter-spacing:1px">Var $</th>';
-  h+='<th style="text-align:right;padding:9px 8px;font-size:9px;color:var(--tx3);text-transform:uppercase;letter-spacing:1px">Var %</th>';
-  h+='<th style="text-align:right;padding:9px 8px;font-size:9px;color:var(--tx3);text-transform:uppercase;letter-spacing:1px">Presupuesto</th>';
+  h+='<div class="fin-tbl-wrap">';
+  h+='<table class="fin-gc-table" id="finGcTbl">';
+  h+='<thead><tr>';
+  h+='<th>Categoría</th>';
+  h+='<th class="num">'+labelAct+'</th>';
+  h+='<th class="num">'+labelAnt+'</th>';
+  h+='<th class="num">Var $</th>';
+  h+='<th class="num">Var %</th>';
+  h+='<th class="num">Presupuesto</th>';
   h+='</tr></thead><tbody>';
 
   gastos.forEach(function(g,idx){
@@ -2501,13 +2748,13 @@ function finRenderGastosComp(gastos,esAno){
     var varSign=g.var_dinero>0?"+":"";
     var varPctTxt=g.var_pct===null||g.var_pct===undefined?"—":(g.var_pct*100>=1?"+":"")+(g.var_pct*100).toFixed(0)+"%";
 
-    h+='<tr class="finGcRow" data-key="'+key+'" style="cursor:pointer;border-bottom:1px solid var(--sf2)">';
-    h+='<td style="padding:10px 8px"><span class="finGcArr" style="display:inline-block;width:12px;color:var(--tx3);transition:transform 0.2s">▸</span> <span style="font-weight:600;color:var(--nv)">'+g.categoria+'</span></td>';
-    h+='<td style="text-align:right;padding:10px 8px;font-weight:700;color:var(--nv);font-variant-numeric:tabular-nums">'+fm(g.mes_actual)+'</td>';
-    h+='<td style="text-align:right;padding:10px 8px;color:var(--tx2);font-variant-numeric:tabular-nums">'+fm(g.mes_anterior)+'</td>';
-    h+='<td style="text-align:right;padding:10px 8px;color:'+varColor+';font-weight:600;font-variant-numeric:tabular-nums">'+varSign+fmCop(g.var_dinero)+'</td>';
-    h+='<td style="text-align:right;padding:10px 8px;color:'+varColor+';font-weight:700">'+varPctTxt+'</td>';
-    h+='<td style="text-align:right;padding:10px 8px">';
+    h+='<tr class="fin-gc-row" data-key="'+key+'">';
+    h+='<td><span class="fin-gc-arr">▸</span> <span style="font-weight:600;color:var(--nv)">'+g.categoria+'</span></td>';
+    h+='<td class="num" style="font-weight:700;color:var(--nv)">'+fm(g.mes_actual)+'</td>';
+    h+='<td class="num" style="color:var(--tx2)">'+fm(g.mes_anterior)+'</td>';
+    h+='<td class="num" style="color:'+varColor+';font-weight:600">'+varSign+fmCop(g.var_dinero)+'</td>';
+    h+='<td class="num" style="color:'+varColor+';font-weight:700">'+varPctTxt+'</td>';
+    h+='<td class="num">';
     if(g.presupuesto&&g.presupuesto>0){
       var consPct=g.consumo_pct||0;
       var barColor=consPct>=1?"var(--err)":consPct>=0.8?"var(--warn)":"var(--ok)";
@@ -2519,61 +2766,61 @@ function finRenderGastosComp(gastos,esAno){
     h+='</td></tr>';
 
     (g.subcategorias||[]).forEach(function(s){
-      h+='<tr class="finGcSub '+key+'" style="display:none;background:var(--sf2)">';
+      h+='<tr class="fin-gc-sub '+key+'">';
       h+='<td colspan="2" style="padding:6px 8px 6px 28px;font-size:11px;color:var(--tx2);font-weight:600">'+s.nombre+'</td>';
-      h+='<td colspan="4" style="text-align:right;padding:6px 8px;font-size:11px;color:var(--tx2);font-variant-numeric:tabular-nums">'+fm(s.valor)+'</td></tr>';
+      h+='<td colspan="4" class="num" style="padding:6px 8px;font-size:11px;color:var(--tx2)">'+fm(s.valor)+'</td></tr>';
     });
     (g.movimientos||[]).slice(0,15).forEach(function(m){
-      h+='<tr class="finGcSub '+key+'" style="display:none;background:var(--sf2)">';
+      h+='<tr class="fin-gc-sub '+key+'">';
       h+='<td colspan="2" style="padding:5px 8px 5px 42px;font-size:10.5px;color:var(--tx3)">· '+(m.descripcion||m.subcategoria||"—")+' <span style="color:var(--tx3)">'+finFmtFecha(m.fecha)+'</span></td>';
-      h+='<td colspan="4" style="text-align:right;padding:5px 8px;font-size:10.5px;color:var(--tx3);font-variant-numeric:tabular-nums">'+fm(m.valor)+'</td></tr>';
+      h+='<td colspan="4" class="num" style="padding:5px 8px;font-size:10.5px;color:var(--tx3)">'+fm(m.valor)+'</td></tr>';
     });
   });
-  h+='</tbody></table>';
+  h+='</tbody></table></div>';
   el.innerHTML=h;
 
-  el.querySelectorAll(".finGcRow").forEach(function(tr){
+  el.querySelectorAll(".fin-gc-row").forEach(function(tr){
     tr.addEventListener("click",function(){
       var key=tr.getAttribute("data-key");
-      var arr=tr.querySelector(".finGcArr");
+      var arr=tr.querySelector(".fin-gc-arr");
       var isOpen=arr&&arr.textContent==="▾";
       if(arr)arr.textContent=isOpen?"▸":"▾";
-      el.querySelectorAll(".finGcSub."+key).forEach(function(sub){
+      el.querySelectorAll(".fin-gc-sub."+key).forEach(function(sub){
         sub.style.display=isOpen?"none":"table-row";
       });
     });
   });
 }
 
-// ---------- FLUJO DE CAJA (BUG FIX: usa display:none/block en vez de max-height) ----------
+// ---------- FLUJO DE CAJA (display:none/table-row) ----------
 function finRenderFlujo(fc){
   var el=document.getElementById("finFlujo");
   if(!fc){el.innerHTML='<p style="color:var(--tx3);font-size:11px;padding:10px">Sin datos</p>';return}
 
   var h='<div style="font-size:10px;color:var(--tx3);margin-bottom:10px;font-style:italic">Click en cada categoría para ver movimientos</div>';
-  h+='<table style="width:100%;border-collapse:collapse;font-size:13px" id="finFlTbl">';
+  h+='<div class="fin-tbl-wrap">';
+  h+='<table class="fin-fl-table" id="finFlTbl">';
 
-  // Saldo inicial
   h+='<tr style="background:linear-gradient(90deg,var(--sf2),var(--sf));border-top:2px solid var(--bd);border-bottom:2px solid var(--bd)">';
-  h+='<td colspan="2" style="padding:13px 16px;font-weight:700;color:var(--info)">Saldo inicial del mes</td>';
-  h+='<td style="padding:13px 16px;text-align:right;font-weight:700;color:var(--info);font-variant-numeric:tabular-nums">'+fm(fc.saldo_inicial)+'</td></tr>';
+  h+='<td colspan="2" style="font-weight:700;color:var(--info)">Saldo inicial del mes</td>';
+  h+='<td style="text-align:right;font-weight:700;color:var(--info);font-variant-numeric:tabular-nums">'+fm(fc.saldo_inicial)+'</td></tr>';
 
   function seccion(key,label,data,sign){
     var hasMovs=data&&data.movimientos&&data.movimientos.length>0;
     var color=sign==="+"?"var(--ok)":"var(--err)";
     var movCount=data&&data.movimientos?data.movimientos.length:0;
-    var html='<tr class="finFlRow" '+(hasMovs?'data-key="'+key+'"':'')+' style="cursor:'+(hasMovs?"pointer":"default")+';border-bottom:1px solid var(--sf2)">';
-    html+='<td style="padding:12px 16px;width:24px;color:var(--tx3)">'+(hasMovs?'<span class="finFlArr" style="display:inline-block;transition:transform 0.2s">▸</span>':'')+'</td>';
-    html+='<td style="padding:12px 4px"><span style="font-weight:500;color:var(--tx)">'+(sign==="+"?"+ ":"− ")+label+'</span> <span style="color:var(--tx3);font-size:10px;margin-left:4px">('+movCount+' mov)</span></td>';
-    html+='<td style="padding:12px 16px;text-align:right;font-weight:700;font-variant-numeric:tabular-nums;color:'+color+'">'+(sign==="+"?"+":"")+fm(data.total)+'</td>';
+    var html='<tr class="fin-fl-row '+(hasMovs?'':'no-cursor')+'" '+(hasMovs?'data-key="'+key+'"':'')+'>';
+    html+='<td style="width:24px">'+(hasMovs?'<span class="fin-fl-arr">▸</span>':'')+'</td>';
+    html+='<td><span style="font-weight:500;color:var(--tx)">'+(sign==="+"?"+ ":"− ")+label+'</span> <span style="color:var(--tx3);font-size:10px;margin-left:4px">('+movCount+' mov)</span></td>';
+    html+='<td style="text-align:right;font-weight:700;font-variant-numeric:tabular-nums;color:'+color+'">'+(sign==="+"?"+":"")+fm(data.total)+'</td>';
     html+='</tr>';
     if(hasMovs){
       data.movimientos.forEach(function(m){
         var mc=m.valor>=0?"var(--ok)":"var(--err)";
-        html+='<tr class="finFlSub '+key+'" style="display:none;background:var(--sf2)">';
-        html+='<td style="padding:6px 16px;color:var(--tx3);font-size:10.5px;width:24px">'+finFmtFecha(m.fecha,"short")+'</td>';
-        html+='<td style="padding:6px 8px 6px 12px;font-size:11.5px;color:var(--tx2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:300px" title="'+(m.descripcion||"")+'">'+(m.descripcion||m.subcategoria||m.categoria||"—")+'</td>';
-        html+='<td style="padding:6px 16px;text-align:right;font-size:11.5px;font-variant-numeric:tabular-nums;font-weight:600;color:'+mc+'">'+(m.valor>=0?"+":"")+fm(m.valor)+'</td>';
+        html+='<tr class="fin-fl-sub '+key+'">';
+        html+='<td class="fin-fl-sub-fecha">'+finFmtFecha(m.fecha,"short")+'</td>';
+        html+='<td class="fin-fl-sub-desc" title="'+(m.descripcion||"")+'">'+(m.descripcion||m.subcategoria||m.categoria||"—")+'</td>';
+        html+='<td class="fin-fl-sub-amt" style="color:'+mc+'">'+(m.valor>=0?"+":"")+fm(m.valor)+'</td>';
         html+='</tr>';
       });
     }
@@ -2588,27 +2835,27 @@ function finRenderFlujo(fc){
   if(fc.no_operativos&&fc.no_operativos.total!==0)h+=seccion("noop","No operativos",fc.no_operativos,fc.no_operativos.total>=0?"+":"−");
   if(fc.sin_clasificar&&fc.sin_clasificar.total!==0)h+=seccion("sc","Sin clasificar",fc.sin_clasificar,fc.sin_clasificar.total>=0?"+":"−");
 
-  h+='<tr style="background:linear-gradient(90deg,var(--acl),#dbeafe);border-top:2px solid var(--ac);border-bottom:none">';
-  h+='<td colspan="2" style="padding:14px 16px;font-weight:800;color:var(--ac);font-size:14px">= Saldo final del mes</td>';
-  h+='<td style="padding:14px 16px;text-align:right;font-weight:800;color:var(--ac);font-variant-numeric:tabular-nums;font-size:15px">'+fm(fc.saldo_final)+'</td></tr>';
+  h+='<tr style="background:linear-gradient(90deg,var(--acl),#dbeafe);border-top:2px solid var(--ac)">';
+  h+='<td colspan="2" style="font-weight:800;color:var(--ac);font-size:14px">= Saldo final del mes</td>';
+  h+='<td style="text-align:right;font-weight:800;color:var(--ac);font-variant-numeric:tabular-nums;font-size:15px">'+fm(fc.saldo_final)+'</td></tr>';
 
-  h+='</table>';
+  h+='</table></div>';
   el.innerHTML=h;
 
-  el.querySelectorAll(".finFlRow[data-key]").forEach(function(tr){
+  el.querySelectorAll(".fin-fl-row[data-key]").forEach(function(tr){
     tr.addEventListener("click",function(){
       var key=tr.getAttribute("data-key");
-      var arr=tr.querySelector(".finFlArr");
+      var arr=tr.querySelector(".fin-fl-arr");
       var isOpen=arr&&arr.textContent==="▾";
       if(arr)arr.textContent=isOpen?"▸":"▾";
-      el.querySelectorAll(".finFlSub."+key).forEach(function(sub){
+      el.querySelectorAll(".fin-fl-sub."+key).forEach(function(sub){
         sub.style.display=isOpen?"none":"table-row";
       });
     });
   });
 }
 
-// ---------- PROYECCIÓN DE CIERRE ----------
+// ---------- PROYECCIÓN ----------
 function finRenderProyeccion(p,esAno){
   var el=document.getElementById("finProyeccion");
   if(esAno||!p){
@@ -2623,15 +2870,15 @@ function finRenderProyeccion(p,esAno){
     h+='<div style="font-size:10px;color:var(--tx3);margin-bottom:14px;font-style:italic">Mes pasado · solo informativo</div>';
   }
 
-  h+='<div style="display:grid;grid-template-columns:1.4fr 1fr;gap:14px">';
+  h+='<div class="fin-proy-grid">';
 
   h+='<div>';
-  h+='<div style="font-size:10px;color:var(--tx3);font-weight:800;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px">Cálculo</div>';
-  h+='<div style="display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid var(--sf2)"><span style="font-size:13px;color:var(--tx2)">Saldo a hoy</span><span style="font-weight:700;font-variant-numeric:tabular-nums">'+fm(p.saldo_actual)+'</span></div>';
-  h+='<div style="display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid var(--sf2)"><span style="font-size:13px;color:var(--ok)">+ Cobros esperados<div style="font-size:10px;color:var(--tx3);margin-top:2px">basado en avg de últimos 3 meses · '+fmCop(p.cobros_diario_avg_3m)+'/día</div></span><span style="font-weight:700;color:var(--ok);font-variant-numeric:tabular-nums">+'+fm(p.cobros_esperados_estimado)+'</span></div>';
-  h+='<div style="display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid var(--sf2)"><span style="font-size:13px;color:var(--err)">− Gastos fijos pendientes<div style="font-size:10px;color:var(--tx3);margin-top:2px">'+p.fijos_pendientes.length+' compromiso(s) sin pagar</div></span><span style="font-weight:700;color:var(--err);font-variant-numeric:tabular-nums">−'+fm(p.fijos_pendientes_total)+'</span></div>';
+  h+='<div style="font-size:9px;color:var(--tx3);font-weight:800;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px">Cálculo</div>';
+  h+='<div class="fin-proy-line"><div class="fin-proy-line-l">Saldo a hoy</div><div class="fin-proy-line-v">'+fm(p.saldo_actual)+'</div></div>';
+  h+='<div class="fin-proy-line"><div class="fin-proy-line-l" style="color:var(--ok)">+ Cobros esperados<div class="fin-proy-line-l-sub">basado en avg de últimos 3 meses · '+fmCop(p.cobros_diario_avg_3m)+'/día</div></div><div class="fin-proy-line-v" style="color:var(--ok)">+'+fm(p.cobros_esperados_estimado)+'</div></div>';
+  h+='<div class="fin-proy-line"><div class="fin-proy-line-l" style="color:var(--err)">− Gastos fijos pendientes<div class="fin-proy-line-l-sub">'+p.fijos_pendientes.length+' compromiso(s) sin pagar</div></div><div class="fin-proy-line-v" style="color:var(--err)">−'+fm(p.fijos_pendientes_total)+'</div></div>';
   var proyColor=p.saldo_proyectado_cierre>=p.saldo_actual?"var(--ok)":"var(--err)";
-  h+='<div style="display:flex;justify-content:space-between;align-items:center;padding:18px 0 8px;border-top:2px solid var(--nv);margin-top:8px"><span style="font-size:14px;font-weight:800;color:var(--nv)">Saldo proyectado al cierre</span><span style="font-size:22px;font-weight:800;color:'+proyColor+';font-variant-numeric:tabular-nums">'+fm(p.saldo_proyectado_cierre)+'</span></div>';
+  h+='<div class="fin-proy-line fin-proy-total"><div style="font-size:14px;font-weight:800;color:var(--nv)">Saldo proyectado al cierre</div><div style="font-size:22px;font-weight:800;color:'+proyColor+';font-variant-numeric:tabular-nums">'+fm(p.saldo_proyectado_cierre)+'</div></div>';
   if(p.variacion_proyectada_pct!==null&&p.variacion_proyectada_pct!==undefined){
     var vSign=p.variacion_proyectada>=0?"+":"";
     h+='<div style="text-align:right;font-size:11px;color:var(--tx3);margin-top:4px">'+vSign+fmCop(p.variacion_proyectada)+' · '+finPctVar(p.variacion_proyectada_pct,"vs hoy")+'</div>';
@@ -2639,24 +2886,24 @@ function finRenderProyeccion(p,esAno){
   h+='</div>';
 
   h+='<div>';
-  h+='<div style="font-size:10px;color:var(--tx3);font-weight:800;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px">Gastos fijos del mes</div>';
+  h+='<div style="font-size:9px;color:var(--tx3);font-weight:800;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px">Gastos fijos del mes</div>';
   if(!p.fijos_pendientes.length&&!p.fijos_pagados.length){
     h+='<div style="text-align:center;padding:30px 10px;color:var(--tx3);font-size:11px;background:var(--sf2);border-radius:8px">No hay gastos fijos configurados<br><span style="color:var(--tx3);font-size:10px">configurar en MATRIZ_GASTOS_FIJOS</span></div>';
   } else {
     if(p.fijos_pendientes.length>0){
       h+='<div style="font-size:10px;color:var(--err);font-weight:800;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px">Pendientes</div>';
       p.fijos_pendientes.forEach(function(f){
-        h+='<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--sf2);font-size:12px">';
-        h+='<span style="color:var(--tx);flex:1">'+f.concepto+'<div style="font-size:10px;color:var(--tx3);margin-top:1px">'+f.categoria+(f.subcategoria?' · '+f.subcategoria:"")+'</div></span>';
-        h+='<span style="color:var(--err);font-weight:700;font-variant-numeric:tabular-nums">'+fm(f.pendiente)+'</span></div>';
+        h+='<div class="fin-proy-fijo">';
+        h+='<div class="fin-proy-fijo-nm" style="color:var(--tx)">'+f.concepto+'<div class="fin-proy-fijo-cat">'+f.categoria+(f.subcategoria?' · '+f.subcategoria:"")+'</div></div>';
+        h+='<div class="fin-proy-fijo-val" style="color:var(--err)">'+fm(f.pendiente)+'</div></div>';
       });
     }
     if(p.fijos_pagados.length>0){
       h+='<div style="font-size:10px;color:var(--ok);font-weight:800;letter-spacing:.5px;text-transform:uppercase;margin-top:14px;margin-bottom:6px">Pagados</div>';
       p.fijos_pagados.forEach(function(f){
-        h+='<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--sf2);font-size:11.5px">';
-        h+='<span style="color:var(--tx3);text-decoration:line-through;flex:1">'+f.concepto+'<div style="font-size:10px;margin-top:1px">'+f.categoria+'</div></span>';
-        h+='<span style="color:var(--tx3);text-decoration:line-through;font-variant-numeric:tabular-nums">'+fm(f.ya_pagado)+'</span></div>';
+        h+='<div class="fin-proy-fijo">';
+        h+='<div class="fin-proy-fijo-nm" style="color:var(--tx3);text-decoration:line-through">'+f.concepto+'<div class="fin-proy-fijo-cat">'+f.categoria+'</div></div>';
+        h+='<div class="fin-proy-fijo-val" style="color:var(--tx3);text-decoration:line-through">'+fm(f.ya_pagado)+'</div></div>';
       });
     }
   }
@@ -2679,7 +2926,8 @@ function exportarPDFFinanzas(){
   var html='<!DOCTYPE html><html><head><meta charset="utf-8"><title>Finanzas - '+periodoTxt+'</title>';
   html+='<style>';
   html+='body{font-family:Arial,sans-serif;color:#0a1628;padding:25px;margin:0;font-size:11px}';
-  html+='h1{font-size:20px;margin:0 0 4px}h2{font-size:14px;margin:18px 0 8px;color:#0a1628;padding-bottom:4px;border-bottom:2px solid #c9a449}';
+  html+='h1{font-size:20px;margin:0 0 4px;font-weight:700;letter-spacing:-0.5px}';
+  html+='h2{font-size:13px;margin:18px 0 8px;color:#0a1628;padding-bottom:5px;border-bottom:2px solid #c9a449;text-transform:uppercase;letter-spacing:1.5px;font-weight:700}';
   html+='table{width:100%;border-collapse:collapse;font-size:10px;margin-top:6px}';
   html+='th{background:#0a1628;color:white;padding:7px;text-align:left;font-size:9px;text-transform:uppercase;letter-spacing:1px}';
   html+='td{padding:6px 7px;border-bottom:1px solid #e2e8f0}';
@@ -2692,17 +2940,20 @@ function exportarPDFFinanzas(){
   html+='.kpi-l{font-size:9px;color:#94a3b8;text-transform:uppercase;font-weight:700;letter-spacing:1px}';
   html+='.kpi-v{font-size:18px;font-weight:800;margin-top:4px}';
   html+='.section{page-break-inside:avoid}';
+  html+='.insights{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}';
+  html+='.insight{padding:9px 12px;border:1px solid #e2e8f0;border-radius:6px}';
+  html+='.insight-l{font-size:9px;color:#94a3b8;font-weight:700;text-transform:uppercase}';
+  html+='.insight-v{font-weight:800;font-size:13px;margin-top:2px}';
+  html+='.insight-d{font-size:9px;color:#94a3b8}';
   html+='@page{margin:1.5cm}';
   html+='</style></head><body>';
 
-  // Header
   html+='<div class="header">';
   html+='<div style="font-size:9px;font-weight:700;color:#94a3b8;letter-spacing:2px;text-transform:uppercase">Colombia Abogados · Reporte financiero</div>';
   html+='<h1>Finanzas — '+periodoTxt+'</h1>';
   html+='<div style="font-size:10px;color:#475569;margin-top:4px">Generado: '+new Date().toLocaleDateString('es-CO',{dateStyle:'long'})+' · '+meta.total_movimientos_mes+' movimientos · '+meta.casos_creados_mes+' casos</div>';
   html+='</div>';
 
-  // KPIs
   html+='<div class="kpi-grid">';
   var k=d.kpis||{};
   html+='<div class="kpi-card" style="border-left:3px solid #16a34a"><div class="kpi-l">Ingresos (devengado)</div><div class="kpi-v" style="color:#16a34a">'+fmCop(k.ingresos.valor)+'</div></div>';
@@ -2710,19 +2961,17 @@ function exportarPDFFinanzas(){
   html+='<div class="kpi-card" style="border-left:3px solid #c9a449"><div class="kpi-l">Utilidad operacional</div><div class="kpi-v" style="color:#c9a449">'+fmCop(k.utilidad_operacional.valor)+'</div><div style="font-size:10px;color:#c9a449;font-weight:700">'+finFmtPct(k.utilidad_operacional.pct,1)+' margen</div></div>';
   html+='</div>';
 
-  // Insights
   if(d.insights&&d.insights.length){
-    html+='<h2>💡 Análisis automáticos</h2>';
-    html+='<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">';
+    html+='<h2>Análisis automáticos</h2>';
+    html+='<div class="insights">';
     d.insights.forEach(function(it){
-      html+='<div style="padding:8px 10px;border:1px solid #e2e8f0;border-radius:6px"><div style="font-size:9px;color:#94a3b8;font-weight:700;text-transform:uppercase">'+it.icono+' '+it.titulo+'</div><div style="font-weight:800;font-size:13px;margin-top:2px">'+it.valor+'</div><div style="font-size:9px;color:#94a3b8">'+it.detalle+'</div></div>';
+      html+='<div class="insight"><div class="insight-l">'+it.titulo+'</div><div class="insight-v">'+it.valor+'</div><div class="insight-d">'+it.detalle+'</div></div>';
     });
     html+='</div>';
   }
 
-  // Saldo de caja
   var sc=d.saldo_caja||{};
-  html+='<h2>💰 Saldo de caja</h2>';
+  html+='<h2>Saldo de caja</h2>';
   html+='<table>';
   html+='<tr><td>Saldo a hoy</td><td class="num" style="font-weight:800">'+fm(sc.saldo_actual)+'</td></tr>';
   html+='<tr><td>Saldo apertura del periodo</td><td class="num">'+fm(sc.saldo_inicial_mes)+'</td></tr>';
@@ -2731,9 +2980,8 @@ function exportarPDFFinanzas(){
   html+='<tr class="subtotal"><td>Saldo cierre</td><td class="num">'+fm(sc.saldo_final_mes)+'</td></tr>';
   html+='</table>';
 
-  // PyG
   var p=d.pyg||{};
-  html+='<h2>📊 Estado de Resultados (PyG · devengado)</h2>';
+  html+='<h2>Estado de Resultados (PyG · devengado)</h2>';
   html+='<table>';
   html+='<thead><tr><th>Concepto</th><th class="num" style="text-align:right">Valor</th><th class="num" style="text-align:right">% Ingresos</th></tr></thead><tbody>';
   html+='<tr style="background:#dcfce7"><td colspan="3" style="font-weight:800;color:#16a34a;text-transform:uppercase;font-size:9px">INGRESOS</td></tr>';
@@ -2756,10 +3004,9 @@ function exportarPDFFinanzas(){
   html+='<tr style="background:#fdf6e3;border-top:3px solid '+uoColor+'"><td><strong style="color:'+uoColor+'">= UTILIDAD OPERACIONAL</strong></td><td class="num"><strong style="color:'+uoColor+';font-size:13px">'+fm(p.utilidad_operacional.valor)+'</strong></td><td class="num"><strong style="color:'+uoColor+'">'+finFmtPct(p.utilidad_operacional.pct,1)+'</strong></td></tr>';
   html+='</tbody></table>';
 
-  // Recaudo terceros
   var r=d.recaudo_terceros||{};
   if(r.mes_actual&&r.mes_actual.casos_sin_descuento.length>0){
-    html+='<h2>🏛️ Recaudo de terceros · Centro de conciliación</h2>';
+    html+='<h2>Recaudo de terceros · Centro de conciliación</h2>';
     html+='<p style="font-size:10px;color:#475569;margin-bottom:6px">'+r.mes_actual.casos_sin_descuento.length+' casos sin descuento · centro vendido: '+fm(r.mes_actual.total_centro_base)+'</p>';
     html+='<table>';
     html+='<tr><td>Tercero A · 20%</td><td class="num" style="color:#92400e;font-weight:800">'+fm(r.mes_actual.tercero_a.valor)+'</td></tr>';
@@ -2768,10 +3015,9 @@ function exportarPDFFinanzas(){
     html+='</table>';
   }
 
-  // Gastos comparativo
   var gc=d.gastos_comparativo||[];
   if(gc.length>0){
-    html+='<h2 class="section">📋 Gastos · comparativo</h2>';
+    html+='<h2 class="section">Gastos · comparativo</h2>';
     html+='<table>';
     html+='<thead><tr><th>Categoría</th><th class="num" style="text-align:right">Periodo</th><th class="num" style="text-align:right">Anterior</th><th class="num" style="text-align:right">Var $</th><th class="num" style="text-align:right">Var %</th></tr></thead><tbody>';
     gc.forEach(function(g){
@@ -2782,10 +3028,9 @@ function exportarPDFFinanzas(){
     html+='</tbody></table>';
   }
 
-  // Tendencia 12M
   var s12=d.serie_12m||[];
   if(s12.length>0){
-    html+='<h2 class="section">📈 Tendencia 12 meses</h2>';
+    html+='<h2 class="section">Tendencia 12 meses</h2>';
     html+='<table>';
     html+='<thead><tr><th>Mes</th><th class="num" style="text-align:right">Ingresos</th><th class="num" style="text-align:right">Margen bruto</th><th class="num" style="text-align:right">Utilidad operacional</th><th class="num" style="text-align:right">Casos</th></tr></thead><tbody>';
     var tIng=0,tMb=0,tUo=0,tCas=0;
@@ -2805,7 +3050,7 @@ function exportarPDFFinanzas(){
   w.document.write(html);w.document.close();
   setTimeout(function(){
     w.print();
-    showMsg("finMsg","✅ PDF listo para imprimir/guardar","ok");
+    showMsg("finMsg","✓ PDF listo","ok");
   },500);
 }
 // Footer year
