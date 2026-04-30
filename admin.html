@@ -339,6 +339,36 @@
 </div>
 <div class="msg" id="anMsg"></div>
 </div>
+<div class="pg" id="pg-finanzas">
+<div class="an-wrap">
+<div class="an-header">
+<div><h3 class="an-title">Finanzas</h3><p class="an-sub">PyG y flujo de caja · datos de BD_BANCO</p></div>
+<div class="an-filters">
+<select id="finMes" class="an-select" onchange="cargarFinanzas()"></select>
+<select id="finAno" class="an-select" onchange="cargarFinanzas()"></select>
+<button class="btn btn-nv" onclick="FIN_CACHE=null;cargarFinanzas(true)" style="font-size:11px">↻</button>
+</div>
+</div>
+<div id="finMeta"></div>
+<div id="finAlertas"></div>
+<div class="kpis-an" id="finKpis"></div>
+<div class="an-card" style="margin-bottom:12px"><div class="an-card-h">Saldo de caja</div><div id="finSaldoCaja"></div></div>
+<div class="an-grid2">
+<div class="an-card"><div class="an-card-h">Estado de Resultados (PyG)</div><div id="finPyG"></div></div>
+<div class="an-card"><div class="an-card-h">Del Ingreso al EBITDA</div><div id="finWaterfall"></div></div>
+</div>
+<div class="an-card" style="margin-bottom:12px;margin-top:12px"><div class="an-card-h">Tendencia 12 meses · Ingresos vs EBITDA</div><div id="finTendencia"></div></div>
+<div class="an-grid2">
+<div class="an-card"><div class="an-card-h">Top ingresos del mes</div><div id="finTopIngresos"></div></div>
+<div class="an-card"><div class="an-card-h">Top egresos del mes</div><div id="finTopEgresos"></div></div>
+</div>
+<div class="an-card" style="margin-bottom:12px;margin-top:12px"><div class="an-card-h">Análisis de gastos operativos</div><div id="finGastos" style="overflow-x:auto"></div></div>
+<div class="an-card" style="margin-bottom:12px"><div class="an-card-h">Gastos fijos · esperado vs real</div><div id="finFijos" style="overflow-x:auto"></div></div>
+<div class="an-card" style="margin-bottom:12px"><div class="an-card-h">Flujo de caja del mes</div><div id="finFlujo"></div></div>
+<div class="an-card" style="margin-bottom:12px"><div class="an-card-h">Proyección a 30 días</div><div id="finProyeccion"></div></div>
+</div>
+<div class="msg" id="finMsg"></div>
+</div>
 <div class="pg" id="pg-log"><div class="card"><h3>Actividad</h3><div class="log-list" id="logList"><div class="log-row"><span class="log-text" style="font-style:italic">Sin actividad</span></div></div></div></div>
 </div>
 <footer class="web-footer">
@@ -386,7 +416,7 @@ var API="https://script.google.com/macros/s/AKfycbyAz9TGcQbu4nlmZ2NJuilBIe7bAPX8
 var fm=function(v){return new Intl.NumberFormat("es-CO",{style:"currency",currency:"COP",maximumFractionDigits:0}).format(v||0)};function fD(v){if(!v)return"—";var d=new Date(v);return isNaN(d.getTime())?"—":d.toLocaleDateString("es-CO",{day:"numeric",month:"short",year:"numeric"})}function fDi(v){if(!v)return"";var d=new Date(v);return isNaN(d.getTime())?"":d.toISOString().split("T")[0]}function enc(v){return encodeURIComponent(v||"")}function callAPI(p){return fetch(API+"?"+p,{redirect:"follow"}).then(function(r){return r.json()})}var MESES=["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
 var TABS=[{id:"dash",label:"Dashboard",icon:"📊"},{id:"analytics",label:"Analytics",icon:"📈"},{id:"prop",label:"Propuestas",icon:"📨"},{id:"pagos",label:"Pagos",icon:"💰"},{id:"casos",label:"Procesos",icon:"📋"},{id:"com",label:"Comisiones",icon:"💼"},{id:"log",label:"Log",icon:"📝"}];
 (function(){var saved=localStorage.getItem("admin_key");if(saved){document.getElementById("keyInput").value=saved;setTimeout(doLogin,300)}})();
-function buildTabs(){var h="",s="";TABS.forEach(function(t){h+='<div class="tn'+(t.id==="dash"?" on":"")+'" data-tab="'+t.id+'">'+t.label+'</div>';s+='<div class="sn'+(t.id==="dash"?" on":"")+'" data-tab="'+t.id+'">'+t.icon+" "+t.label+"</div>"});document.getElementById("navTabs").innerHTML=h;document.getElementById("sideNav").innerHTML=s;document.querySelectorAll(".tn,.sn").forEach(function(t){t.addEventListener("click",function(){goTab(t.dataset.tab);if(t.dataset.tab==="analytics")cargarAnalytics();if(t.dataset.tab==="com")cargarComisiones();if(t.classList.contains("sn"))toggleSidebar()})})}
+function buildTabs(){var h="",s="";TABS.forEach(function(t){h+='<div class="tn'+(t.id==="dash"?" on":"")+'" data-tab="'+t.id+'">'+t.label+'</div>';s+='<div class="sn'+(t.id==="dash"?" on":"")+'" data-tab="'+t.id+'">'+t.icon+" "+t.label+"</div>"});document.getElementById("navTabs").innerHTML=h;document.getElementById("sideNav").innerHTML=s;document.querySelectorAll(".tn,.sn").forEach(function(t){t.addEventListener("click",function(){goTab(t.dataset.tab);if(t.dataset.tab==="analytics")cargarAnalytics();if(t.dataset.tab==="com")cargarComisiones();if(t.dataset.tab==="finanzas")cargarFinanzas();if(t.classList.contains("sn"))toggleSidebar()})})}
 function goTab(n){document.querySelectorAll(".pg").forEach(function(p){p.classList.remove("on")});document.querySelectorAll(".tn,.sn").forEach(function(t){t.classList.remove("on")});var pg=document.getElementById("pg-"+n);if(pg)pg.classList.add("on");document.querySelectorAll(".tn,.sn").forEach(function(t){if(t.dataset.tab===n)t.classList.add("on")})}
 function cerrarSesion(){if(confirm("¿Cerrar sesión?")){localStorage.removeItem("admin_key");KEY="";DASH_CACHE=null;LEAD_ACTUAL=null;DETALLE_CED="";document.getElementById("appPage").classList.add("hidden");document.getElementById("loginPage").classList.remove("hidden");document.getElementById("loginPage").style.display="";document.getElementById("keyInput").value="";document.getElementById("keyInput").type="password";document.getElementById("navTabs").innerHTML="";document.getElementById("sideNav").innerHTML="";document.getElementById("loginMsg").innerHTML="";document.querySelectorAll(".pg").forEach(function(p){p.classList.remove("on")});document.getElementById("pg-dash").classList.add("on")}}
 function toggleSidebar(){document.getElementById("sidebar").classList.toggle("open");document.getElementById("sideOverlay").classList.toggle("show")}
@@ -1933,6 +1963,400 @@ function addLog(m){
   list.insertBefore(row,list.firstChild);
   var all=list.querySelectorAll(".log-row");
   if(all.length>50)all[all.length-1].remove();
+}
+
+// ====================== FINANZAS ======================
+var FIN_CACHE=null,FIN_MES=null,FIN_ANO=null;
+
+function cargarFinanzas(force){
+  var mesEl=document.getElementById("finMes");
+  var anoEl=document.getElementById("finAno");
+  if(!mesEl)return;
+  // Primera carga: poblar selects
+  if(!mesEl.options.length){
+    var hoy=new Date();
+    var mh="";
+    for(var i=1;i<=12;i++){
+      mh+='<option value="'+i+'"'+(i===hoy.getMonth()+1?" selected":"")+'>'+MESES[i-1]+'</option>';
+    }
+    mesEl.innerHTML=mh;
+    var ah="";
+    var anoActual=hoy.getFullYear();
+    for(var y=anoActual-1;y<=anoActual+1;y++){
+      ah+='<option value="'+y+'"'+(y===anoActual?" selected":"")+'>'+y+'</option>';
+    }
+    anoEl.innerHTML=ah;
+  }
+  FIN_MES=Number(mesEl.value);
+  FIN_ANO=Number(anoEl.value);
+  var cacheKey=FIN_ANO+"-"+FIN_MES;
+  if(FIN_CACHE&&FIN_CACHE.__key===cacheKey&&!force){renderFinanzas();return}
+  document.getElementById("finKpis").innerHTML='<div class="skel-card" style="grid-column:1/-1;padding:20px"><div class="skel skel-line" style="width:60%"></div><div class="skel skel-line" style="width:40%;height:24px"></div></div>';
+  var qs="action=finanzas&key="+enc(KEY)+"&mes="+FIN_MES+"&ano="+FIN_ANO;
+  if(force)qs+="&refresh=true";
+  callAPI(qs).then(function(d){
+    if(!d.ok){showMsg("finMsg",d.error||"Error","err");return}
+    d.__key=cacheKey;FIN_CACHE=d;
+    renderFinanzas();
+  }).catch(function(){showMsg("finMsg","Error de conexión","err")});
+}
+
+function renderFinanzas(){
+  if(!FIN_CACHE)return;
+  var d=FIN_CACHE;
+  var meta=d.meta||{};
+  var infoEl=document.getElementById("finMeta");
+  if(infoEl){
+    var t='';
+    if(meta.sin_categorizar>0){
+      t='<div style="padding:10px 14px;background:var(--warnb);border-radius:8px;font-size:11px;color:var(--warn);font-weight:700;margin-bottom:12px">⚠ '+meta.sin_categorizar+' movimientos sin categorizar — afecta exactitud del PyG</div>';
+    }
+    t+='<div style="font-size:10px;color:var(--tx3);margin-bottom:10px">'+meta.total_movimientos_mes+' movimientos en '+MESES[FIN_MES-1]+' '+FIN_ANO+(meta.from_cache?' · caché':'')+'</div>';
+    infoEl.innerHTML=t;
+  }
+  finRenderAlertas(d.alertas||[]);
+  finRenderKpis(d.resumen_mes||{});
+  finRenderSaldoCaja(d.resumen_mes||{});
+  finRenderPyG(d.pyg||{});
+  finRenderWaterfall(d.waterfall||[]);
+  finRenderTendencia(d.tendencia_12m||[]);
+  finRenderTop(d.top_ingresos||[],"finTopIngresos","var(--ok)",false);
+  finRenderTop(d.top_egresos||[],"finTopEgresos","var(--err)",true);
+  finRenderGastos(d.analisis_gastos||[]);
+  finRenderFijos(d.gastos_fijos||{items:[]});
+  finRenderFlujo(d.flujo_caja||{});
+  finRenderProyeccion(d.proyeccion_30d||{});
+}
+
+// ---------- HELPERS ----------
+function finFmtPct(n){if(n===null||n===undefined||isNaN(n))return "—";return (n*100).toFixed(1).replace(/\.0$/,"")+"%"}
+function finPctVar(n,label){
+  if(n===null||n===undefined||isNaN(n))return '<span style="color:var(--tx3)">'+(label||"")+' n/a</span>';
+  var pct=Math.round(n*100);
+  if(Math.abs(pct)<1)return '<span style="color:var(--tx3)">≈ '+(label||"")+'</span>';
+  var color=pct>0?"var(--ok)":"var(--err)";
+  var arrow=pct>0?"▲":"▼";
+  return '<span style="color:'+color+';font-weight:700">'+arrow+Math.abs(pct)+'%</span> <span style="color:var(--tx3)">'+(label||"")+'</span>';
+}
+function finSparkline(arr,color){
+  if(!arr||!arr.length)return "";
+  var max=Math.max.apply(null,arr)||1;
+  var W=80,H=22;
+  var n=arr.length,stepX=n>1?W/(n-1):0;
+  var pts=arr.map(function(v,i){
+    var x=n>1?i*stepX:W/2;
+    var y=H-(v/max)*H+1;
+    return x.toFixed(1)+","+y.toFixed(1);
+  }).join(" ");
+  var lastX=n>1?(n-1)*stepX:W/2;
+  var lastY=H-(arr[arr.length-1]/max)*H+1;
+  return '<svg width="'+W+'" height="'+H+'" style="display:inline-block;vertical-align:middle"><polyline points="'+pts+'" fill="none" stroke="'+(color||"var(--ac)")+'" stroke-width="1.5"/><circle cx="'+lastX.toFixed(1)+'" cy="'+lastY.toFixed(1)+'" r="2" fill="'+(color||"var(--ac)")+'"/></svg>';
+}
+
+// ---------- ALERTAS ----------
+function finRenderAlertas(arr){
+  var el=document.getElementById("finAlertas");
+  if(!arr.length){el.innerHTML="";return}
+  var h='<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px">';
+  arr.forEach(function(a){
+    var bg=a.severidad==="danger"?"var(--errb)":a.severidad==="warning"?"var(--warnb)":a.severidad==="success"?"var(--okb)":"var(--infob)";
+    var fg=a.severidad==="danger"?"var(--err)":a.severidad==="warning"?"var(--warn)":a.severidad==="success"?"var(--ok)":"var(--info)";
+    var icon=a.severidad==="danger"?"🚨":a.severidad==="warning"?"⚠":a.severidad==="success"?"✓":"ℹ";
+    h+='<div style="padding:10px 14px;background:'+bg+';border-left:3px solid '+fg+';border-radius:8px;font-size:12px;color:'+fg+';font-weight:600;display:flex;align-items:center;gap:10px"><span style="font-size:14px;flex-shrink:0">'+icon+'</span><span style="flex:1">'+a.mensaje+'</span></div>';
+  });
+  h+='</div>';
+  el.innerHTML=h;
+}
+
+// ---------- KPIs ----------
+function finRenderKpis(r){
+  if(!r||!r.ingresos){document.getElementById("finKpis").innerHTML="";return}
+  var ing=r.ingresos,mb=r.margen_bruto||{},eb=r.ebitda||{},go=r.gastos_operativos||{};
+  var h='';
+  h+='<div class="kpi-pro"><div class="kpi-stripe" style="background:var(--ok)"></div><div class="kpi-label">Ingresos</div><div class="kpi-val" style="color:var(--ok)">'+fmCop(ing.valor)+'</div>';
+  h+='<div class="kpi-sub">'+finPctVar(ing.vs_mes_ant_pct,"vs mes ant")+' · '+finPctVar(ing.vs_avg_3m_pct,"vs avg 3M")+'</div></div>';
+  h+='<div class="kpi-pro"><div class="kpi-stripe" style="background:var(--info)"></div><div class="kpi-label">Margen bruto</div><div class="kpi-val" style="color:var(--info)">'+finFmtPct(mb.pct)+'</div>';
+  h+='<div class="kpi-sub">'+fmCop(mb.valor||0)+' · '+finPctVar(mb.vs_mes_ant_pct,"vs mes ant")+'</div></div>';
+  var ebColor=(eb.valor||0)>=0?"var(--ac)":"var(--err)";
+  h+='<div class="kpi-pro"><div class="kpi-stripe" style="background:'+ebColor+'"></div><div class="kpi-label">EBITDA</div><div class="kpi-val" style="color:'+ebColor+'">'+fmCop(eb.valor||0)+'</div>';
+  h+='<div class="kpi-sub">'+finFmtPct(eb.pct)+' margen · '+finPctVar(eb.vs_mes_ant_pct,"vs mes ant")+'</div></div>';
+  document.getElementById("finKpis").innerHTML=h;
+}
+
+// ---------- SALDO CAJA ----------
+function finRenderSaldoCaja(r){
+  var s=r.saldo_caja||{};
+  var go=r.gastos_operativos||{};
+  var saldoColor=(s.valor||0)>=0?"var(--ok)":"var(--err)";
+  var varColor=(s.variacion_vs_mes_ant||0)>=0?"var(--ok)":"var(--err)";
+  var varArrow=(s.variacion_vs_mes_ant||0)>=0?"+":"";
+  var runway=s.runway_meses;
+  var runwayHTML='';
+  if(runway!==null&&runway!==undefined&&isFinite(runway)){
+    var rwColor=runway<3?"var(--err)":runway<6?"var(--warn)":"var(--ok)";
+    runwayHTML='<div style="text-align:center;padding:14px 16px;background:var(--sf2);border-radius:10px;flex:1"><div style="font-size:9px;color:var(--tx3);font-weight:800;text-transform:uppercase;letter-spacing:1px">Runway</div><div style="font-size:22px;font-weight:800;margin-top:4px;color:'+rwColor+'">'+runway.toFixed(1)+' <span style="font-size:13px">meses</span></div><div style="font-size:9px;color:var(--tx3);margin-top:2px">al ritmo de quema actual</div></div>';
+  } else {
+    runwayHTML='<div style="text-align:center;padding:14px 16px;background:var(--okb);border-radius:10px;flex:1"><div style="font-size:9px;color:var(--ok);font-weight:800;text-transform:uppercase;letter-spacing:1px">Runway</div><div style="font-size:18px;font-weight:800;margin-top:4px;color:var(--ok)">∞ acumulando</div><div style="font-size:9px;color:var(--tx3);margin-top:2px">flujo neto positivo</div></div>';
+  }
+  var h='<div style="display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:12px">';
+  h+='<div style="padding:18px 20px;background:linear-gradient(135deg,var(--nv),var(--nvl));border-radius:12px;color:white"><div style="font-size:10px;color:rgba(255,255,255,0.6);font-weight:800;text-transform:uppercase;letter-spacing:1.5px">Saldo en caja</div><div style="font-size:30px;font-weight:800;margin-top:6px;color:white;letter-spacing:-0.5px">'+fm(s.valor)+'</div>';
+  h+='<div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:6px">cierre de '+MESES[FIN_MES-1]+' '+FIN_ANO+'</div></div>';
+  h+='<div style="text-align:center;padding:14px 16px;background:var(--sf2);border-radius:10px;flex:1"><div style="font-size:9px;color:var(--tx3);font-weight:800;text-transform:uppercase;letter-spacing:1px">Variación mes</div><div style="font-size:18px;font-weight:800;margin-top:4px;color:'+varColor+'">'+varArrow+fmCop(s.variacion_vs_mes_ant||0)+'</div><div style="font-size:9px;color:var(--tx3);margin-top:2px">vs mes anterior</div></div>';
+  h+=runwayHTML;
+  h+='</div>';
+  document.getElementById("finSaldoCaja").innerHTML=h;
+}
+
+// ---------- PyG ----------
+function finRenderPyG(p){
+  if(!p||!p.ingresos){document.getElementById("finPyG").innerHTML='<p style="color:var(--tx3);font-size:11px;padding:10px">Sin datos</p>';return}
+  var ing=p.ingresos,cd=p.costos_directos,mb=p.margen_bruto,go=p.gastos_operativos,eb=p.ebitda;
+  var h='<table style="width:100%;border-collapse:collapse;font-size:12px">';
+  // Ingresos
+  h+='<tr><td colspan="3" style="padding:8px 4px;font-size:9px;font-weight:800;color:var(--ok);text-transform:uppercase;letter-spacing:1.5px;border-bottom:1px solid var(--bd)">Ingresos</td></tr>';
+  (ing.desglose||[]).forEach(function(c){
+    h+='<tr><td style="padding:6px 4px;color:var(--tx2)">'+c.categoria+'</td><td style="text-align:right;font-weight:700;color:var(--ok);font-variant-numeric:tabular-nums">'+fm(c.valor)+'</td><td style="text-align:right;font-size:10px;color:var(--tx3);min-width:50px">'+(c.presupuesto?finFmtPct(c.variacion_pct):"—")+'</td></tr>';
+  });
+  h+='<tr style="background:var(--okb)"><td style="padding:7px 4px;font-weight:800;color:var(--ok)">Total ingresos</td><td style="text-align:right;font-weight:800;color:var(--ok);font-variant-numeric:tabular-nums">'+fm(ing.total)+'</td><td></td></tr>';
+  // Costos directos
+  if(cd&&cd.desglose&&cd.desglose.length){
+    h+='<tr><td colspan="3" style="padding:8px 4px;padding-top:14px;font-size:9px;font-weight:800;color:var(--warn);text-transform:uppercase;letter-spacing:1.5px;border-bottom:1px solid var(--bd)">Costos directos</td></tr>';
+    cd.desglose.forEach(function(c){
+      h+='<tr><td style="padding:6px 4px;color:var(--tx2)">'+c.categoria+'</td><td style="text-align:right;font-weight:700;color:var(--warn);font-variant-numeric:tabular-nums">'+fm(c.valor)+'</td><td></td></tr>';
+    });
+    h+='<tr style="background:var(--warnb)"><td style="padding:7px 4px;font-weight:800;color:var(--warn)">Total costos directos</td><td style="text-align:right;font-weight:800;color:var(--warn);font-variant-numeric:tabular-nums">'+fm(cd.total)+'</td><td></td></tr>';
+  }
+  // Margen bruto
+  h+='<tr style="background:var(--infob);border-top:2px solid var(--info)"><td style="padding:9px 4px;font-weight:800;color:var(--info)">= MARGEN BRUTO</td><td style="text-align:right;font-weight:800;color:var(--info);font-variant-numeric:tabular-nums;font-size:13px">'+fm(mb.valor)+'</td><td style="text-align:right;font-weight:800;color:var(--info)">'+finFmtPct(mb.pct)+'</td></tr>';
+  // Gastos operativos
+  h+='<tr><td colspan="3" style="padding:8px 4px;padding-top:14px;font-size:9px;font-weight:800;color:var(--err);text-transform:uppercase;letter-spacing:1.5px;border-bottom:1px solid var(--bd)">Gastos operativos</td></tr>';
+  (go.desglose||[]).forEach(function(c){
+    var pres=c.presupuesto?'<span style="font-size:10px;color:var(--tx3)">'+finFmtPct(c.variacion_pct)+'</span>':"—";
+    h+='<tr><td style="padding:6px 4px;color:var(--tx2)">'+c.categoria+'</td><td style="text-align:right;font-weight:700;color:var(--err);font-variant-numeric:tabular-nums">'+fm(c.valor)+'</td><td style="text-align:right;font-size:10px;color:var(--tx3);min-width:50px">'+pres+'</td></tr>';
+  });
+  h+='<tr style="background:var(--errb)"><td style="padding:7px 4px;font-weight:800;color:var(--err)">Total gastos operativos</td><td style="text-align:right;font-weight:800;color:var(--err);font-variant-numeric:tabular-nums">'+fm(go.total)+'</td><td></td></tr>';
+  // EBITDA
+  var ebColor=eb.valor>=0?"var(--ac)":"var(--err)";
+  var ebBg=eb.valor>=0?"var(--acl)":"var(--errb)";
+  h+='<tr style="background:'+ebBg+';border-top:3px solid '+ebColor+'"><td style="padding:11px 4px;font-weight:800;color:'+ebColor+';font-size:13px">= EBITDA</td><td style="text-align:right;font-weight:800;color:'+ebColor+';font-variant-numeric:tabular-nums;font-size:15px">'+fm(eb.valor)+'</td><td style="text-align:right;font-weight:800;color:'+ebColor+'">'+finFmtPct(eb.pct)+'</td></tr>';
+  h+='</table>';
+  document.getElementById("finPyG").innerHTML=h;
+}
+
+// ---------- WATERFALL ----------
+function finRenderWaterfall(arr){
+  var el=document.getElementById("finWaterfall");
+  if(!arr.length){el.innerHTML='<p style="color:var(--tx3);font-size:11px">Sin datos</p>';return}
+  var max=Math.max.apply(null,arr.map(function(s){return Math.max(Math.abs(s.desde),Math.abs(s.hasta))}))||1;
+  var W=400,H=240,padL=70,padR=12,padT=18,padB=58;
+  var plotW=W-padL-padR,plotH=H-padT-padB;
+  var n=arr.length,stepX=plotW/n,barW=Math.min(50,stepX*0.65);
+  var grid='';
+  for(var g=0;g<=4;g++){
+    var gy=padT+plotH*g/4;
+    var gv=Math.round(max*(1-g/4));
+    grid+='<line x1="'+padL+'" y1="'+gy+'" x2="'+(W-padR)+'" y2="'+gy+'" stroke="var(--bd)" stroke-width="0.5" stroke-dasharray="2 3"/>';
+    grid+='<text x="'+(padL-6)+'" y="'+(gy+3)+'" text-anchor="end" font-size="9" fill="var(--tx3)">'+fmCop(gv)+'</text>';
+  }
+  var bars='',labels='',values='';
+  arr.forEach(function(s,i){
+    var bx=padL+stepX*i+(stepX-barW)/2;
+    var topVal=Math.max(s.desde,s.hasta);
+    var botVal=Math.min(s.desde,s.hasta);
+    var by=padT+plotH-(topVal/max)*plotH;
+    var bh=((topVal-botVal)/max)*plotH;
+    var color=s.tipo==="positivo"||s.tipo==="total"&&s.valor>=0?"var(--ok)":s.tipo==="negativo"?"var(--err)":s.tipo==="subtotal"?"var(--info)":"var(--ac)";
+    bars+='<rect x="'+bx.toFixed(1)+'" y="'+by.toFixed(1)+'" width="'+barW+'" height="'+Math.max(bh,2).toFixed(1)+'" fill="'+color+'" rx="2" opacity="0.85"><title>'+s.etiqueta+': '+fmCop(s.valor)+'</title></rect>';
+    values+='<text x="'+(bx+barW/2).toFixed(1)+'" y="'+(by-4).toFixed(1)+'" text-anchor="middle" font-size="10" font-weight="800" fill="'+color+'">'+fmCop(s.valor)+'</text>';
+    var nameShort=s.etiqueta.length>9?s.etiqueta.substring(0,8)+"…":s.etiqueta;
+    labels+='<text x="'+(bx+barW/2).toFixed(1)+'" y="'+(H-30)+'" text-anchor="middle" font-size="10" font-weight="700" fill="var(--tx2)">'+nameShort+'</text>';
+  });
+  // conectores
+  var conn='';
+  for(var i=0;i<arr.length-1;i++){
+    var x1=padL+stepX*i+(stepX+barW)/2;
+    var x2=padL+stepX*(i+1)+(stepX-barW)/2;
+    var y=padT+plotH-(arr[i].hasta/max)*plotH;
+    conn+='<line x1="'+x1.toFixed(1)+'" y1="'+y.toFixed(1)+'" x2="'+x2.toFixed(1)+'" y2="'+y.toFixed(1)+'" stroke="var(--tx3)" stroke-width="0.7" stroke-dasharray="2 2" opacity="0.5"/>';
+  }
+  el.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="xMidYMid meet" style="width:100%;height:auto;display:block;font-family:Outfit,sans-serif">'+grid+conn+bars+values+labels+'</svg>';
+}
+
+// ---------- TENDENCIA 12M ----------
+function finRenderTendencia(arr){
+  var el=document.getElementById("finTendencia");
+  if(!arr.length){el.innerHTML='<p style="color:var(--tx3);font-size:11px">Sin datos</p>';return}
+  var W=720,H=240,padL=68,padR=18,padT=24,padB=50;
+  var plotW=W-padL-padR,plotH=H-padT-padB;
+  var max=Math.max.apply(null,arr.map(function(m){return Math.max(m.ingresos||0,Math.abs(m.ebitda)||0)}))||1;
+  var n=arr.length,stepX=plotW/n,barW=Math.min(36,stepX*0.42);
+  var grid='',ticks='';
+  for(var g=0;g<=4;g++){
+    var gy=padT+plotH*(1-g/4);
+    var gv=max*g/4;
+    grid+='<line x1="'+padL+'" y1="'+gy.toFixed(1)+'" x2="'+(W-padR)+'" y2="'+gy.toFixed(1)+'" stroke="var(--bd)" stroke-width="0.5" stroke-dasharray="2 3"/>';
+    if(g>0)ticks+='<text x="'+(padL-6)+'" y="'+(gy+4).toFixed(1)+'" text-anchor="end" font-size="9" fill="var(--tx3)" font-weight="600">'+fmCop(gv)+'</text>';
+  }
+  var bars='',labels='';
+  arr.forEach(function(m,i){
+    var bx=padL+stepX*i+(stepX/2);
+    var bh1=((m.ingresos||0)/max)*plotH;
+    var by1=padT+plotH-bh1;
+    var bh2=(Math.abs(m.ebitda)||0)/max*plotH;
+    var ebPos=m.ebitda>=0;
+    var by2=padT+plotH-bh2;
+    if(m.ingresos>0)bars+='<rect x="'+(bx-barW-1).toFixed(1)+'" y="'+by1.toFixed(1)+'" width="'+barW+'" height="'+bh1.toFixed(1)+'" fill="var(--ok)" rx="2" opacity="0.85"><title>'+m.etiqueta+' Ing: '+fmCop(m.ingresos)+'</title></rect>';
+    if(m.ebitda!==0&&ebPos)bars+='<rect x="'+(bx+1).toFixed(1)+'" y="'+by2.toFixed(1)+'" width="'+barW+'" height="'+bh2.toFixed(1)+'" fill="var(--ac)" rx="2" opacity="0.85"><title>'+m.etiqueta+' EBITDA: '+fmCop(m.ebitda)+'</title></rect>';
+    if(m.ebitda<0)bars+='<rect x="'+(bx+1).toFixed(1)+'" y="'+(padT+plotH).toFixed(1)+'" width="'+barW+'" height="'+bh2.toFixed(1)+'" fill="var(--err)" rx="2" opacity="0.85"><title>'+m.etiqueta+' EBITDA: '+fmCop(m.ebitda)+'</title></rect>';
+    labels+='<text x="'+bx.toFixed(1)+'" y="'+(H-26)+'" text-anchor="middle" font-size="10" font-weight="700" fill="var(--tx2)">'+m.etiqueta+'</text>';
+  });
+  var legend='<div style="display:flex;gap:18px;justify-content:center;margin-top:8px;font-size:11px;color:var(--tx2);font-weight:600"><span style="display:inline-flex;align-items:center;gap:6px"><span style="display:inline-block;width:11px;height:11px;background:var(--ok);border-radius:2px"></span>Ingresos</span><span style="display:inline-flex;align-items:center;gap:6px"><span style="display:inline-block;width:11px;height:11px;background:var(--ac);border-radius:2px"></span>EBITDA</span></div>';
+  el.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="xMidYMid meet" style="width:100%;height:auto;display:block;font-family:Outfit,sans-serif">'+grid+ticks+bars+labels+'</svg>'+legend;
+}
+
+// ---------- TOP MOVIMIENTOS ----------
+function finRenderTop(arr,id,color,abs){
+  var el=document.getElementById(id);
+  if(!arr.length){el.innerHTML='<p style="color:var(--tx3);font-size:11px;padding:10px">Sin movimientos</p>';return}
+  var h='<table style="width:100%;border-collapse:collapse;font-size:11px">';
+  arr.forEach(function(m){
+    var val=abs?Math.abs(m.valor):m.valor;
+    var noOpFlag=m.es_no_operativo?'<span style="font-size:8px;background:var(--purpleb);color:var(--purple);padding:1px 5px;border-radius:3px;margin-left:4px;font-weight:800">no-PyG</span>':'';
+    h+='<tr style="border-bottom:1px solid var(--bd)"><td style="padding:8px 6px"><div style="font-weight:600;color:var(--nv);font-size:11px">'+(m.descripcion||"—")+noOpFlag+'</div><div style="font-size:9px;color:var(--tx3);margin-top:1px">'+m.fecha+' · '+(m.subcategoria||m.categoria)+'</div></td><td style="text-align:right;font-weight:800;color:'+color+';font-variant-numeric:tabular-nums;white-space:nowrap;padding:8px 6px">'+fmCop(val)+'</td></tr>';
+  });
+  h+='</table>';
+  el.innerHTML=h;
+}
+
+// ---------- ANÁLISIS DE GASTOS ----------
+function finRenderGastos(arr){
+  var el=document.getElementById("finGastos");
+  if(!arr.length){el.innerHTML='<p style="color:var(--tx3);font-size:11px;padding:10px">Sin datos</p>';return}
+  var h='<table style="width:100%;border-collapse:collapse;font-size:11px"><thead><tr style="border-bottom:2px solid var(--bd)"><th style="text-align:left;padding:8px 6px;font-size:9px;color:var(--tx3);text-transform:uppercase;letter-spacing:1px">Categoría</th><th style="text-align:right;padding:8px 6px;font-size:9px;color:var(--tx3);text-transform:uppercase;letter-spacing:1px">Real</th><th style="text-align:right;padding:8px 6px;font-size:9px;color:var(--tx3);text-transform:uppercase;letter-spacing:1px">Presupuesto</th><th style="text-align:center;padding:8px 6px;font-size:9px;color:var(--tx3);text-transform:uppercase;letter-spacing:1px">Consumo</th><th style="text-align:right;padding:8px 6px;font-size:9px;color:var(--tx3);text-transform:uppercase;letter-spacing:1px">Avg 3M</th><th style="text-align:center;padding:8px 6px;font-size:9px;color:var(--tx3);text-transform:uppercase;letter-spacing:1px">Tendencia</th></tr></thead><tbody>';
+  arr.forEach(function(c){
+    var color=c.estado==="sobre_limite"?"var(--err)":c.estado==="cerca_limite"?"var(--warn)":c.estado==="normal"?"var(--ok)":"var(--tx3)";
+    var bgConsumo=c.estado==="sobre_limite"?"var(--errb)":c.estado==="cerca_limite"?"var(--warnb)":c.estado==="normal"?"var(--okb)":"var(--sf2)";
+    var consumoPct=c.consumo_pct!==null&&c.consumo_pct!==undefined?Math.round(c.consumo_pct*100):null;
+    var consumoTxt=consumoPct!==null?consumoPct+"%":"—";
+    h+='<tr style="border-bottom:1px solid var(--bd)"><td style="padding:8px 6px;font-weight:600;color:var(--nv)">'+c.categoria+'</td>';
+    h+='<td style="text-align:right;padding:8px 6px;font-weight:700;color:'+color+';font-variant-numeric:tabular-nums">'+fmCop(c.real_mes)+'</td>';
+    h+='<td style="text-align:right;padding:8px 6px;color:var(--tx2);font-variant-numeric:tabular-nums">'+(c.presupuesto?fmCop(c.presupuesto):"—")+'</td>';
+    h+='<td style="text-align:center;padding:8px 6px"><span style="display:inline-block;padding:3px 10px;border-radius:10px;background:'+bgConsumo+';color:'+color+';font-weight:800;font-size:10px">'+consumoTxt+'</span></td>';
+    h+='<td style="text-align:right;padding:8px 6px;color:var(--tx2);font-size:10px;font-variant-numeric:tabular-nums">'+fmCop(c.avg_3m)+'</td>';
+    h+='<td style="text-align:center;padding:8px 6px">'+finSparkline(c.tendencia_6m,color)+'</td></tr>';
+  });
+  h+='</tbody></table>';
+  el.innerHTML=h;
+}
+
+// ---------- GASTOS FIJOS ----------
+function finRenderFijos(obj){
+  var items=obj.items||[];
+  var el=document.getElementById("finFijos");
+  if(!items.length){el.innerHTML='<p style="color:var(--tx3);font-size:11px;padding:10px">Sin gastos fijos configurados</p>';return}
+  var h='<table style="width:100%;border-collapse:collapse;font-size:11px"><thead><tr style="border-bottom:2px solid var(--bd)"><th style="text-align:left;padding:8px 6px;font-size:9px;color:var(--tx3);text-transform:uppercase;letter-spacing:1px">Concepto</th><th style="text-align:right;padding:8px 6px;font-size:9px;color:var(--tx3);text-transform:uppercase;letter-spacing:1px">Esperado</th><th style="text-align:right;padding:8px 6px;font-size:9px;color:var(--tx3);text-transform:uppercase;letter-spacing:1px">Real</th><th style="text-align:center;padding:8px 6px;font-size:9px;color:var(--tx3);text-transform:uppercase;letter-spacing:1px">Variación</th></tr></thead><tbody>';
+  items.forEach(function(f){
+    var color=f.estado==="sobre"?"var(--err)":f.estado==="sub"?"var(--warn)":f.estado==="ok"?"var(--ok)":f.estado==="leve_desvio"?"var(--info)":"var(--tx3)";
+    var bg=f.estado==="sobre"?"var(--errb)":f.estado==="sub"?"var(--warnb)":f.estado==="ok"?"var(--okb)":f.estado==="leve_desvio"?"var(--infob)":"var(--sf2)";
+    var varTxt=f.variacion_pct!==null?finFmtPct(f.variacion_pct):"—";
+    var arrow=f.variacion_pct>0.05?"▲":f.variacion_pct<-0.05?"▼":"≈";
+    h+='<tr style="border-bottom:1px solid var(--bd)"><td style="padding:7px 6px"><div style="font-weight:600;color:var(--nv)">'+f.concepto+'</div><div style="font-size:9px;color:var(--tx3)">'+f.subcategoria+'</div></td>';
+    h+='<td style="text-align:right;padding:7px 6px;color:var(--tx2);font-variant-numeric:tabular-nums">'+(f.esperado?fmCop(f.esperado):"—")+'</td>';
+    h+='<td style="text-align:right;padding:7px 6px;font-weight:700;color:var(--nv);font-variant-numeric:tabular-nums">'+fmCop(f.real)+'</td>';
+    h+='<td style="text-align:center;padding:7px 6px"><span style="display:inline-block;padding:3px 10px;border-radius:10px;background:'+bg+';color:'+color+';font-weight:800;font-size:10px">'+arrow+' '+varTxt+'</span></td></tr>';
+  });
+  // Total
+  var totalColor=Math.abs(obj.variacion_total_pct||0)>0.1?"var(--warn)":"var(--ok)";
+  h+='<tr style="border-top:2px solid var(--nv);background:var(--sf2);font-weight:800"><td style="padding:9px 6px;color:var(--nv)">TOTAL</td><td style="text-align:right;padding:9px 6px;color:var(--tx2);font-variant-numeric:tabular-nums">'+fmCop(obj.total_esperado||0)+'</td><td style="text-align:right;padding:9px 6px;color:var(--nv);font-variant-numeric:tabular-nums">'+fmCop(obj.total_real||0)+'</td><td style="text-align:center;padding:9px 6px;color:'+totalColor+'">'+finFmtPct(obj.variacion_total_pct)+'</td></tr>';
+  h+='</tbody></table>';
+  el.innerHTML=h;
+}
+
+// ---------- FLUJO DE CAJA ----------
+function finRenderFlujo(f){
+  var el=document.getElementById("finFlujo");
+  var rows=[
+    {l:"Saldo inicial",v:f.saldo_inicial||0,c:"var(--info)",b:"var(--infob)"},
+    {l:"Entradas operativas",v:f.entradas_operativas||0,c:"var(--ok)",b:"var(--okb)",add:true},
+    {l:"Salidas operativas",v:f.salidas_operativas||0,c:"var(--err)",b:"var(--errb)",add:true},
+    {l:"Inversiones",v:f.inversiones||0,c:"var(--purple)",b:"var(--purpleb)",add:true},
+    {l:"No operativos (préstamos, ajustes)",v:f.no_operativos||0,c:"var(--gold)",b:"#fdf6e3",add:true},
+    {l:"Saldo final",v:f.saldo_final||0,c:"var(--nv)",b:"var(--sf2)",total:true}
+  ];
+  var h='<div style="display:flex;flex-direction:column;gap:6px">';
+  rows.forEach(function(r){
+    var sign=r.add&&r.v>=0?'+':'';
+    var fontSize=r.total?"14px":"12px";
+    var fontWeight=r.total?"800":"600";
+    var border=r.total?"border:2px solid "+r.c:"border:1px solid var(--bd)";
+    h+='<div style="padding:'+(r.total?"14px 16px":"10px 14px")+';background:'+r.b+';border-radius:8px;'+border+';display:flex;justify-content:space-between;align-items:center"><span style="font-size:'+fontSize+';font-weight:'+fontWeight+';color:'+r.c+'">'+r.l+'</span><span style="font-size:'+fontSize+';font-weight:800;color:'+r.c+';font-variant-numeric:tabular-nums">'+sign+fm(r.v)+'</span></div>';
+  });
+  h+='</div>';
+  // Detalle no-PyG
+  if(f.detalle_no_pyg&&f.detalle_no_pyg.length){
+    h+='<div style="margin-top:14px;padding:12px 14px;background:var(--sf2);border-radius:8px"><div style="font-size:9px;font-weight:800;color:var(--tx3);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px">Detalle no-PyG (afecta caja, no resultado)</div>';
+    f.detalle_no_pyg.forEach(function(d){
+      var color=d.valor>=0?"var(--ok)":"var(--err)";
+      h+='<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:11px"><span style="color:var(--tx2)">'+d.categoria+'</span><span style="font-weight:700;color:'+color+';font-variant-numeric:tabular-nums">'+(d.valor>=0?'+':'')+fm(d.valor)+'</span></div>';
+    });
+    h+='</div>';
+  }
+  el.innerHTML=h;
+}
+
+// ---------- PROYECCIÓN 30D ----------
+function finRenderProyeccion(p){
+  var el=document.getElementById("finProyeccion");
+  if(!p||!p.serie_diaria||!p.serie_diaria.length){el.innerHTML='<p style="color:var(--tx3);font-size:11px;padding:10px">Sin datos suficientes</p>';return}
+  var ent=p.entradas_estimadas||0,sal=p.salidas_estimadas||0,neto=p.flujo_neto||0;
+  var netoColor=neto>=0?"var(--ok)":"var(--err)";
+  var summary='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px">';
+  summary+='<div style="padding:12px 16px;background:var(--okb);border-left:3px solid var(--ok);border-radius:8px"><div style="font-size:9px;color:var(--ok);font-weight:800;text-transform:uppercase;letter-spacing:1px">Entradas est.</div><div style="font-size:18px;font-weight:800;color:var(--ok);margin-top:2px">'+fmCop(ent)+'</div></div>';
+  summary+='<div style="padding:12px 16px;background:var(--errb);border-left:3px solid var(--err);border-radius:8px"><div style="font-size:9px;color:var(--err);font-weight:800;text-transform:uppercase;letter-spacing:1px">Salidas est.</div><div style="font-size:18px;font-weight:800;color:var(--err);margin-top:2px">'+fmCop(sal)+'</div></div>';
+  summary+='<div style="padding:12px 16px;background:'+(neto>=0?"var(--okb)":"var(--errb)")+';border-left:3px solid '+netoColor+';border-radius:8px"><div style="font-size:9px;color:'+netoColor+';font-weight:800;text-transform:uppercase;letter-spacing:1px">Flujo neto</div><div style="font-size:18px;font-weight:800;color:'+netoColor+';margin-top:2px">'+(neto>=0?'+':'')+fmCop(neto)+'</div></div>';
+  summary+='</div>';
+  var arr=p.serie_diaria||[];
+  var W=720,H=180,padL=68,padR=18,padT=18,padB=36;
+  var plotW=W-padL-padR,plotH=H-padT-padB;
+  var maxV=Math.max.apply(null,arr.map(function(d){return d.saldo_relativo}))||0;
+  var minV=Math.min.apply(null,arr.map(function(d){return d.saldo_relativo}))||0;
+  var range=maxV-minV||1;
+  var n=arr.length,stepX=plotW/(n-1||1);
+  var pts=arr.map(function(d,i){
+    var x=padL+i*stepX;
+    var y=padT+plotH-((d.saldo_relativo-minV)/range)*plotH;
+    return [x,y,d];
+  });
+  var grid='',ticks='';
+  for(var g=0;g<=4;g++){
+    var gy=padT+plotH*(1-g/4);
+    var gv=minV+range*g/4;
+    grid+='<line x1="'+padL+'" y1="'+gy.toFixed(1)+'" x2="'+(W-padR)+'" y2="'+gy.toFixed(1)+'" stroke="var(--bd)" stroke-width="0.5" stroke-dasharray="2 3"/>';
+    ticks+='<text x="'+(padL-6)+'" y="'+(gy+3).toFixed(1)+'" text-anchor="end" font-size="9" fill="var(--tx3)" font-weight="600">'+fmCop(gv)+'</text>';
+  }
+  // zero line
+  if(minV<0&&maxV>0){
+    var zy=padT+plotH-((0-minV)/range)*plotH;
+    grid+='<line x1="'+padL+'" y1="'+zy.toFixed(1)+'" x2="'+(W-padR)+'" y2="'+zy.toFixed(1)+'" stroke="var(--err)" stroke-width="1" stroke-dasharray="4 3" opacity="0.5"/>';
+  }
+  var pathD=pts.map(function(p,i){return (i===0?"M":"L")+p[0].toFixed(1)+" "+p[1].toFixed(1)}).join(" ");
+  var areaD=pathD+" L "+pts[pts.length-1][0].toFixed(1)+" "+(padT+plotH).toFixed(1)+" L "+pts[0][0].toFixed(1)+" "+(padT+plotH).toFixed(1)+" Z";
+  var color=neto>=0?"var(--ok)":"var(--err)";
+  var labels='';
+  arr.forEach(function(d,i){
+    if(i===0||i===arr.length-1||(i+1)%5===0){
+      var lx=padL+i*stepX;
+      labels+='<text x="'+lx.toFixed(1)+'" y="'+(H-12)+'" text-anchor="middle" font-size="9" font-weight="700" fill="var(--tx2)">d'+d.dia+'</text>';
+    }
+  });
+  var svg='<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="xMidYMid meet" style="width:100%;height:auto;display:block;font-family:Outfit,sans-serif">'
+    +'<defs><linearGradient id="finProGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="'+color+'" stop-opacity="0.25"/><stop offset="100%" stop-color="'+color+'" stop-opacity="0"/></linearGradient></defs>'
+    +grid+ticks
+    +'<path d="'+areaD+'" fill="url(#finProGrad)"/>'
+    +'<path d="'+pathD+'" fill="none" stroke="'+color+'" stroke-width="2" stroke-linecap="round"/>'
+    +labels
+    +'</svg>';
+  el.innerHTML=summary+svg+'<div style="font-size:10px;color:var(--tx3);margin-top:6px;text-align:center">Estimación lineal con base en avg de últimos 3 meses</div>';
 }
 
 // Footer year
