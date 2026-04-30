@@ -349,6 +349,13 @@
   Estructura nueva: PyG devengado + Recaudo terceros + Gastos comparativo + Flujo + Proyección
 -->
 
+<!--
+  ARVID — Bloque HTML del módulo Finanzas v3.1
+  
+  REEMPLAZA: TODA la sección <div class="pg" id="pg-finanzas">...</div>
+  (desde la línea ~342 hasta justo antes de <div class="pg" id="pg-log">)
+-->
+
 <div class="pg" id="pg-finanzas">
 <div class="an-wrap">
 
@@ -357,13 +364,22 @@
 <div class="an-filters">
 <select id="finMes" class="an-select" onchange="cargarFinanzas()"></select>
 <select id="finAno" class="an-select" onchange="cargarFinanzas()"></select>
+<button class="btn btn-ghost" onclick="exportarPDFFinanzas()" style="font-size:11px" title="Descargar PDF">📄 PDF</button>
 <button class="btn btn-nv" onclick="FIN_CACHE=null;cargarFinanzas(true)" style="font-size:11px">↻</button>
 </div>
 </div>
 
 <div id="finMeta"></div>
 <div id="finAlertas"></div>
+
+<!-- KPIs HERO -->
 <div class="kpis-an" id="finKpis"></div>
+
+<!-- Insights automáticos (NUEVO) -->
+<div class="an-card" style="margin-bottom:12px"><div class="an-card-h">💡 Análisis automáticos</div><div id="finInsights"></div></div>
+
+<!-- Tendencia 12M (NUEVO) -->
+<div class="an-card" style="margin-bottom:12px"><div class="an-card-h">Tendencia 12 meses</div><div id="finTendencia"></div></div>
 
 <div class="an-card" style="margin-bottom:12px"><div class="an-card-h">Saldo de caja</div><div id="finSaldoCaja"></div></div>
 
@@ -1983,6 +1999,10 @@ function addLog(m){
 // Backend correspondiente: Finanzas.gs v3 (PyG devengado desde CASOS,
 // centros excluidos del PyG, recaudo terceros 20%/10%)
 
+// ====================== FINANZAS v3.1 ======================
+// REEMPLAZA: desde "// ====================== FINANZAS ======================"
+// hasta justo ANTES de "// Footer year"
+
 var FIN_CACHE=null,FIN_MES=null,FIN_ANO=null;
 
 function cargarFinanzas(force){
@@ -1991,7 +2011,7 @@ function cargarFinanzas(force){
   if(!mesEl)return;
   if(!mesEl.options.length){
     var hoy=new Date();
-    var mh="";
+    var mh='<option value="all">📅 Todos los meses</option>';
     for(var i=1;i<=12;i++){
       mh+='<option value="'+i+'"'+(i===hoy.getMonth()+1?" selected":"")+'>'+MESES[i-1]+'</option>';
     }
@@ -2003,7 +2023,8 @@ function cargarFinanzas(force){
     }
     anoEl.innerHTML=ah;
   }
-  FIN_MES=Number(mesEl.value);
+  var mesVal=mesEl.value;
+  FIN_MES=mesVal==="all"?"all":Number(mesVal);
   FIN_ANO=Number(anoEl.value);
   var cacheKey=FIN_ANO+"-"+FIN_MES;
   if(FIN_CACHE&&FIN_CACHE.__key===cacheKey&&!force){renderFinanzas();return}
@@ -2021,23 +2042,27 @@ function renderFinanzas(){
   if(!FIN_CACHE)return;
   var d=FIN_CACHE;
   var meta=d.meta||{};
+  var esAno=meta.es_ano===true;
   var infoEl=document.getElementById("finMeta");
   if(infoEl){
     var t='';
     if(meta.sin_categorizar>0){
       t='<div style="padding:10px 14px;background:var(--warnb);border-radius:8px;font-size:11px;color:var(--warn);font-weight:700;margin-bottom:12px">⚠ '+meta.sin_categorizar+' movimientos sin categorizar — afecta exactitud del PyG</div>';
     }
-    t+='<div style="font-size:10px;color:var(--tx3);margin-bottom:10px">'+meta.total_movimientos_mes+' movimientos · '+meta.casos_creados_mes+' casos creados en '+MESES[FIN_MES-1]+' '+FIN_ANO+(meta.from_cache?' · caché':'')+'</div>';
+    var periodoTxt=esAno?("Año "+meta.ano+" completo"):(MESES[meta.mes-1]+" "+meta.ano);
+    t+='<div style="font-size:10px;color:var(--tx3);margin-bottom:10px"><strong>'+periodoTxt+'</strong> · '+meta.total_movimientos_mes+' movimientos · '+meta.casos_creados_mes+' casos creados'+(meta.from_cache?' · caché':'')+'</div>';
     infoEl.innerHTML=t;
   }
   finRenderAlertas(d.alertas||[]);
-  finRenderKpis(d.kpis||{});
-  finRenderSaldoCaja(d.saldo_caja||{},d.flujo_caja||{});
+  finRenderKpis(d.kpis||{},esAno);
+  finRenderInsights(d.insights||[]);
+  finRenderTendencia(d.serie_12m||[],esAno);
+  finRenderSaldoCaja(d.saldo_caja||{},d.flujo_caja||{},esAno);
   finRenderPyG(d.pyg||{});
-  finRenderRecaudo(d.recaudo_terceros||{});
-  finRenderGastosComp(d.gastos_comparativo||[]);
+  finRenderRecaudo(d.recaudo_terceros||{},esAno);
+  finRenderGastosComp(d.gastos_comparativo||[],esAno);
   finRenderFlujo(d.flujo_caja||{});
-  finRenderProyeccion(d.proyeccion_cierre||{});
+  finRenderProyeccion(d.proyeccion_cierre,esAno);
 }
 
 // ---------- HELPERS ----------
@@ -2080,18 +2105,19 @@ function finRenderAlertas(arr){
   el.innerHTML=h;
 }
 
-// ---------- KPIs HERO (3 cards premium) ----------
-function finRenderKpis(k){
+// ---------- KPIs HERO ----------
+function finRenderKpis(k,esAno){
   if(!k||!k.ingresos){document.getElementById("finKpis").innerHTML="";return}
+  var labelComp=esAno?"vs año ant":"vs mes ant";
   function deltaHTML(pct,abs){
     var pctTxt='';
     var absTxt='';
-    if(pct===null||pct===undefined||isNaN(pct))pctTxt='<span style="color:var(--tx3)">vs mes ant n/a</span>';
+    if(pct===null||pct===undefined||isNaN(pct))pctTxt='<span style="color:var(--tx3)">'+labelComp+' n/a</span>';
     else {
       var p=Math.round(pct*100);
       var pColor=p>0?"var(--ok)":p<0?"var(--err)":"var(--tx3)";
       var pArr=p>0?"▲":p<0?"▼":"";
-      pctTxt='<span style="color:'+pColor+';font-weight:700">'+pArr+Math.abs(p)+'%</span> <span style="color:var(--tx3)">vs mes ant</span>';
+      pctTxt='<span style="color:'+pColor+';font-weight:700">'+pArr+Math.abs(p)+'%</span> <span style="color:var(--tx3)">'+labelComp+'</span>';
     }
     var aColor=abs>0?"var(--ok)":abs<0?"var(--err)":"var(--tx3)";
     var aSign=abs>0?"+":"";
@@ -2099,20 +2125,18 @@ function finRenderKpis(k){
     return pctTxt+' · '+absTxt;
   }
   var ing=k.ingresos,mb=k.margen_bruto,uo=k.utilidad_operacional;
+  var labelIng=esAno?"Ingresos del año":"Ingresos (devengado)";
   var h='';
-  // Ingresos
   h+='<div class="kpi-pro"><div class="kpi-stripe" style="background:var(--ok)"></div>';
-  h+='<div class="kpi-label">Ingresos (devengado)</div>';
+  h+='<div class="kpi-label">'+labelIng+'</div>';
   h+='<div class="kpi-val" style="color:var(--ok)">'+fmCop(ing.valor)+'</div>';
   h+='<div class="kpi-sub">'+deltaHTML(ing.vs_mes_ant,ing.vs_mes_ant_abs)+'</div></div>';
-  // Margen bruto
   var mbColor=(mb.valor||0)>=0?"var(--info)":"var(--err)";
   h+='<div class="kpi-pro"><div class="kpi-stripe" style="background:'+mbColor+'"></div>';
   h+='<div class="kpi-label">Margen bruto</div>';
   h+='<div class="kpi-val" style="color:'+mbColor+'">'+fmCop(mb.valor)+'</div>';
   h+='<div class="kpi-sub" style="color:'+mbColor+';font-weight:700;margin-bottom:4px">'+finFmtPct(mb.pct,1)+' margen</div>';
   h+='<div class="kpi-sub">'+deltaHTML(mb.vs_mes_ant,mb.vs_mes_ant_abs)+'</div></div>';
-  // Utilidad operacional
   var uoColor=(uo.valor||0)>=0?"var(--gold)":"var(--err)";
   h+='<div class="kpi-pro"><div class="kpi-stripe" style="background:'+uoColor+'"></div>';
   h+='<div class="kpi-label">Utilidad operacional</div>';
@@ -2122,36 +2146,121 @@ function finRenderKpis(k){
   document.getElementById("finKpis").innerHTML=h;
 }
 
+// ---------- INSIGHTS AUTOMÁTICOS ----------
+function finRenderInsights(arr){
+  var el=document.getElementById("finInsights");
+  if(!arr||!arr.length){el.innerHTML='<p style="color:var(--tx3);font-size:11px;padding:6px 0">Análisis automáticos aparecerán cuando haya suficientes datos históricos</p>';return}
+  var h='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px">';
+  arr.forEach(function(it){
+    var bg=it.tono==="success"?"var(--okb)":it.tono==="warning"?"var(--warnb)":it.tono==="danger"?"var(--errb)":"var(--infob)";
+    var fg=it.tono==="success"?"var(--ok)":it.tono==="warning"?"var(--warn)":it.tono==="danger"?"var(--err)":"var(--info)";
+    h+='<div style="padding:14px 16px;background:'+bg+';border-left:3px solid '+fg+';border-radius:8px">';
+    h+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:18px">'+it.icono+'</span><span style="font-size:9px;font-weight:800;color:'+fg+';text-transform:uppercase;letter-spacing:1px">'+it.titulo+'</span></div>';
+    h+='<div style="font-size:16px;font-weight:800;color:var(--nv);line-height:1.2">'+it.valor+'</div>';
+    h+='<div style="font-size:10.5px;color:var(--tx3);margin-top:3px">'+it.detalle+'</div>';
+    h+='</div>';
+  });
+  h+='</div>';
+  el.innerHTML=h;
+}
+
+// ---------- TENDENCIA 12M ----------
+function finRenderTendencia(serie,esAno){
+  var el=document.getElementById("finTendencia");
+  if(!serie||!serie.length){el.innerHTML='<p style="color:var(--tx3);font-size:11px;padding:10px">Sin datos suficientes</p>';return}
+  if(!serie.some(function(m){return m.ingresos>0||m.gastos_operativos>0})){
+    el.innerHTML='<p style="color:var(--tx3);font-size:11px;padding:10px">Sin datos en el rango</p>';return;
+  }
+
+  var W=720,H=240,padL=68,padR=18,padT=22,padB=46;
+  var plotW=W-padL-padR,plotH=H-padT-padB;
+  var max=Math.max.apply(null,serie.map(function(m){return Math.max(m.ingresos,Math.abs(m.utilidad_operacional))}))||1;
+  var n=serie.length,stepX=plotW/n;
+  var barW=Math.min(34,stepX*0.4);
+
+  var grid='',ticks='';
+  for(var g=0;g<=4;g++){
+    var gy=padT+plotH*(1-g/4);
+    var gv=max*g/4;
+    grid+='<line x1="'+padL+'" y1="'+gy.toFixed(1)+'" x2="'+(W-padR)+'" y2="'+gy.toFixed(1)+'" stroke="var(--bd)" stroke-width="0.5" stroke-dasharray="2 3"/>';
+    if(g>0)ticks+='<text x="'+(padL-6)+'" y="'+(gy+4).toFixed(1)+'" text-anchor="end" font-size="9" fill="var(--tx3)" font-weight="600">'+fmCop(gv)+'</text>';
+  }
+
+  var bars='',labels='',lineDots='',linePath='';
+  var marginPts=[];
+  serie.forEach(function(m,i){
+    var bx=padL+stepX*i+(stepX/2);
+    // Bar Ingresos
+    var bh1=(m.ingresos/max)*plotH;
+    var by1=padT+plotH-bh1;
+    if(m.ingresos>0){
+      bars+='<rect x="'+(bx-barW-1).toFixed(1)+'" y="'+by1.toFixed(1)+'" width="'+barW+'" height="'+bh1.toFixed(1)+'" fill="var(--ok)" rx="2" opacity="0.85"><title>'+m.etiqueta+' Ing: '+fmCop(m.ingresos)+'</title></rect>';
+    }
+    // Bar Utilidad operacional
+    if(m.utilidad_operacional!==0){
+      var bh2=Math.abs(m.utilidad_operacional)/max*plotH;
+      var ebPos=m.utilidad_operacional>=0;
+      var by2=ebPos?(padT+plotH-bh2):(padT+plotH);
+      var col=ebPos?"var(--gold)":"var(--err)";
+      bars+='<rect x="'+(bx+1).toFixed(1)+'" y="'+by2.toFixed(1)+'" width="'+barW+'" height="'+bh2.toFixed(1)+'" fill="'+col+'" rx="2" opacity="0.85"><title>'+m.etiqueta+' UO: '+fmCop(m.utilidad_operacional)+'</title></rect>';
+    }
+    labels+='<text x="'+bx.toFixed(1)+'" y="'+(H-26)+'" text-anchor="middle" font-size="10" font-weight="700" fill="var(--tx2)">'+m.etiqueta+'</text>';
+  });
+
+  var legend='<div style="display:flex;gap:18px;justify-content:center;margin-top:8px;font-size:11px;color:var(--tx2);font-weight:600">';
+  legend+='<span style="display:inline-flex;align-items:center;gap:6px"><span style="display:inline-block;width:11px;height:11px;background:var(--ok);border-radius:2px"></span>Ingresos</span>';
+  legend+='<span style="display:inline-flex;align-items:center;gap:6px"><span style="display:inline-block;width:11px;height:11px;background:var(--gold);border-radius:2px"></span>Utilidad operacional</span>';
+  legend+='</div>';
+
+  // Resumen
+  var totalIng=0,totalUO=0,mejorMes=null;
+  serie.forEach(function(m){
+    totalIng+=m.ingresos;
+    totalUO+=m.utilidad_operacional;
+    if(!mejorMes||m.ingresos>mejorMes.ingresos)mejorMes=m;
+  });
+  var summary='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px">';
+  summary+='<div style="padding:10px 14px;background:var(--okb);border-left:3px solid var(--ok);border-radius:7px"><div style="font-size:9px;color:var(--ok);font-weight:800;text-transform:uppercase;letter-spacing:1px">Total ingresos</div><div style="font-size:16px;font-weight:800;color:var(--ok);margin-top:2px">'+fmCop(totalIng)+'</div></div>';
+  summary+='<div style="padding:10px 14px;background:#fdf6e3;border-left:3px solid var(--gold);border-radius:7px"><div style="font-size:9px;color:var(--gold);font-weight:800;text-transform:uppercase;letter-spacing:1px">Total UO</div><div style="font-size:16px;font-weight:800;color:'+(totalUO>=0?"var(--gold)":"var(--err)")+';margin-top:2px">'+fmCop(totalUO)+'</div></div>';
+  summary+='<div style="padding:10px 14px;background:var(--infob);border-left:3px solid var(--info);border-radius:7px"><div style="font-size:9px;color:var(--info);font-weight:800;text-transform:uppercase;letter-spacing:1px">Mejor mes</div><div style="font-size:14px;font-weight:800;color:var(--info);margin-top:2px">'+(mejorMes?mejorMes.etiqueta:"—")+'</div><div style="font-size:11px;color:var(--tx2);font-weight:700">'+(mejorMes?fmCop(mejorMes.ingresos):"—")+'</div></div>';
+  summary+='</div>';
+
+  var svg='<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="xMidYMid meet" style="width:100%;height:auto;display:block;font-family:Outfit,sans-serif">'+grid+ticks+bars+labels+'</svg>';
+
+  el.innerHTML=summary+svg+legend;
+}
+
 // ---------- SALDO DE CAJA ----------
-function finRenderSaldoCaja(s,fc){
+function finRenderSaldoCaja(s,fc,esAno){
   var el=document.getElementById("finSaldoCaja");
+  var labelInicial=esAno?"Saldo apertura del año":"Saldo apertura del mes";
+  var labelFinal=esAno?"Saldo cierre del año":"Saldo cierre del mes";
+  var labelVar=esAno?"Variación del año":"Variación del mes";
+  var labelMov=esAno?"Movimiento del año":"Movimiento del mes";
+
   var varColor=(s.variacion_mes||0)>=0?"var(--ok)":"var(--err)";
   var varSign=(s.variacion_mes||0)>=0?"+":"";
   var h='<div style="display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:12px">';
-  // Saldo principal (clickeable)
   h+='<div id="finSaldoToggle" style="padding:18px 20px;background:linear-gradient(135deg,var(--nv),var(--nvl));border-radius:12px;color:white;cursor:pointer;position:relative;transition:transform 0.2s">';
   h+='<div style="font-size:10px;color:rgba(255,255,255,0.6);font-weight:800;text-transform:uppercase;letter-spacing:1.5px">Saldo en caja</div>';
   h+='<div style="font-size:30px;font-weight:800;margin-top:6px;color:white;letter-spacing:-0.5px">'+fm(s.saldo_actual)+'</div>';
-  h+='<div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:6px">click para ver desglose del mes</div>';
+  h+='<div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:6px">click para ver desglose</div>';
   h+='<div style="position:absolute;top:18px;right:18px;color:rgba(255,255,255,0.4);font-size:18px;transition:transform 0.2s" id="finSaldoArrow">⌄</div>';
   h+='</div>';
-  // Variación
-  h+='<div style="text-align:center;padding:14px 16px;background:var(--sf2);border-radius:10px"><div style="font-size:9px;color:var(--tx3);font-weight:800;text-transform:uppercase;letter-spacing:1px">Variación del mes</div>';
+  h+='<div style="text-align:center;padding:14px 16px;background:var(--sf2);border-radius:10px"><div style="font-size:9px;color:var(--tx3);font-weight:800;text-transform:uppercase;letter-spacing:1px">'+labelVar+'</div>';
   h+='<div style="font-size:20px;font-weight:800;margin-top:4px;color:'+varColor+'">'+varSign+fmCop(s.variacion_mes)+'</div>';
-  h+='<div style="font-size:9px;color:var(--tx3);margin-top:2px">vs apertura del mes</div></div>';
-  // Movimiento
+  h+='<div style="font-size:9px;color:var(--tx3);margin-top:2px">vs apertura</div></div>';
   h+='<div style="padding:14px 16px;background:var(--sf2);border-radius:10px;display:flex;flex-direction:column;justify-content:center">';
-  h+='<div style="font-size:9px;color:var(--tx3);font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Movimiento del mes</div>';
+  h+='<div style="font-size:9px;color:var(--tx3);font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">'+labelMov+'</div>';
   h+='<div style="font-size:13px;color:var(--ok);font-weight:700">+'+fmCop(s.entradas_mes)+' <span style="color:var(--tx3);font-size:10px;font-weight:600">entradas</span></div>';
   h+='<div style="font-size:13px;color:var(--err);font-weight:700;margin-top:2px">−'+fmCop(s.salidas_mes)+' <span style="color:var(--tx3);font-size:10px;font-weight:600">salidas</span></div>';
   h+='</div>';
   h+='</div>';
 
-  // Detalle expandible
   h+='<div id="finSaldoDetalle" style="max-height:0;overflow:hidden;transition:max-height 0.35s ease;margin-top:0">';
   h+='<div style="padding:18px 20px;background:var(--sf2);border-radius:10px;margin-top:12px">';
-  h+='<div style="font-size:10px;color:var(--tx3);font-weight:800;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px">Composición del movimiento del mes</div>';
-  h+='<div style="display:flex;justify-content:space-between;padding:7px 0;font-size:13px"><span>Saldo apertura del mes</span><span style="font-weight:700;font-variant-numeric:tabular-nums">'+fm(s.saldo_inicial_mes)+'</span></div>';
+  h+='<div style="font-size:10px;color:var(--tx3);font-weight:800;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px">Composición</div>';
+  h+='<div style="display:flex;justify-content:space-between;padding:7px 0;font-size:13px"><span>'+labelInicial+'</span><span style="font-weight:700;font-variant-numeric:tabular-nums">'+fm(s.saldo_inicial_mes)+'</span></div>';
   if(fc.entradas_operativas&&fc.entradas_operativas.total>0)h+='<div style="display:flex;justify-content:space-between;padding:7px 0;font-size:13px;color:var(--ok)"><span>+ Entradas operativas</span><span style="font-weight:700;font-variant-numeric:tabular-nums">+'+fm(fc.entradas_operativas.total)+'</span></div>';
   if(fc.centros&&fc.centros.cobrados&&fc.centros.cobrados.total>0)h+='<div style="display:flex;justify-content:space-between;padding:7px 0;font-size:13px;color:var(--ok)"><span>+ Centros cobrados</span><span style="font-weight:700;font-variant-numeric:tabular-nums">+'+fm(fc.centros.cobrados.total)+'</span></div>';
   if(fc.no_operativos&&fc.no_operativos.total>0)h+='<div style="display:flex;justify-content:space-between;padding:7px 0;font-size:13px;color:var(--ok)"><span>+ No operativos</span><span style="font-weight:700;font-variant-numeric:tabular-nums">+'+fm(fc.no_operativos.total)+'</span></div>';
@@ -2159,7 +2268,7 @@ function finRenderSaldoCaja(s,fc){
   if(fc.centros&&fc.centros.pagados&&fc.centros.pagados.total<0)h+='<div style="display:flex;justify-content:space-between;padding:7px 0;font-size:13px;color:var(--err)"><span>− Centros pagados</span><span style="font-weight:700;font-variant-numeric:tabular-nums">'+fm(fc.centros.pagados.total)+'</span></div>';
   if(fc.inversiones&&fc.inversiones.total<0)h+='<div style="display:flex;justify-content:space-between;padding:7px 0;font-size:13px;color:var(--err)"><span>− Inversiones</span><span style="font-weight:700;font-variant-numeric:tabular-nums">'+fm(fc.inversiones.total)+'</span></div>';
   if(fc.no_operativos&&fc.no_operativos.total<0)h+='<div style="display:flex;justify-content:space-between;padding:7px 0;font-size:13px;color:var(--err)"><span>− No operativos</span><span style="font-weight:700;font-variant-numeric:tabular-nums">'+fm(fc.no_operativos.total)+'</span></div>';
-  h+='<div style="display:flex;justify-content:space-between;padding:11px 0 4px;border-top:2px solid var(--nv);margin-top:6px;font-size:14px;font-weight:800"><span>Saldo cierre del mes</span><span style="font-variant-numeric:tabular-nums">'+fm(fc.saldo_final||s.saldo_final_mes)+'</span></div>';
+  h+='<div style="display:flex;justify-content:space-between;padding:11px 0 4px;border-top:2px solid var(--nv);margin-top:6px;font-size:14px;font-weight:800"><span>'+labelFinal+'</span><span style="font-variant-numeric:tabular-nums">'+fm(fc.saldo_final||s.saldo_final_mes)+'</span></div>';
   h+='</div></div>';
 
   el.innerHTML=h;
@@ -2170,12 +2279,12 @@ function finRenderSaldoCaja(s,fc){
     tog.addEventListener("click",function(){
       var open=det.style.maxHeight&&det.style.maxHeight!=="0px";
       if(open){det.style.maxHeight="0";if(arr)arr.style.transform="rotate(0deg)"}
-      else {det.style.maxHeight="500px";if(arr)arr.style.transform="rotate(180deg)"}
+      else {det.style.maxHeight="600px";if(arr)arr.style.transform="rotate(180deg)"}
     });
   }
 }
 
-// ---------- PyG dinámico expandible ----------
+// ---------- PyG ----------
 function finRenderPyG(p){
   var el=document.getElementById("finPyG");
   if(!p||!p.ingresos){el.innerHTML='<p style="color:var(--tx3);font-size:11px;padding:10px">Sin datos</p>';return}
@@ -2183,7 +2292,6 @@ function finRenderPyG(p){
   var h='<div style="font-size:10px;color:var(--tx3);margin-bottom:10px;font-style:italic">Click en cada categoría para ver desglose · centros excluidos (flujo pasante)</div>';
   h+='<table style="width:100%;border-collapse:collapse;font-size:12px" id="finPygTbl">';
 
-  // INGRESOS
   h+='<tr><td colspan="3" style="padding:8px 4px;font-size:9px;font-weight:800;color:var(--ok);text-transform:uppercase;letter-spacing:1.5px;border-bottom:1px solid var(--bd)">Ingresos</td></tr>';
   if(!p.ingresos.desglose||!p.ingresos.desglose.length){
     h+='<tr><td colspan="3" style="padding:8px 4px;color:var(--tx3);font-style:italic">Sin ingresos en el periodo</td></tr>';
@@ -2193,20 +2301,18 @@ function finRenderPyG(p){
       h+='<tr class="finPygRow" data-key="'+key+'" style="cursor:pointer;border-bottom:1px solid var(--sf2)"><td style="padding:8px 4px;color:var(--tx2)"><span class="finPygArr" style="display:inline-block;width:12px;color:var(--tx3);transition:transform 0.2s">▸</span> '+d.categoria+' <span style="font-size:10px;color:var(--tx3)">· '+d.casos_count+(d.casos_count===1?' caso':' casos')+'</span></td>';
       h+='<td style="text-align:right;font-weight:700;color:var(--ok);font-variant-numeric:tabular-nums">'+fm(d.valor)+'</td>';
       h+='<td style="text-align:right;font-size:10px;color:var(--tx3);min-width:50px">'+(p.ingresos.total>0?finFmtPct(d.valor/p.ingresos.total):"—")+'</td></tr>';
-      // Subrows: casos de esta modalidad
       var casos=(p.ingresos.detalle_casos||[]).filter(function(c){return c.modalidad===d.categoria});
-      casos.slice(0,15).forEach(function(c){
+      casos.slice(0,30).forEach(function(c){
         h+='<tr class="finPygSub '+key+'" style="display:none;background:var(--sf2)"><td style="padding:5px 4px 5px 24px;font-size:11px;color:var(--tx2)">'+c.nombre+' <span style="color:var(--tx3)">· '+(c.asesor||"—")+' · '+finFmtFecha(c.fecha)+'</span></td>';
         h+='<td style="text-align:right;font-size:11px;color:var(--tx2);font-variant-numeric:tabular-nums">'+fm(c.valor)+'</td><td></td></tr>';
       });
-      if(casos.length>15){
-        h+='<tr class="finPygSub '+key+'" style="display:none;background:var(--sf2)"><td colspan="3" style="padding:4px 24px;font-size:10px;color:var(--tx3);font-style:italic">+ '+(casos.length-15)+' casos más</td></tr>';
+      if(casos.length>30){
+        h+='<tr class="finPygSub '+key+'" style="display:none;background:var(--sf2)"><td colspan="3" style="padding:4px 24px;font-size:10px;color:var(--tx3);font-style:italic">+ '+(casos.length-30)+' casos más</td></tr>';
       }
     });
   }
   h+='<tr style="background:var(--okb)"><td style="padding:7px 4px;font-weight:800;color:var(--ok)">Total ingresos</td><td style="text-align:right;font-weight:800;color:var(--ok);font-variant-numeric:tabular-nums">'+fm(p.ingresos.total)+'</td><td></td></tr>';
 
-  // COSTOS DIRECTOS
   h+='<tr><td colspan="3" style="padding:8px 4px;padding-top:14px;font-size:9px;font-weight:800;color:var(--warn);text-transform:uppercase;letter-spacing:1.5px;border-bottom:1px solid var(--bd)">Costos directos</td></tr>';
   if(!p.costos_directos.desglose||!p.costos_directos.desglose.length){
     h+='<tr><td colspan="3" style="padding:8px 4px;color:var(--tx3);font-style:italic">Sin costos directos</td></tr>';
@@ -2222,7 +2328,7 @@ function finRenderPyG(p){
           h+='<td style="text-align:right;font-size:11px;color:var(--tx2);font-variant-numeric:tabular-nums">'+fm(det.total)+'</td><td></td></tr>';
         });
       } else {
-        (d.detalle||[]).slice(0,10).forEach(function(det){
+        (d.detalle||[]).slice(0,15).forEach(function(det){
           h+='<tr class="finPygSub '+key+'" style="display:none;background:var(--sf2)"><td style="padding:5px 4px 5px 24px;font-size:11px;color:var(--tx2)">'+(det.descripcion||det.subcategoria||"—")+' <span style="color:var(--tx3)">· '+finFmtFecha(det.fecha)+'</span></td>';
           h+='<td style="text-align:right;font-size:11px;color:var(--tx2);font-variant-numeric:tabular-nums">'+fm(det.valor)+'</td><td></td></tr>';
         });
@@ -2231,10 +2337,8 @@ function finRenderPyG(p){
   }
   h+='<tr style="background:var(--warnb)"><td style="padding:7px 4px;font-weight:800;color:var(--warn)">Total costos directos</td><td style="text-align:right;font-weight:800;color:var(--warn);font-variant-numeric:tabular-nums">'+fm(p.costos_directos.total)+'</td><td></td></tr>';
 
-  // MARGEN BRUTO
   h+='<tr style="background:var(--infob);border-top:2px solid var(--info)"><td style="padding:9px 4px;font-weight:800;color:var(--info)">= MARGEN BRUTO</td><td style="text-align:right;font-weight:800;color:var(--info);font-variant-numeric:tabular-nums;font-size:13px">'+fm(p.margen_bruto.valor)+'</td><td style="text-align:right;font-weight:800;color:var(--info)">'+finFmtPct(p.margen_bruto.pct,1)+'</td></tr>';
 
-  // GASTOS OPERATIVOS
   h+='<tr><td colspan="3" style="padding:8px 4px;padding-top:14px;font-size:9px;font-weight:800;color:var(--err);text-transform:uppercase;letter-spacing:1.5px;border-bottom:1px solid var(--bd)">Gastos operativos</td></tr>';
   if(!p.gastos_operativos.desglose||!p.gastos_operativos.desglose.length){
     h+='<tr><td colspan="3" style="padding:8px 4px;color:var(--tx3);font-style:italic">Sin gastos operativos</td></tr>';
@@ -2249,13 +2353,11 @@ function finRenderPyG(p){
       h+='<tr class="finPygRow" data-key="'+key+'" style="cursor:pointer;border-bottom:1px solid var(--sf2)"><td style="padding:8px 4px;color:var(--tx2)"><span class="finPygArr" style="display:inline-block;width:12px;color:var(--tx3);transition:transform 0.2s">▸</span> '+d.categoria+presBadge+'</td>';
       h+='<td style="text-align:right;font-weight:700;color:var(--err);font-variant-numeric:tabular-nums">'+fm(d.valor)+'</td>';
       h+='<td style="text-align:right;font-size:10px;color:var(--tx3)">'+(p.ingresos.total>0?finFmtPct(d.valor/p.ingresos.total):"—")+'</td></tr>';
-      // Subcategorías
       (d.subcategorias||[]).forEach(function(s){
         h+='<tr class="finPygSub '+key+'" style="display:none;background:var(--sf2)"><td style="padding:5px 4px 5px 24px;font-size:11px;color:var(--tx2);font-weight:600">'+s.nombre+'</td>';
         h+='<td style="text-align:right;font-size:11px;color:var(--tx2);font-variant-numeric:tabular-nums">'+fm(s.valor)+'</td><td></td></tr>';
       });
-      // Movimientos individuales
-      (d.movimientos||[]).slice(0,10).forEach(function(m){
+      (d.movimientos||[]).slice(0,15).forEach(function(m){
         h+='<tr class="finPygSub '+key+'" style="display:none;background:var(--sf2)"><td style="padding:5px 4px 5px 36px;font-size:11px;color:var(--tx3)">· '+(m.descripcion||m.subcategoria||"—")+' <span style="color:var(--tx3)">'+finFmtFecha(m.fecha)+'</span></td>';
         h+='<td style="text-align:right;font-size:10.5px;color:var(--tx3);font-variant-numeric:tabular-nums">'+fm(m.valor)+'</td><td></td></tr>';
       });
@@ -2263,14 +2365,12 @@ function finRenderPyG(p){
   }
   h+='<tr style="background:var(--errb)"><td style="padding:7px 4px;font-weight:800;color:var(--err)">Total gastos operativos</td><td style="text-align:right;font-weight:800;color:var(--err);font-variant-numeric:tabular-nums">'+fm(p.gastos_operativos.total)+'</td><td></td></tr>';
 
-  // UTILIDAD OPERACIONAL
   var uoColor=p.utilidad_operacional.valor>=0?"var(--gold)":"var(--err)";
   var uoBg=p.utilidad_operacional.valor>=0?"#fdf6e3":"var(--errb)";
   h+='<tr style="background:'+uoBg+';border-top:3px solid '+uoColor+'"><td style="padding:11px 4px;font-weight:800;color:'+uoColor+';font-size:13px">= UTILIDAD OPERACIONAL</td><td style="text-align:right;font-weight:800;color:'+uoColor+';font-variant-numeric:tabular-nums;font-size:15px">'+fm(p.utilidad_operacional.valor)+'</td><td style="text-align:right;font-weight:800;color:'+uoColor+'">'+finFmtPct(p.utilidad_operacional.pct,1)+'</td></tr>';
   h+='</table>';
   el.innerHTML=h;
 
-  // Toggle expand
   el.querySelectorAll(".finPygRow").forEach(function(tr){
     tr.addEventListener("click",function(){
       var key=tr.getAttribute("data-key");
@@ -2284,48 +2384,43 @@ function finRenderPyG(p){
   });
 }
 
-// ---------- RECAUDO TERCEROS (NUEVO) ----------
-function finRenderRecaudo(r){
+// ---------- RECAUDO TERCEROS ----------
+function finRenderRecaudo(r,esAno){
   var el=document.getElementById("finRecaudo");
   if(!r||!r.mes_actual){el.innerHTML='<p style="color:var(--tx3);font-size:11px;padding:10px">Sin datos</p>';return}
   var ma=r.mes_actual;
   var totalMes=ma.tercero_a.valor+ma.tercero_b.valor;
+  var labelPeriodo=esAno?"Año actual":"Mes actual";
 
-  var h='<div style="font-size:10px;color:var(--tx3);margin-bottom:14px;font-style:italic">Casos del mes sin descuento · 20% y 10% sobre centro vendido · NO afecta PyG</div>';
+  var h='<div style="font-size:10px;color:var(--tx3);margin-bottom:14px;font-style:italic">Casos del periodo sin descuento · 20% y 10% sobre centro vendido · NO afecta PyG</div>';
   h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">';
 
-  // CARD 1: Mes actual
   h+='<div style="background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:18px">';
-  h+='<div style="font-size:10px;color:var(--tx3);font-weight:800;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px">Mes actual</div>';
+  h+='<div style="font-size:10px;color:var(--tx3);font-weight:800;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px">'+labelPeriodo+'</div>';
 
   if(!ma.casos_sin_descuento.length){
-    h+='<div style="text-align:center;padding:30px 0;color:var(--tx3);font-size:12px">No hay casos sin descuento este mes</div>';
+    h+='<div style="text-align:center;padding:30px 0;color:var(--tx3);font-size:12px">No hay casos sin descuento</div>';
     if(ma.casos_con_descuento&&ma.casos_con_descuento.length>0){
       h+='<div style="text-align:center;color:var(--tx3);font-size:11px;margin-top:-15px">'+ma.casos_con_descuento.length+' caso(s) con descuento aplicado</div>';
     }
   } else {
-    // Tercero A
     h+='<div style="display:flex;justify-content:space-between;align-items:center;padding:13px 14px;background:linear-gradient(135deg,#fef3c7,#fde68a);border-radius:9px;margin-bottom:8px">';
     h+='<div><div style="font-size:10px;color:#92400e;font-weight:800;letter-spacing:.5px;text-transform:uppercase">Tercero A · 20%</div>';
     h+='<div style="font-size:11px;color:#78350f;margin-top:2px">comprometido</div></div>';
     h+='<div style="font-size:18px;font-weight:800;color:#78350f;font-variant-numeric:tabular-nums">'+fm(ma.tercero_a.valor)+'</div></div>';
-    // Tercero B
     h+='<div style="display:flex;justify-content:space-between;align-items:center;padding:13px 14px;background:linear-gradient(135deg,#ede9fe,#ddd6fe);border-radius:9px;margin-bottom:8px">';
     h+='<div><div style="font-size:10px;color:#5b21b6;font-weight:800;letter-spacing:.5px;text-transform:uppercase">Tercero B · 10%</div>';
     h+='<div style="font-size:11px;color:#5b21b6;margin-top:2px">comprometido</div></div>';
     h+='<div style="font-size:18px;font-weight:800;color:#5b21b6;font-variant-numeric:tabular-nums">'+fm(ma.tercero_b.valor)+'</div></div>';
-    // Total
     h+='<div style="display:flex;justify-content:space-between;align-items:center;padding:11px 14px;border-top:2px solid var(--nv);margin-top:6px;font-weight:800;color:var(--nv)"><span>Total comprometido</span><span style="font-variant-numeric:tabular-nums">'+fm(totalMes)+'</span></div>';
-    // Resumen
     h+='<div style="margin-top:12px;padding:10px 12px;background:var(--sf2);border-radius:7px;font-size:11px;color:var(--tx2);line-height:1.5">';
     h+='<strong style="color:var(--nv)">'+ma.casos_sin_descuento.length+(ma.casos_sin_descuento.length===1?' caso':' casos')+'</strong> sin descuento · centro vendido: <strong style="color:var(--nv)">'+fm(ma.total_centro_base)+'</strong>';
     if(ma.casos_con_descuento&&ma.casos_con_descuento.length>0){
       h+='<br><span style="color:var(--tx3);font-size:10px">+ '+ma.casos_con_descuento.length+' con descuento (no aplica reparto)</span>';
     }
     h+='</div>';
-    // Toggle detalle
     h+='<div id="finRecDetTog" style="margin-top:12px;cursor:pointer;font-size:11px;color:var(--ac);font-weight:700">▸ Ver detalle por caso</div>';
-    h+='<div id="finRecDet" style="max-height:0;overflow:hidden;transition:max-height 0.3s ease"><div style="margin-top:10px;max-height:240px;overflow-y:auto">';
+    h+='<div id="finRecDet" style="max-height:0;overflow:hidden;transition:max-height 0.3s ease"><div style="margin-top:10px;max-height:300px;overflow-y:auto">';
     ma.casos_sin_descuento.forEach(function(c){
       h+='<div style="display:grid;grid-template-columns:1.4fr .8fr .8fr;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd);font-size:11px">';
       h+='<div><strong>'+(c.nombre||c.cedula).substring(0,24)+'</strong><div style="color:var(--tx3);font-size:10px">'+(c.asesor||"—")+'</div></div>';
@@ -2337,9 +2432,8 @@ function finRenderRecaudo(r){
   }
   h+='</div>';
 
-  // CARD 2: Tendencia 12M
   h+='<div style="background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:18px">';
-  h+='<div style="font-size:10px;color:var(--tx3);font-weight:800;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px">Tendencia últimos 12 meses</div>';
+  h+='<div style="font-size:10px;color:var(--tx3);font-weight:800;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px">Tendencia 12 meses</div>';
   var maxVal=0;
   (r.tendencia_12m||[]).forEach(function(t){if(t.total>maxVal)maxVal=t.total});
   h+='<div style="display:flex;align-items:flex-end;gap:3px;height:80px;padding:8px 0;margin-top:10px">';
@@ -2360,7 +2454,6 @@ function finRenderRecaudo(r){
   h+='<span><span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:#f59e0b;margin-right:5px;vertical-align:middle"></span>Tercero A · 20%</span>';
   h+='<span><span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:#8b5cf6;margin-right:5px;vertical-align:middle"></span>Tercero B · 10%</span>';
   h+='</div>';
-  // Totales 12M
   var t12a=0,t12b=0;
   (r.tendencia_12m||[]).forEach(function(t){t12a+=t.tercero_a;t12b+=t.tercero_b});
   h+='<div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--bd)">';
@@ -2373,29 +2466,30 @@ function finRenderRecaudo(r){
   h+='</div>';
   el.innerHTML=h;
 
-  // Toggle detalle
   var togDet=document.getElementById("finRecDetTog");
   var detEl=document.getElementById("finRecDet");
   if(togDet&&detEl){
     togDet.addEventListener("click",function(){
       var open=detEl.style.maxHeight&&detEl.style.maxHeight!=="0px";
       if(open){detEl.style.maxHeight="0";togDet.innerHTML="▸ Ver detalle por caso"}
-      else {detEl.style.maxHeight="320px";togDet.innerHTML="▾ Ocultar detalle"}
+      else {detEl.style.maxHeight="380px";togDet.innerHTML="▾ Ocultar detalle"}
     });
   }
 }
 
 // ---------- TABLA COMPARATIVA DE GASTOS ----------
-function finRenderGastosComp(gastos){
+function finRenderGastosComp(gastos,esAno){
   var el=document.getElementById("finGastosComp");
   if(!gastos||!gastos.length){el.innerHTML='<p style="color:var(--tx3);font-size:11px;padding:10px">Sin gastos operativos en el periodo</p>';return}
+  var labelAct=esAno?"Año actual":"Mes actual";
+  var labelAnt=esAno?"Año anterior":"Mes anterior";
 
   var h='<div style="font-size:10px;color:var(--tx3);margin-bottom:10px;font-style:italic">Click en cada fila para ver detalle</div>';
   h+='<table style="width:100%;border-collapse:collapse;font-size:12px" id="finGcTbl">';
   h+='<thead><tr style="border-bottom:2px solid var(--bd);background:var(--sf2)">';
   h+='<th style="text-align:left;padding:9px 8px;font-size:9px;color:var(--tx3);text-transform:uppercase;letter-spacing:1px">Categoría</th>';
-  h+='<th style="text-align:right;padding:9px 8px;font-size:9px;color:var(--tx3);text-transform:uppercase;letter-spacing:1px">Mes actual</th>';
-  h+='<th style="text-align:right;padding:9px 8px;font-size:9px;color:var(--tx3);text-transform:uppercase;letter-spacing:1px">Mes anterior</th>';
+  h+='<th style="text-align:right;padding:9px 8px;font-size:9px;color:var(--tx3);text-transform:uppercase;letter-spacing:1px">'+labelAct+'</th>';
+  h+='<th style="text-align:right;padding:9px 8px;font-size:9px;color:var(--tx3);text-transform:uppercase;letter-spacing:1px">'+labelAnt+'</th>';
   h+='<th style="text-align:right;padding:9px 8px;font-size:9px;color:var(--tx3);text-transform:uppercase;letter-spacing:1px">Var $</th>';
   h+='<th style="text-align:right;padding:9px 8px;font-size:9px;color:var(--tx3);text-transform:uppercase;letter-spacing:1px">Var %</th>';
   h+='<th style="text-align:right;padding:9px 8px;font-size:9px;color:var(--tx3);text-transform:uppercase;letter-spacing:1px">Presupuesto</th>';
@@ -2424,14 +2518,12 @@ function finRenderGastosComp(gastos){
     }
     h+='</td></tr>';
 
-    // Subcategorías
     (g.subcategorias||[]).forEach(function(s){
       h+='<tr class="finGcSub '+key+'" style="display:none;background:var(--sf2)">';
       h+='<td colspan="2" style="padding:6px 8px 6px 28px;font-size:11px;color:var(--tx2);font-weight:600">'+s.nombre+'</td>';
       h+='<td colspan="4" style="text-align:right;padding:6px 8px;font-size:11px;color:var(--tx2);font-variant-numeric:tabular-nums">'+fm(s.valor)+'</td></tr>';
     });
-    // Movimientos
-    (g.movimientos||[]).slice(0,8).forEach(function(m){
+    (g.movimientos||[]).slice(0,15).forEach(function(m){
       h+='<tr class="finGcSub '+key+'" style="display:none;background:var(--sf2)">';
       h+='<td colspan="2" style="padding:5px 8px 5px 42px;font-size:10.5px;color:var(--tx3)">· '+(m.descripcion||m.subcategoria||"—")+' <span style="color:var(--tx3)">'+finFmtFecha(m.fecha)+'</span></td>';
       h+='<td colspan="4" style="text-align:right;padding:5px 8px;font-size:10.5px;color:var(--tx3);font-variant-numeric:tabular-nums">'+fm(m.valor)+'</td></tr>';
@@ -2453,36 +2545,37 @@ function finRenderGastosComp(gastos){
   });
 }
 
-// ---------- FLUJO DE CAJA expandible ----------
+// ---------- FLUJO DE CAJA (BUG FIX: usa display:none/block en vez de max-height) ----------
 function finRenderFlujo(fc){
   var el=document.getElementById("finFlujo");
   if(!fc){el.innerHTML='<p style="color:var(--tx3);font-size:11px;padding:10px">Sin datos</p>';return}
 
   var h='<div style="font-size:10px;color:var(--tx3);margin-bottom:10px;font-style:italic">Click en cada categoría para ver movimientos</div>';
-  h+='<div style="display:flex;flex-direction:column;gap:0;border:1px solid var(--bd);border-radius:10px;overflow:hidden">';
+  h+='<table style="width:100%;border-collapse:collapse;font-size:13px" id="finFlTbl">';
 
   // Saldo inicial
-  h+='<div style="display:flex;justify-content:space-between;align-items:center;padding:13px 16px;background:linear-gradient(90deg,var(--sf2),var(--sf));border-bottom:2px solid var(--bd);font-weight:700"><span style="color:var(--info)">Saldo inicial del mes</span><span style="font-variant-numeric:tabular-nums;color:var(--info)">'+fm(fc.saldo_inicial)+'</span></div>';
+  h+='<tr style="background:linear-gradient(90deg,var(--sf2),var(--sf));border-top:2px solid var(--bd);border-bottom:2px solid var(--bd)">';
+  h+='<td colspan="2" style="padding:13px 16px;font-weight:700;color:var(--info)">Saldo inicial del mes</td>';
+  h+='<td style="padding:13px 16px;text-align:right;font-weight:700;color:var(--info);font-variant-numeric:tabular-nums">'+fm(fc.saldo_inicial)+'</td></tr>';
 
   function seccion(key,label,data,sign){
     var hasMovs=data&&data.movimientos&&data.movimientos.length>0;
     var color=sign==="+"?"var(--ok)":"var(--err)";
     var movCount=data&&data.movimientos?data.movimientos.length:0;
-    var html='<div class="finFlLine" data-toggle="'+key+'" style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--sf2);cursor:'+(hasMovs?"pointer":"default")+';transition:background 0.15s"';
-    if(hasMovs)html+=' onmouseover="this.style.background=\'var(--sf2)\'" onmouseout="this.style.background=\'transparent\'"';
-    html+='><span><span class="finFlArr" style="display:inline-block;width:14px;color:var(--tx3);transition:transform 0.2s">'+(hasMovs?"▸":"&nbsp;&nbsp;")+'</span><span style="font-weight:500;color:var(--tx);font-size:13px">'+(sign==="+"?"+ ":"− ")+label+'</span> <span style="color:var(--tx3);font-size:10px;margin-left:4px">('+movCount+' mov)</span></span>';
-    html+='<span style="font-weight:700;font-variant-numeric:tabular-nums;color:'+color+';font-size:13px">'+(sign==="+"?"+":"")+fm(data.total)+'</span></div>';
+    var html='<tr class="finFlRow" '+(hasMovs?'data-key="'+key+'"':'')+' style="cursor:'+(hasMovs?"pointer":"default")+';border-bottom:1px solid var(--sf2)">';
+    html+='<td style="padding:12px 16px;width:24px;color:var(--tx3)">'+(hasMovs?'<span class="finFlArr" style="display:inline-block;transition:transform 0.2s">▸</span>':'')+'</td>';
+    html+='<td style="padding:12px 4px"><span style="font-weight:500;color:var(--tx)">'+(sign==="+"?"+ ":"− ")+label+'</span> <span style="color:var(--tx3);font-size:10px;margin-left:4px">('+movCount+' mov)</span></td>';
+    html+='<td style="padding:12px 16px;text-align:right;font-weight:700;font-variant-numeric:tabular-nums;color:'+color+'">'+(sign==="+"?"+":"")+fm(data.total)+'</td>';
+    html+='</tr>';
     if(hasMovs){
-      html+='<div class="finFlDet '+key+'" style="background:var(--sf2);max-height:0;overflow:hidden;transition:max-height 0.35s ease;border-bottom:1px solid var(--sf2)">';
       data.movimientos.forEach(function(m){
         var mc=m.valor>=0?"var(--ok)":"var(--err)";
-        html+='<div style="display:flex;justify-content:space-between;padding:6px 16px 6px 42px;font-size:11.5px;color:var(--tx2);border-bottom:1px solid var(--sf)">';
-        html+='<span style="color:var(--tx3);font-size:10.5px;min-width:48px">'+finFmtFecha(m.fecha,"short")+'</span>';
-        html+='<span style="flex:1;padding:0 10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="'+(m.descripcion||"")+'">'+(m.descripcion||m.subcategoria||m.categoria||"—")+'</span>';
-        html+='<span style="font-variant-numeric:tabular-nums;font-weight:600;color:'+mc+'">'+(m.valor>=0?"+":"")+fm(m.valor)+'</span>';
-        html+='</div>';
+        html+='<tr class="finFlSub '+key+'" style="display:none;background:var(--sf2)">';
+        html+='<td style="padding:6px 16px;color:var(--tx3);font-size:10.5px;width:24px">'+finFmtFecha(m.fecha,"short")+'</td>';
+        html+='<td style="padding:6px 8px 6px 12px;font-size:11.5px;color:var(--tx2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:300px" title="'+(m.descripcion||"")+'">'+(m.descripcion||m.subcategoria||m.categoria||"—")+'</td>';
+        html+='<td style="padding:6px 16px;text-align:right;font-size:11.5px;font-variant-numeric:tabular-nums;font-weight:600;color:'+mc+'">'+(m.valor>=0?"+":"")+fm(m.valor)+'</td>';
+        html+='</tr>';
       });
-      html+='</div>';
     }
     return html;
   }
@@ -2495,29 +2588,33 @@ function finRenderFlujo(fc){
   if(fc.no_operativos&&fc.no_operativos.total!==0)h+=seccion("noop","No operativos",fc.no_operativos,fc.no_operativos.total>=0?"+":"−");
   if(fc.sin_clasificar&&fc.sin_clasificar.total!==0)h+=seccion("sc","Sin clasificar",fc.sin_clasificar,fc.sin_clasificar.total>=0?"+":"−");
 
-  // Saldo final
-  h+='<div style="display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:linear-gradient(90deg,var(--acl),#dbeafe);border-top:2px solid var(--ac);font-weight:800"><span style="color:var(--ac);font-size:14px">= Saldo final del mes</span><span style="font-variant-numeric:tabular-nums;color:var(--ac);font-size:15px">'+fm(fc.saldo_final)+'</span></div>';
+  h+='<tr style="background:linear-gradient(90deg,var(--acl),#dbeafe);border-top:2px solid var(--ac);border-bottom:none">';
+  h+='<td colspan="2" style="padding:14px 16px;font-weight:800;color:var(--ac);font-size:14px">= Saldo final del mes</td>';
+  h+='<td style="padding:14px 16px;text-align:right;font-weight:800;color:var(--ac);font-variant-numeric:tabular-nums;font-size:15px">'+fm(fc.saldo_final)+'</td></tr>';
 
-  h+='</div>';
+  h+='</table>';
   el.innerHTML=h;
 
-  el.querySelectorAll(".finFlLine[data-toggle]").forEach(function(line){
-    line.addEventListener("click",function(){
-      var key=line.getAttribute("data-toggle");
-      var det=el.querySelector(".finFlDet."+key);
-      var arr=line.querySelector(".finFlArr");
-      if(!det)return;
-      var isOpen=det.style.maxHeight&&det.style.maxHeight!=="0px";
-      if(isOpen){det.style.maxHeight="0";if(arr)arr.style.transform="rotate(0deg)"}
-      else {det.style.maxHeight="500px";if(arr)arr.style.transform="rotate(90deg)"}
+  el.querySelectorAll(".finFlRow[data-key]").forEach(function(tr){
+    tr.addEventListener("click",function(){
+      var key=tr.getAttribute("data-key");
+      var arr=tr.querySelector(".finFlArr");
+      var isOpen=arr&&arr.textContent==="▾";
+      if(arr)arr.textContent=isOpen?"▸":"▾";
+      el.querySelectorAll(".finFlSub."+key).forEach(function(sub){
+        sub.style.display=isOpen?"none":"table-row";
+      });
     });
   });
 }
 
 // ---------- PROYECCIÓN DE CIERRE ----------
-function finRenderProyeccion(p){
+function finRenderProyeccion(p,esAno){
   var el=document.getElementById("finProyeccion");
-  if(!p){el.innerHTML='<p style="color:var(--tx3);font-size:11px;padding:10px">Sin datos</p>';return}
+  if(esAno||!p){
+    el.innerHTML='<p style="color:var(--tx3);font-size:11px;padding:10px;text-align:center;font-style:italic">Proyección de cierre disponible solo en vista mensual</p>';
+    return;
+  }
 
   var h='';
   if(p.es_mes_actual){
@@ -2528,7 +2625,6 @@ function finRenderProyeccion(p){
 
   h+='<div style="display:grid;grid-template-columns:1.4fr 1fr;gap:14px">';
 
-  // COL 1: Cálculo
   h+='<div>';
   h+='<div style="font-size:10px;color:var(--tx3);font-weight:800;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px">Cálculo</div>';
   h+='<div style="display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid var(--sf2)"><span style="font-size:13px;color:var(--tx2)">Saldo a hoy</span><span style="font-weight:700;font-variant-numeric:tabular-nums">'+fm(p.saldo_actual)+'</span></div>';
@@ -2542,7 +2638,6 @@ function finRenderProyeccion(p){
   }
   h+='</div>';
 
-  // COL 2: Gastos fijos
   h+='<div>';
   h+='<div style="font-size:10px;color:var(--tx3);font-weight:800;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px">Gastos fijos del mes</div>';
   if(!p.fijos_pendientes.length&&!p.fijos_pagados.length){
@@ -2569,6 +2664,149 @@ function finRenderProyeccion(p){
 
   h+='</div>';
   el.innerHTML=h;
+}
+
+// ---------- DESCARGA PDF ----------
+function exportarPDFFinanzas(){
+  if(!FIN_CACHE){showMsg("finMsg","Carga primero los datos","err");return}
+  var d=FIN_CACHE;
+  var meta=d.meta||{};
+  var esAno=meta.es_ano===true;
+  var periodoTxt=esAno?("Año "+meta.ano):(MESES[meta.mes-1]+" "+meta.ano);
+
+  showMsg("finMsg","Generando PDF...","info");
+
+  var html='<!DOCTYPE html><html><head><meta charset="utf-8"><title>Finanzas - '+periodoTxt+'</title>';
+  html+='<style>';
+  html+='body{font-family:Arial,sans-serif;color:#0a1628;padding:25px;margin:0;font-size:11px}';
+  html+='h1{font-size:20px;margin:0 0 4px}h2{font-size:14px;margin:18px 0 8px;color:#0a1628;padding-bottom:4px;border-bottom:2px solid #c9a449}';
+  html+='table{width:100%;border-collapse:collapse;font-size:10px;margin-top:6px}';
+  html+='th{background:#0a1628;color:white;padding:7px;text-align:left;font-size:9px;text-transform:uppercase;letter-spacing:1px}';
+  html+='td{padding:6px 7px;border-bottom:1px solid #e2e8f0}';
+  html+='.num{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}';
+  html+='.total{background:#0a1628;color:white;font-weight:800}';
+  html+='.subtotal{background:#f1f3f8;font-weight:700}';
+  html+='.header{border-bottom:3px solid #c9a449;padding-bottom:10px;margin-bottom:14px}';
+  html+='.kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}';
+  html+='.kpi-card{padding:12px;border-radius:6px;border:1px solid #e2e8f0}';
+  html+='.kpi-l{font-size:9px;color:#94a3b8;text-transform:uppercase;font-weight:700;letter-spacing:1px}';
+  html+='.kpi-v{font-size:18px;font-weight:800;margin-top:4px}';
+  html+='.section{page-break-inside:avoid}';
+  html+='@page{margin:1.5cm}';
+  html+='</style></head><body>';
+
+  // Header
+  html+='<div class="header">';
+  html+='<div style="font-size:9px;font-weight:700;color:#94a3b8;letter-spacing:2px;text-transform:uppercase">Colombia Abogados · Reporte financiero</div>';
+  html+='<h1>Finanzas — '+periodoTxt+'</h1>';
+  html+='<div style="font-size:10px;color:#475569;margin-top:4px">Generado: '+new Date().toLocaleDateString('es-CO',{dateStyle:'long'})+' · '+meta.total_movimientos_mes+' movimientos · '+meta.casos_creados_mes+' casos</div>';
+  html+='</div>';
+
+  // KPIs
+  html+='<div class="kpi-grid">';
+  var k=d.kpis||{};
+  html+='<div class="kpi-card" style="border-left:3px solid #16a34a"><div class="kpi-l">Ingresos (devengado)</div><div class="kpi-v" style="color:#16a34a">'+fmCop(k.ingresos.valor)+'</div></div>';
+  html+='<div class="kpi-card" style="border-left:3px solid #1971c2"><div class="kpi-l">Margen bruto</div><div class="kpi-v" style="color:#1971c2">'+fmCop(k.margen_bruto.valor)+'</div><div style="font-size:10px;color:#1971c2;font-weight:700">'+finFmtPct(k.margen_bruto.pct,1)+' margen</div></div>';
+  html+='<div class="kpi-card" style="border-left:3px solid #c9a449"><div class="kpi-l">Utilidad operacional</div><div class="kpi-v" style="color:#c9a449">'+fmCop(k.utilidad_operacional.valor)+'</div><div style="font-size:10px;color:#c9a449;font-weight:700">'+finFmtPct(k.utilidad_operacional.pct,1)+' margen</div></div>';
+  html+='</div>';
+
+  // Insights
+  if(d.insights&&d.insights.length){
+    html+='<h2>💡 Análisis automáticos</h2>';
+    html+='<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">';
+    d.insights.forEach(function(it){
+      html+='<div style="padding:8px 10px;border:1px solid #e2e8f0;border-radius:6px"><div style="font-size:9px;color:#94a3b8;font-weight:700;text-transform:uppercase">'+it.icono+' '+it.titulo+'</div><div style="font-weight:800;font-size:13px;margin-top:2px">'+it.valor+'</div><div style="font-size:9px;color:#94a3b8">'+it.detalle+'</div></div>';
+    });
+    html+='</div>';
+  }
+
+  // Saldo de caja
+  var sc=d.saldo_caja||{};
+  html+='<h2>💰 Saldo de caja</h2>';
+  html+='<table>';
+  html+='<tr><td>Saldo a hoy</td><td class="num" style="font-weight:800">'+fm(sc.saldo_actual)+'</td></tr>';
+  html+='<tr><td>Saldo apertura del periodo</td><td class="num">'+fm(sc.saldo_inicial_mes)+'</td></tr>';
+  html+='<tr><td>Entradas</td><td class="num" style="color:#16a34a">+'+fm(sc.entradas_mes)+'</td></tr>';
+  html+='<tr><td>Salidas</td><td class="num" style="color:#c92a2a">-'+fm(sc.salidas_mes)+'</td></tr>';
+  html+='<tr class="subtotal"><td>Saldo cierre</td><td class="num">'+fm(sc.saldo_final_mes)+'</td></tr>';
+  html+='</table>';
+
+  // PyG
+  var p=d.pyg||{};
+  html+='<h2>📊 Estado de Resultados (PyG · devengado)</h2>';
+  html+='<table>';
+  html+='<thead><tr><th>Concepto</th><th class="num" style="text-align:right">Valor</th><th class="num" style="text-align:right">% Ingresos</th></tr></thead><tbody>';
+  html+='<tr style="background:#dcfce7"><td colspan="3" style="font-weight:800;color:#16a34a;text-transform:uppercase;font-size:9px">INGRESOS</td></tr>';
+  (p.ingresos.desglose||[]).forEach(function(d){
+    html+='<tr><td style="padding-left:16px">'+d.categoria+' ('+d.casos_count+(d.casos_count===1?' caso':' casos')+')</td><td class="num">'+fm(d.valor)+'</td><td class="num">'+finFmtPct(d.valor/p.ingresos.total)+'</td></tr>';
+  });
+  html+='<tr class="subtotal"><td><strong>Total ingresos</strong></td><td class="num"><strong>'+fm(p.ingresos.total)+'</strong></td><td class="num">100%</td></tr>';
+  html+='<tr style="background:#fef3c7"><td colspan="3" style="font-weight:800;color:#d97706;text-transform:uppercase;font-size:9px">COSTOS DIRECTOS</td></tr>';
+  (p.costos_directos.desglose||[]).forEach(function(d){
+    html+='<tr><td style="padding-left:16px">'+d.categoria+'</td><td class="num">'+fm(d.valor)+'</td><td class="num">'+finFmtPct(d.valor/p.ingresos.total)+'</td></tr>';
+  });
+  html+='<tr class="subtotal"><td><strong>Total costos directos</strong></td><td class="num"><strong>'+fm(p.costos_directos.total)+'</strong></td><td></td></tr>';
+  html+='<tr style="background:#dbeafe;border-top:2px solid #1e40af"><td><strong style="color:#1e40af">= MARGEN BRUTO</strong></td><td class="num"><strong style="color:#1e40af">'+fm(p.margen_bruto.valor)+'</strong></td><td class="num"><strong style="color:#1e40af">'+finFmtPct(p.margen_bruto.pct,1)+'</strong></td></tr>';
+  html+='<tr style="background:#fee2e2"><td colspan="3" style="font-weight:800;color:#c92a2a;text-transform:uppercase;font-size:9px">GASTOS OPERATIVOS</td></tr>';
+  (p.gastos_operativos.desglose||[]).forEach(function(d){
+    html+='<tr><td style="padding-left:16px">'+d.categoria+'</td><td class="num">'+fm(d.valor)+'</td><td class="num">'+finFmtPct(d.valor/p.ingresos.total)+'</td></tr>';
+  });
+  html+='<tr class="subtotal"><td><strong>Total gastos operativos</strong></td><td class="num"><strong>'+fm(p.gastos_operativos.total)+'</strong></td><td></td></tr>';
+  var uoColor=p.utilidad_operacional.valor>=0?"#c9a449":"#c92a2a";
+  html+='<tr style="background:#fdf6e3;border-top:3px solid '+uoColor+'"><td><strong style="color:'+uoColor+'">= UTILIDAD OPERACIONAL</strong></td><td class="num"><strong style="color:'+uoColor+';font-size:13px">'+fm(p.utilidad_operacional.valor)+'</strong></td><td class="num"><strong style="color:'+uoColor+'">'+finFmtPct(p.utilidad_operacional.pct,1)+'</strong></td></tr>';
+  html+='</tbody></table>';
+
+  // Recaudo terceros
+  var r=d.recaudo_terceros||{};
+  if(r.mes_actual&&r.mes_actual.casos_sin_descuento.length>0){
+    html+='<h2>🏛️ Recaudo de terceros · Centro de conciliación</h2>';
+    html+='<p style="font-size:10px;color:#475569;margin-bottom:6px">'+r.mes_actual.casos_sin_descuento.length+' casos sin descuento · centro vendido: '+fm(r.mes_actual.total_centro_base)+'</p>';
+    html+='<table>';
+    html+='<tr><td>Tercero A · 20%</td><td class="num" style="color:#92400e;font-weight:800">'+fm(r.mes_actual.tercero_a.valor)+'</td></tr>';
+    html+='<tr><td>Tercero B · 10%</td><td class="num" style="color:#5b21b6;font-weight:800">'+fm(r.mes_actual.tercero_b.valor)+'</td></tr>';
+    html+='<tr class="total"><td>Total comprometido</td><td class="num">'+fm(r.mes_actual.total_terceros)+'</td></tr>';
+    html+='</table>';
+  }
+
+  // Gastos comparativo
+  var gc=d.gastos_comparativo||[];
+  if(gc.length>0){
+    html+='<h2 class="section">📋 Gastos · comparativo</h2>';
+    html+='<table>';
+    html+='<thead><tr><th>Categoría</th><th class="num" style="text-align:right">Periodo</th><th class="num" style="text-align:right">Anterior</th><th class="num" style="text-align:right">Var $</th><th class="num" style="text-align:right">Var %</th></tr></thead><tbody>';
+    gc.forEach(function(g){
+      var varColor=g.var_dinero>0?"#c92a2a":g.var_dinero<0?"#16a34a":"#94a3b8";
+      var varPctTxt=g.var_pct===null?"—":(g.var_pct*100>=1?"+":"")+(g.var_pct*100).toFixed(0)+"%";
+      html+='<tr><td>'+g.categoria+'</td><td class="num" style="font-weight:700">'+fm(g.mes_actual)+'</td><td class="num">'+fm(g.mes_anterior)+'</td><td class="num" style="color:'+varColor+'">'+(g.var_dinero>0?"+":"")+fmCop(g.var_dinero)+'</td><td class="num" style="color:'+varColor+'">'+varPctTxt+'</td></tr>';
+    });
+    html+='</tbody></table>';
+  }
+
+  // Tendencia 12M
+  var s12=d.serie_12m||[];
+  if(s12.length>0){
+    html+='<h2 class="section">📈 Tendencia 12 meses</h2>';
+    html+='<table>';
+    html+='<thead><tr><th>Mes</th><th class="num" style="text-align:right">Ingresos</th><th class="num" style="text-align:right">Margen bruto</th><th class="num" style="text-align:right">Utilidad operacional</th><th class="num" style="text-align:right">Casos</th></tr></thead><tbody>';
+    var tIng=0,tMb=0,tUo=0,tCas=0;
+    s12.forEach(function(m){
+      tIng+=m.ingresos;tMb+=m.margen_bruto;tUo+=m.utilidad_operacional;tCas+=m.casos_count;
+      html+='<tr><td>'+m.etiqueta+'</td><td class="num" style="color:#16a34a">'+fm(m.ingresos)+'</td><td class="num" style="color:#1971c2">'+fm(m.margen_bruto)+'</td><td class="num" style="color:'+(m.utilidad_operacional>=0?"#c9a449":"#c92a2a")+'">'+fm(m.utilidad_operacional)+'</td><td class="num">'+m.casos_count+'</td></tr>';
+    });
+    html+='<tr class="total"><td>TOTAL</td><td class="num">'+fm(tIng)+'</td><td class="num">'+fm(tMb)+'</td><td class="num">'+fm(tUo)+'</td><td class="num">'+tCas+'</td></tr>';
+    html+='</tbody></table>';
+  }
+
+  html+='<div style="margin-top:30px;padding-top:14px;border-top:1px solid #e2e8f0;font-size:9px;color:#94a3b8;text-align:center">Colombia Abogados · Reporte generado automáticamente desde el sistema interno</div>';
+
+  html+='</body></html>';
+
+  var w=window.open("","_blank");
+  w.document.write(html);w.document.close();
+  setTimeout(function(){
+    w.print();
+    showMsg("finMsg","✅ PDF listo para imprimir/guardar","ok");
+  },500);
 }
 // Footer year
 (function(){var yr=document.getElementById("footerYear");if(yr)yr.textContent=new Date().getFullYear();})();
