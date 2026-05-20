@@ -169,6 +169,26 @@
                 </div>
             </div>
 
+            <div class="space-y-2 p-3 bg-slate-50 rounded-lg border border-slate-100">
+                <label class="font-bold text-slate-700 uppercase">Cuotas de Honorarios (%)</label>
+                <p class="text-[9px] text-slate-400 italic -mt-1">Solo aplica a honorarios de la firma. El Centro de Conciliación sigue 50/50.</p>
+                <div class="grid grid-cols-3 gap-2">
+                    <div class="space-y-1">
+                        <label class="font-bold text-[9px] uppercase text-slate-500">Apertura</label>
+                        <input type="number" inputmode="numeric" id="in-cuota-1" value="50" oninput="actualizarVista()" class="w-full border rounded px-2 py-2 font-bold text-center">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="font-bold text-[9px] uppercase text-slate-500">Cuota 2</label>
+                        <input type="number" inputmode="numeric" id="in-cuota-2" value="25" oninput="actualizarVista()" class="w-full border rounded px-2 py-2 font-bold text-center">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="font-bold text-[9px] uppercase text-slate-500">Cuota 3</label>
+                        <input type="number" inputmode="numeric" id="in-cuota-3" value="25" oninput="actualizarVista()" class="w-full border rounded px-2 py-2 font-bold text-center">
+                    </div>
+                </div>
+                <p id="cuota-warn" class="text-[10px] font-bold text-center text-red-600 hidden">⚠️ Las cuotas deben sumar 100% (actual: <span id="cuota-suma">0</span>%)</p>
+            </div>
+
             <button onclick="procesarYDescargar()" class="w-full bg-[#002855] text-white py-4 rounded-xl font-black tracking-widest hover:bg-slate-800 transition-all shadow-lg">
                 GENERAR PDF FINAL
             </button>
@@ -294,20 +314,22 @@
                 <section class="mb-4">
                     <div class="flex items-center mb-2.5">
                         <span class="section-marker"></span>
-                        <h2 class="font-black text-slate-800 text-[10px] uppercase tracking-wider">Fase 4: Cronograma de Pagos Diferido (50% - 25% - 25%)</h2>
+                        <h2 class="font-black text-slate-800 text-[10px] uppercase tracking-wider">Fase 4: Cronograma de Pagos Diferido (<span id="lbl-titulo-cuotas">50% - 25% - 25%</span>)</h2>
                     </div>
                     <div class="grid grid-cols-2 gap-3.5">
                         <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
                             <p class="text-[9px] font-black text-slate-400 uppercase mb-2.5 border-b pb-1">Honorarios de la Firma</p>
                             <div id="cron-firma-acu" class="space-y-2 mb-3">
                                 <p class="text-[7px] font-bold text-blue-600 uppercase">Modalidad Acuerdo:</p>
-                                <div class="flex justify-between text-[11px] font-medium"><span>Apertura (50%):</span><span id="hon-acu-p1" class="brand-navy">$0</span></div>
-                                <div class="flex justify-between text-[10px] opacity-60"><span>Mes 1 y 2 (25% c/u):</span><span id="hon-acu-p23">$0</span></div>
+                                <div class="flex justify-between text-[11px] font-medium"><span>Apertura (<span id="lbl-acu-p1">50</span>%):</span><span id="hon-acu-p1" class="brand-navy">$0</span></div>
+                                <div class="flex justify-between text-[10px] opacity-60"><span>Cuota 2 (<span id="lbl-acu-p2">25</span>%):</span><span id="hon-acu-p2">$0</span></div>
+                                <div class="flex justify-between text-[10px] opacity-60"><span>Cuota 3 (<span id="lbl-acu-p3">25</span>%):</span><span id="hon-acu-p3">$0</span></div>
                             </div>
                             <div id="cron-firma-liq" class="space-y-2">
                                 <p class="text-[7px] font-bold text-emerald-600 uppercase">Modalidad Liquidación:</p>
-                                <div class="flex justify-between text-[11px] font-medium"><span>Apertura (50%):</span><span id="hon-liq-p1" class="brand-navy">$0</span></div>
-                                <div class="flex justify-between text-[10px] opacity-60"><span>Mes 1 y 2 (25% c/u):</span><span id="hon-liq-p23">$0</span></div>
+                                <div class="flex justify-between text-[11px] font-medium"><span>Apertura (<span id="lbl-liq-p1">50</span>%):</span><span id="hon-liq-p1" class="brand-navy">$0</span></div>
+                                <div class="flex justify-between text-[10px] opacity-60"><span>Cuota 2 (<span id="lbl-liq-p2">25</span>%):</span><span id="hon-liq-p2">$0</span></div>
+                                <div class="flex justify-between text-[10px] opacity-60"><span>Cuota 3 (<span id="lbl-liq-p3">25</span>%):</span><span id="hon-liq-p3">$0</span></div>
                             </div>
                         </div>
                         <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
@@ -484,10 +506,40 @@
             document.getElementById('tot-inv-acu').innerText = formatMoney(totalInvAcu);
             document.getElementById('tot-inv-liq').innerText = formatMoney(totalInvLiq);
 
-            document.getElementById('hon-acu-p1').innerText = formatMoney(hAcu * 0.5);
-            document.getElementById('hon-acu-p23').innerText = formatMoney(hAcu * 0.25) + " x 2";
-            document.getElementById('hon-liq-p1').innerText = formatMoney(hLiq * 0.5);
-            document.getElementById('hon-liq-p23').innerText = formatMoney(hLiq * 0.25) + " x 2";
+            // ===== Cuotas de honorarios configurables =====
+            let p1 = Number(document.getElementById('in-cuota-1').value);
+            let p2 = Number(document.getElementById('in-cuota-2').value);
+            let p3 = Number(document.getElementById('in-cuota-3').value);
+            if (isNaN(p1)) p1 = 0;
+            if (isNaN(p2)) p2 = 0;
+            if (isNaN(p3)) p3 = 0;
+            const sumaCuotas = p1 + p2 + p3;
+
+            // Aviso visual si no suman 100 (no bloquea, solo advierte)
+            const warn = document.getElementById('cuota-warn');
+            if (Math.round(sumaCuotas) !== 100) {
+                document.getElementById('cuota-suma').innerText = sumaCuotas;
+                warn.classList.remove('hidden');
+            } else {
+                warn.classList.add('hidden');
+            }
+
+            // Etiquetas de porcentaje en el cronograma y en el título
+            document.getElementById('lbl-acu-p1').innerText = p1;
+            document.getElementById('lbl-acu-p2').innerText = p2;
+            document.getElementById('lbl-acu-p3').innerText = p3;
+            document.getElementById('lbl-liq-p1').innerText = p1;
+            document.getElementById('lbl-liq-p2').innerText = p2;
+            document.getElementById('lbl-liq-p3').innerText = p3;
+            document.getElementById('lbl-titulo-cuotas').innerText = `${p1}% - ${p2}% - ${p3}%`;
+
+            // Montos por cuota (honorarios de la firma)
+            document.getElementById('hon-acu-p1').innerText = formatMoney(hAcu * p1 / 100);
+            document.getElementById('hon-acu-p2').innerText = formatMoney(hAcu * p2 / 100);
+            document.getElementById('hon-acu-p3').innerText = formatMoney(hAcu * p3 / 100);
+            document.getElementById('hon-liq-p1').innerText = formatMoney(hLiq * p1 / 100);
+            document.getElementById('hon-liq-p2').innerText = formatMoney(hLiq * p2 / 100);
+            document.getElementById('hon-liq-p3').innerText = formatMoney(hLiq * p3 / 100);
 
             document.getElementById('con-p1').innerText = formatMoney(cFinal * 0.5);
             document.getElementById('con-p2').innerText = formatMoney(cFinal * 0.5);
